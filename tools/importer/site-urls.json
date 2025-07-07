@@ -1,0 +1,17 @@
+{
+  "originUrl": "https://main--hashsite--zehash-developer.aem.live",
+  "urls": [
+    {
+      "url": "https://main--hashsite--zehash-developer.aem.live",
+      "source": "MANUAL",
+      "targetPath": "/",
+      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+    }
+  ],
+  "crawlOptions": {
+    "strategy": "manual",
+    "strategiesAttempted": [
+      "MANUAL"
+    ]
+  }
+}
