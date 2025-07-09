@@ -1,8 +1,20 @@
 {
-  "originUrl": "https://main--hashsite--zehash-developer.aem.live",
+  "originUrl": "https://library.westernsydney.edu.au",
   "urls": [
     {
-      "url": "https://main--hashsite--zehash-developer.aem.live",
+      "url": "https://library.westernsydney.edu.au",
+      "source": "MANUAL",
+      "targetPath": "/",
+      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+    },
+    {
+      "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
+      "source": "MANUAL",
+      "targetPath": "/",
+      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+    },
+    {
+      "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
       "source": "MANUAL",
       "targetPath": "/",
       "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
