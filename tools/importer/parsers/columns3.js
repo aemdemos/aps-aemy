@@ -1,49 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the two main columns in the source HTML
-  const leftCol = element.querySelector('.code_snippet_first');
-  const rightCol = element.querySelector('.code_snippet_second');
-
-  // Header row for columns block
-  const headerRow = ['Columns'];
-
-  // Prepare left column: remove inline styles and decorative icon(s)
-  let leftContent = null;
-  if (leftCol) {
-    leftCol.removeAttribute('style');
-    const h2 = leftCol.querySelector('h2.snippet');
-    if (h2) {
-      const icon = h2.querySelector('i');
-      if (icon) icon.remove();
-    }
-    leftContent = leftCol;
+  // Helper to convert iframe (non-image) to link
+  function iframeToLink(iframe) {
+    const a = document.createElement('a');
+    a.href = iframe.src;
+    a.textContent = 'Chat Widget';
+    a.target = '_blank';
+    return a;
   }
 
-  // Prepare right column: remove style, icon, and replace iframe with link
-  let rightContent = null;
-  if (rightCol) {
-    rightCol.removeAttribute('style');
-    const h2 = rightCol.querySelector('h2.snippet');
-    if (h2) {
-      const icon = h2.querySelector('i');
-      if (icon) icon.remove();
-    }
-    // Replace iframe with a link to its src (if any)
-    const iframe = rightCol.querySelector('iframe[src]');
-    if (iframe) {
-      const link = document.createElement('a');
-      link.href = iframe.src;
-      link.textContent = iframe.title || 'Chat Widget';
-      iframe.replaceWith(link);
-    }
-    rightContent = rightCol;
+  // Get the two major columns in the block
+  const children = Array.from(element.querySelectorAll(':scope > div'));
+  const first = children.find(div => div.classList.contains('code_snippet_first'));
+  const second = children.find(div => div.classList.contains('code_snippet_second'));
+
+  // Gather left column content (Today's Hours)
+  let leftColContent = [];
+  if (first) {
+    const h2 = first.querySelector('h2');
+    if (h2) leftColContent.push(h2);
+    const pcTab = first.querySelector('.pc-tab');
+    if (pcTab) leftColContent.push(pcTab);
   }
 
-  // If either column is missing, fallback to empty cell
-  const dataRow = [leftContent || '', rightContent || ''];
+  // Gather right column content (Online Librarian)
+  let rightColContent = [];
+  if (second) {
+    const h2 = second.querySelector('h2');
+    if (h2) rightColContent.push(h2);
+    const chatRegion = second.querySelector('[role="region"]');
+    if (chatRegion) {
+      const iframe = chatRegion.querySelector('iframe');
+      if (iframe) {
+        rightColContent.push(iframeToLink(iframe));
+      } else {
+        rightColContent.push(chatRegion);
+      }
+    }
+  }
 
-  // Compose the block table
-  const cells = [headerRow, dataRow];
-  const block = WebImporter.DOMUtils.createTable(cells, document);
+  // Fix: header row should have the same number of columns as content row
+  const tableRows = [
+    ['Columns', ''],
+    [leftColContent, rightColContent]
+  ];
+  const block = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(block);
 }

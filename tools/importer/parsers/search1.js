@@ -1,38 +1,19 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header must be exactly 'Search' in a single column
-  const headerRow = ['Search'];
+  // The block expects a single table: header 'Search',
+  // and a cell containing the entire search UI with all text, form, buttons, options, etc.
+  // We must ensure ALL text content (including placeholders, button labels, radio controls, etc.) is preserved.
 
-  // Prefer the .search-catalogue element, else fallback to all children
-  let searchContent = element.querySelector('.search-catalogue');
-  let rowContent;
+  // Reference the entire search block: in this HTML, this is the top-level element.
+  // By referencing 'element' directly, we retain all nested content and semantic structure.
+  // Do NOT clone. Instead, reference the original element so that all content and text is preserved for the importer to transform.
+  
+  // Create the block table as required (1 col, 2 rows)
+  const table = WebImporter.DOMUtils.createTable([
+    ['Search'],
+    [element]
+  ], document);
 
-  if (searchContent) {
-    // Include all child nodes of searchContent, including text nodes
-    rowContent = Array.from(searchContent.childNodes).filter(
-      (node) => {
-        // Include all elements and non-empty text nodes
-        return (node.nodeType !== Node.TEXT_NODE) || (node.textContent.trim().length > 0);
-      }
-    );
-  } else {
-    // Fallback: include all child nodes of the main element
-    rowContent = Array.from(element.childNodes).filter(
-      (node) => {
-        return (node.nodeType !== Node.TEXT_NODE) || (node.textContent.trim().length > 0);
-      }
-    );
-  }
-  // If no content found, use the element itself
-  if (!rowContent || rowContent.length === 0) {
-    rowContent = [element];
-  }
-
-  const cells = [
-    headerRow,
-    [rowContent]
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Replace the original element with our table
   element.replaceWith(table);
 }

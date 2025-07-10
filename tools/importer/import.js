@@ -12,11 +12,11 @@
 /* global WebImporter */
 /* eslint-disable no-console */
 import accordion8Parser from './parsers/accordion8.js';
-import columns3Parser from './parsers/columns3.js';
-import cards5Parser from './parsers/cards5.js';
 import hero9Parser from './parsers/hero9.js';
-import carousel10Parser from './parsers/carousel10.js';
 import embedSocial6Parser from './parsers/embedSocial6.js';
+import columns3Parser from './parsers/columns3.js';
+import carousel10Parser from './parsers/carousel10.js';
+import cards5Parser from './parsers/cards5.js';
 import search1Parser from './parsers/search1.js';
 import headerParser from './parsers/header.js';
 import metadataParser from './parsers/metadata.js';
@@ -35,11 +35,11 @@ import {
 const parsers = {
   metadata: metadataParser,
   accordion8: accordion8Parser,
-  columns3: columns3Parser,
-  cards5: cards5Parser,
   hero9: hero9Parser,
-  carousel10: carousel10Parser,
   embedSocial6: embedSocial6Parser,
+  columns3: columns3Parser,
+  carousel10: carousel10Parser,
+  cards5: cards5Parser,
   search1: search1Parser,
   ...customParsers,
 };
