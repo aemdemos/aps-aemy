@@ -5,19 +5,19 @@
       "url": "https://library.westernsydney.edu.au",
       "source": "MANUAL",
       "targetPath": "/",
-      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+      "id": "bf1a8ad853584a13202d00c007ef0c3efbbbecc7"
     },
     {
       "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
       "source": "MANUAL",
-      "targetPath": "/",
-      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+      "targetPath": "/collections/indigenous-resources",
+      "id": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
       "source": "MANUAL",
-      "targetPath": "/",
-      "id": "6428573e10830878ad78e1624c0fc0ebd3c3970e"
+      "targetPath": "/researchers/submit-publication",
+      "id": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1"
     }
   ],
   "crawlOptions": {
