@@ -8,19 +8,19 @@
           "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
           "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
           "uuid": "009b8eeb-00-cf00d50ba65a8f84d89557701ea89efb04cdef81",
-          "xpath": "/html[1]/body[1]/div[2]/header[1]/div[1]"
+          "xpath": "/html[1]/body[1]/div[2]/header[1]"
         },
         {
           "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
           "uuid": "80d91d0a-00-cf00d50ba65a8f84d89557701ea89efb04cdef81",
-          "xpath": "/html[1]/body[1]/div[2]/header[1]/div[1]"
+          "xpath": "/html[1]/body[1]/div[2]/header[1]"
         },
         {
           "url": "https://library.westernsydney.edu.au",
           "urlHash": "bf1a8ad853584a13202d00c007ef0c3efbbbecc7",
           "uuid": "bf1a8ad8-00-109e7c66dedb83daa62a92dda2c9e985a5a392c1",
-          "xpath": "/html[1]/body[1]/div[1]/header[1]/div[1]"
+          "xpath": "/html[1]/body[1]/div[1]/header[1]"
         }
       ]
     },
@@ -31,14 +31,14 @@
         {
           "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
           "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
-          "uuid": "009b8eeb-04-b336659d6a58b751a90a6f511c6b5bdd1f7d3464",
-          "xpath": "/html[1]/body[1]/div[4]"
+          "uuid": "009b8eeb-03-eeada7e2c794e3effab80f5211be7031543b87b1",
+          "xpath": "/html[1]/body[1]/div[2]/footer[1]"
         },
         {
           "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
-          "uuid": "80d91d0a-04-b336659d6a58b751a90a6f511c6b5bdd1f7d3464",
-          "xpath": "/html[1]/body[1]/div[4]"
+          "uuid": "80d91d0a-03-eeada7e2c794e3effab80f5211be7031543b87b1",
+          "xpath": "/html[1]/body[1]/div[2]/footer[1]"
         },
         {
           "url": "https://library.westernsydney.edu.au",
@@ -78,17 +78,17 @@
       ]
     },
     {
-      "name": "Cards",
-      "cluster": 2,
-      "source": "Cards",
-      "target": "Cards (cards2)",
-      "key": "cards2",
+      "name": "Carousel",
+      "cluster": 10,
+      "source": "Carousel",
+      "target": "Carousel (carousel10)",
+      "key": "carousel10",
       "instances": [
         {
           "url": "https://library.westernsydney.edu.au",
           "urlHash": "bf1a8ad853584a13202d00c007ef0c3efbbbecc7",
           "uuid": "bf1a8ad8-03-764deff5da11c1e63c49829d6eef5b2e52084cea",
-          "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
+          "xpath": "/html/body/div[1]/main/div[1]/div[1]"
         }
       ]
     },
@@ -108,30 +108,6 @@
       ]
     },
     {
-      "name": "unknown",
-      "cluster": 4,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
-          "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
-          "uuid": "009b8eeb-03-eeada7e2c794e3effab80f5211be7031543b87b1",
-          "xpath": "/html[1]/body[1]/div[2]/footer[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
-          "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
-          "uuid": "80d91d0a-03-eeada7e2c794e3effab80f5211be7031543b87b1",
-          "xpath": "/html[1]/body[1]/div[2]/footer[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au",
-          "urlHash": "bf1a8ad853584a13202d00c007ef0c3efbbbecc7",
-          "uuid": "bf1a8ad8-06-df2d8614774e18e1b8dccbc899c3c4aee180c525",
-          "xpath": "/html[1]/body[1]/div[1]/footer[1]"
-        }
-      ]
-    },
-    {
       "name": "Cards",
       "cluster": 5,
       "source": "Cards",
@@ -142,7 +118,7 @@
           "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
           "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
           "uuid": "009b8eeb-02-ee7a6796f533ca1a641266fa982b337f0ba6fbf3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]"
+          "xpath": "/html/body/div[2]/main/div[2]/div[3]"
         }
       ]
     },
@@ -168,33 +144,6 @@
       ]
     },
     {
-      "name": "header",
-      "cluster": 7,
-      "source": "Header",
-      "target": "Header",
-      "key": "header7",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
-          "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
-          "uuid": "009b8eeb-00-cf00d50ba65a8f84d89557701ea89efb04cdef81",
-          "xpath": "/html[1]/body[1]/div[2]/header[1]/div[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
-          "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
-          "uuid": "80d91d0a-00-cf00d50ba65a8f84d89557701ea89efb04cdef81",
-          "xpath": "/html[1]/body[1]/div[2]/header[1]/div[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au",
-          "urlHash": "bf1a8ad853584a13202d00c007ef0c3efbbbecc7",
-          "uuid": "bf1a8ad8-00-109e7c66dedb83daa62a92dda2c9e985a5a392c1",
-          "xpath": "/html[1]/body[1]/div[1]/header[1]/div[1]"
-        }
-      ]
-    },
-    {
       "name": "Accordion",
       "cluster": 8,
       "source": "Accordion",
@@ -205,7 +154,7 @@
           "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
           "uuid": "80d91d0a-02-ee7a6796f533ca1a641266fa982b337f0ba6fbf3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]"
+          "xpath": "/html/body/div[2]/main/div[2]/div[3]"
         }
       ]
     },
