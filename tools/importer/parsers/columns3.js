@@ -1,22 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns block
-  const block = element.querySelector('.columns.block');
-  if (!block) return;
+  // Find the two main columns in the source HTML
+  const leftCol = element.querySelector('.code_snippet_first');
+  const rightCol = element.querySelector('.code_snippet_second');
 
-  // Get each row (each >div in .columns.block)
-  const rows = Array.from(block.children);
-  // For the header row, use a single cell array as in the example
-  const cells = [['Columns']];
+  // Header row for columns block
+  const headerRow = ['Columns'];
 
-  // For each row, build an array of its immediate children (columns)
-  rows.forEach(row => {
-    const cols = Array.from(row.children);
-    // Push the array of elements as-is, since each row is a block row
-    cells.push(cols);
-  });
+  // Prepare left column: remove inline styles and decorative icon(s)
+  let leftContent = null;
+  if (leftCol) {
+    leftCol.removeAttribute('style');
+    const h2 = leftCol.querySelector('h2.snippet');
+    if (h2) {
+      const icon = h2.querySelector('i');
+      if (icon) icon.remove();
+    }
+    leftContent = leftCol;
+  }
 
-  // Create the block table and replace the original element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Prepare right column: remove style, icon, and replace iframe with link
+  let rightContent = null;
+  if (rightCol) {
+    rightCol.removeAttribute('style');
+    const h2 = rightCol.querySelector('h2.snippet');
+    if (h2) {
+      const icon = h2.querySelector('i');
+      if (icon) icon.remove();
+    }
+    // Replace iframe with a link to its src (if any)
+    const iframe = rightCol.querySelector('iframe[src]');
+    if (iframe) {
+      const link = document.createElement('a');
+      link.href = iframe.src;
+      link.textContent = iframe.title || 'Chat Widget';
+      iframe.replaceWith(link);
+    }
+    rightContent = rightCol;
+  }
+
+  // If either column is missing, fallback to empty cell
+  const dataRow = [leftContent || '', rightContent || ''];
+
+  // Compose the block table
+  const cells = [headerRow, dataRow];
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }
