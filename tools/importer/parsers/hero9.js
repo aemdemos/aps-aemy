@@ -1,49 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract background image URL from style attribute
-  const style = element.getAttribute('style') || '';
+  // 1. Extract background image URL from inline style
   let bgUrl = '';
-  const match = style.match(/background:\s*url\(['"]?([^'")]+)['"]?/);
-  if (match && match[1]) {
-    bgUrl = match[1];
+  const style = element.getAttribute('style') || '';
+  const bgMatch = style.match(/background:\s*url\(['"]?([^'")]+)['"]?/i);
+  if (bgMatch && bgMatch[1]) {
+    bgUrl = bgMatch[1];
   }
 
-  // Create image element for background if present
-  let bgImg = '';
+  // 2. Reference the background image as an <img>, if present
+  let bgImg = null;
   if (bgUrl) {
-    const img = document.createElement('img');
-    img.src = bgUrl;
-    img.alt = '';
-    bgImg = img;
+    bgImg = document.createElement('img');
+    bgImg.src = bgUrl;
   }
 
-  // Extract content: headline, CTA
-  // Find banner description element
-  let content = '';
-  const desc = element.querySelector('.home-banner__desc');
-  if (desc) {
-    // Create heading for the banner text
-    const heading = document.createElement('h2');
-    heading.textContent = desc.textContent.trim();
-    // If there's a link (the <a> element), wrap the heading in a link
-    const href = element.getAttribute('href');
-    if (href) {
-      const a = document.createElement('a');
-      a.href = href;
-      a.textContent = heading.textContent;
-      heading.textContent = '';
-      heading.appendChild(a);
-    }
-    content = heading;
+  // 3. Extract text banner content
+  let descWrapper = element.querySelector('.home-banner__desc-wrapper');
+  let bannerContent = [];
+  if (descWrapper) {
+    // Reference the whole desc wrapper (which contains all text)
+    bannerContent.push(descWrapper);
   }
 
-  // Compose table rows as per the instructions: Header, Image, Content
+  // 4. Compose table rows according to the Hero block spec (header, image, content)
   const rows = [
     ['Hero'],
-    [bgImg],
-    [content]
+    [bgImg ? bgImg : ''],
+    [bannerContent.length ? bannerContent : '']
   ];
-  // Create block table and replace the original element
+
+  // 5. Create the table and replace the original element
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
