@@ -1,7 +1,10 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   // Locate the cards wrapper
-  const cardsWrapper = element.querySelector('.cards__wrapper');
+  let cardsWrapper = element.querySelector('.cards__wrapper');
+  if (element.classList.contains('cards__wrapper')) {
+    cardsWrapper = element;
+  }
   if (!cardsWrapper) return;
   const cardsList = cardsWrapper.querySelector('.cards__list');
   if (!cardsList) return;
