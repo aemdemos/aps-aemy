@@ -1,3 +1,41 @@
+/* Reordered selectors to resolve no-descending-specificity */
+.columns.columns3 > div > div:first-child tbody tr td {
+  padding: 3.5px 14px;
+  border: none;
+  vertical-align: middle;
+  font-size: 0.96em;
+  color: var(--wsu-gray-text);
+}
+
+.columns.columns3 > div > div:first-child td:first-child {
+  color: var(--wsu-pink);
+  text-align: left;
+  font-weight: 500;
+  min-width: 98px;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+.columns.columns3 > div > div:first-child td:first-child a {
+  color: var(--wsu-pink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.columns.columns3 > div > div:first-child td:last-child {
+  text-align: right;
+  color: var(--wsu-gray-text);
+  font-weight: 400;
+  min-width: 88px;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+
+.columns.columns3 > div > div:first-child table tbody tr:first-child td {
+  color: #131313;
+  font-weight: 600;
+}
+
 .columns > div {
   display: flex;
   flex-direction: column;
@@ -31,3 +69,211 @@
     order: unset;
   }
 }
+
+.columns.columns3 {
+  --wsu-pink: #b31b34;
+  --wsu-gray: #f2f2f2;
+  --wsu-gray-text: #444;
+  --block-max-width: 760px;
+
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Main Layout: tightly wrap columns, center as a block, modest gap */
+.columns.columns3 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width: var(--block-max-width);
+  margin: 0 auto;
+  gap: 28px;
+  padding: 0;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Responsive: Stack columns on small screens */
+@media (width <= 850px) {
+  .columns.columns3 > div {
+    flex-direction: column;
+    gap: 18px;
+    max-width: 100%;
+    margin: 0 8px;
+    padding: 0;
+  }
+}
+
+/* Column widths and alignment */
+.columns.columns3 > div > div {
+  min-width: 0;
+  flex: 0 1 360px;
+  padding: 0;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.columns.columns3 > div > div:first-child {
+  max-width: 375px;
+  width: 375px;
+  padding-right: 0;
+}
+
+.columns.columns3 > div > div:last-child {
+  max-width: 320px;
+  width: 320px;
+  padding-left: 0;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Headings */
+.columns.columns3 h2 {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.13;
+}
+
+/* Date + Tab Bar (merged duplicate selector) */
+.columns.columns3 > div > div:first-child > ul {
+  display: flex;
+  gap: 0.6em;
+  align-items: center;
+  list-style: none;
+  margin: 0 0 0.32em;
+  padding: 0;
+  font-size: 1rem;
+  padding-left: 0;
+}
+
+.columns.columns3 > div > div:first-child > ul li:first-child {
+  background: var(--wsu-gray);
+  font-weight: 600;
+  color: #131313;
+  padding: 3px 10px;
+  border-radius: 2.5px;
+  margin: 0;
+  font-size: 1em;
+}
+
+.columns.columns3 > div > div:first-child > ul li:last-child {
+  color: var(--wsu-pink);
+  font-weight: 600;
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Table Styling */
+.columns.columns3 > div > div:first-child table {
+  width: 100%;
+  background: var(--wsu-gray);
+  border-radius: 7px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 0 0.45em;
+  font-size: 0.93em;
+  box-sizing: border-box;
+}
+
+.columns.columns3 > div > div:first-child thead th {
+  text-align: left;
+  font-weight: 700;
+  color: #131313;
+  background: none;
+  font-size: 1em;
+  padding: 8px 14px 4px;
+  border: none;
+}
+
+/* Compact vertical spacing between all elements in columns */
+.columns.columns3 > div > div > * {
+  margin-bottom: 0.28em;
+}
+
+.columns.columns3 > div > div > *:first-child {
+  margin-top: 0;
+}
+
+.columns.columns3 > div > div > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Links and Buttons: flat, left, no underline, normal weight */
+.columns.columns3 > div > div:first-child .button-container {
+  margin: 0.18em 0 0.02em;
+}
+
+.columns.columns3 > div > div:first-child .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--wsu-pink);
+  font-weight: 500;
+  font-size: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 0.05em;
+  text-decoration: none;
+  line-height: 1.2;
+  text-align: left;
+  display: inline;
+  min-width: 0;
+  max-width: 100%;
+  transition: color 0.16s;
+}
+
+/* Chat Widget Button Alignment and Style (Right Panel, merged duplicate selector) */
+.columns.columns3 > div > div:last-child .button-container {
+  margin: 1em 0 0.2em;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.columns.columns3 > div > div:last-child .button-container a.button {
+  background: var(--wsu-pink);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 0.62em 2em;
+  margin: 0;
+  line-height: 1.5;
+  text-align: left;
+  box-shadow: none;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 0;
+  max-width: 100%;
+  transition: background 0.18s, color 0.18s;
+}
+
+.columns.columns3 > div > div:first-child .button-container a.button:hover,
+.columns.columns3 > div > div:first-child .button-container a.button:focus {
+  color: #8c1225;
+  text-decoration: underline;
+}
+
+.columns.columns3 > div > div:last-child .button-container a.button:hover,
+.columns.columns3 > div > div:last-child .button-container a.button:focus {
+  background: #8c1225;
+  color: #fff;
+}
+
+/* Heading and Table Spacing Tweaks */
+
+/* Removed duplicate .columns.columns3 > div > div > *:last-child rule, already above. */
+
+/* Remove unwanted top/bottom spacing for block -- merged with earlier .columns.columns3 rule above */
