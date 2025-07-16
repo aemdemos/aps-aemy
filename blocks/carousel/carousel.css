@@ -32,6 +32,21 @@
   min-height: min(50vw, calc(100dvh - var(--header-height)));
 }
 
+.carousel.carousel10 .carousel-slide {
+  flex: 1 1 0%;
+  max-width: 100%;
+  min-width: 330px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  align-items: flex-start;
+  margin: 0;
+  position: static;
+  overflow: hidden;
+  box-shadow: none;
+  border-radius: 0;
+}
+
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
   align-items: center;
 }
@@ -45,6 +60,7 @@
   inset: 0;
 }
 
+.carousel.carousel10 .carousel-slide-image img,
 .carousel .carousel-slide .carousel-slide-image picture > img {
   height: 100%;
   width: 100%;
@@ -56,7 +72,7 @@
   margin: 68px;
   padding: 16px;
   color: white;
-  background-color: rgba(19 19 19 / 75%);
+  background-color: rgb(19 19 19 / 75%);
   position: relative;
   width: var(--slide-content-width, auto);
 }
@@ -71,6 +87,17 @@
   line-height: 0;
 }
 
+.carousel .carousel-navigation-buttons button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border-radius: 50%;
+  padding: 0;
+  background-color: rgb(19 19 19 / 25%);
+  transition: background-color 0.2s;
+}
+
 .carousel .carousel-slide-indicator button {
   width: 24px;
   height: 24px;
@@ -79,6 +106,11 @@
   border-radius: 50%;
   background-color: #dadada;
   transition: background-color 0.2s;
+}
+
+.carousel .carousel-navigation-buttons button:hover,
+.carousel .carousel-navigation-buttons button:focus-visible {
+  background-color: rgb(19 19 19 / 75%);
 }
 
 .carousel .carousel-slide-indicator button:disabled,
@@ -97,23 +129,6 @@
   align-items: center;
   justify-content: space-between;
   z-index: 1;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.carousel .carousel-navigation-buttons button {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  margin: 0;
-  border-radius: 50%;
-  padding: 0;
-  background-color: rgba(19 19 19 / 25%);
-  transition: background-color 0.2s;
-}
-
-.carousel .carousel-navigation-buttons button:hover,
-.carousel .carousel-navigation-buttons button:focus-visible {
-  background-color: rgba(19 19 19 / 75%);
 }
 
 .carousel .carousel-navigation-buttons button::after {
@@ -143,7 +158,6 @@
 
   .carousel .carousel-slide .carousel-slide-content {
     --slide-content-width: calc((100% - 184px) / 2);
-
     margin: 92px;
   }
 
@@ -151,3 +165,167 @@
     --slide-content-width: auto;
   }
 }
+
+/* --- BEGIN GENERATED CSS --- */
+
+.carousel.carousel10 .carousel-navigation-buttons {
+  display: none;
+}
+
+.carousel.carousel10 .carousel-slides {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: stretch;
+  overflow: hidden;
+  scroll-snap-type: none;
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.carousel.carousel10 .carousel-slide {
+  flex: 1 1 0%;
+  max-width: 100%;
+  min-width: 330px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  align-items: flex-start;
+  margin: 0;
+  position: static;
+  overflow: hidden;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.carousel.carousel10 .carousel-slide:nth-child(n+4) {
+  display: none;
+}
+
+.carousel.carousel10 .carousel-slide-image {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  flex-shrink: 0;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.carousel.carousel10 .carousel-slide-image picture,
+.carousel.carousel10 .carousel-slide-image img {
+  position: static;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel.carousel10 .carousel-slide-content {
+  background: #fff;
+  color: #131313;
+  margin: 0;
+  padding: 22px 22px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0;
+  position: static;
+}
+
+.carousel.carousel10 .carousel-slide-content h2 {
+  margin-top: 0;
+  margin-bottom: 0.6em;
+  color: #131313;
+  font-size: 1.25em;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+}
+
+.carousel.carousel10 .carousel-slide-content p {
+  margin: 0 0 1.1em;
+  color: #444;
+  font-size: 1.01em;
+  font-weight: 400;
+}
+
+.carousel.carousel10 .carousel-slide-content .button-container {
+  margin: 0;
+}
+
+.carousel.carousel10 .carousel-slide-content .button {
+  display: inline-block;
+  background: none;
+  border: none;
+  color: #131313;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+  vertical-align: middle;
+}
+
+.carousel.carousel10 .carousel-slide-content .button::after {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 7px;
+  border: solid #131313;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  transform: rotate(-45deg);
+  width: 8px;
+  height: 8px;
+  content: "";
+}
+
+.carousel.carousel10 .carousel-slide-content .button:hover,
+.carousel.carousel10 .carousel-slide-content .button:focus {
+  color: #3b63fb;
+  text-decoration: underline;
+}
+
+.carousel.carousel10 .carousel-slide-indicators {
+  display: none;
+}
+
+@media (width <= 1099px) {
+  .carousel.carousel10 .carousel-slides {
+    gap: 14px;
+    max-width: 98vw;
+  }
+
+  .carousel.carousel10 .carousel-slide {
+    min-width: 240px;
+    max-width: 100%;
+  }
+}
+
+@media (width <= 899px) {
+  .carousel.carousel10 .carousel-slides {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .carousel.carousel10 .carousel-slide {
+    max-width: 95vw;
+    width: 100%;
+    display: flex;
+  }
+
+  .carousel.carousel10 .carousel-slide:nth-child(n+4) {
+    display: flex;
+  }
+}
+
+/* --- MERGED SELECTOR --- */
+
+/* No explicit .carousel.carousel10 block was present in base CSS or generated CSS beyond what is shown above for sub-selectors.
+   Thus, there is no need for a merged .carousel.carousel10 block itself, all rules are included in the descendant selectors above. */
