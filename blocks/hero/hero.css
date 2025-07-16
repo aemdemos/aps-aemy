@@ -45,3 +45,109 @@
     padding: 40px 32px;
   }
 }
+
+.hero.hero9 {
+  position: relative;
+  width: 100vw;
+  min-height: 220px;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Overlay block: right aligned, vertically centered, tighter padding */
+.hero.hero9 > div:last-child {
+  background: rgb(0 0 0 / 70%);
+  border-radius: 10px;
+  padding: 18px 26px 15px;
+  max-width: 530px;
+  min-width: 220px;
+  margin-right: 32px;
+  box-shadow: 0 4px 28px 0 rgb(0 0 0 / 18%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Headline: large, uppercase, bold, right-aligned, white */
+.hero.hero9 h1,
+.hero.hero9 h2,
+.hero.hero9 h3,
+.hero.hero9 h4,
+.hero.hero9 h5,
+.hero.hero9 h6 {
+  color: #fff;
+  font-family: var(--heading-font-family), sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  font-size: 2.3rem;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  overflow-wrap: break-word;
+  text-shadow: 1px 1px 6px rgb(0 0 0 / 32%);
+  z-index: 2;
+  max-width: 420px;
+}
+
+.hero.hero9 a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.hero.hero9 a:hover,
+.hero.hero9 a:focus {
+  color: #eee;
+  text-decoration: underline;
+}
+
+/* Remove any empty left column if present */
+.hero.hero9 > div:first-child {
+  display: none;
+}
+
+@media (width <= 900px) {
+  .hero.hero9 {
+    min-height: 110px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .hero.hero9 > div:last-child {
+    margin-right: 0;
+    max-width: 96vw;
+    min-width: 0;
+    border-radius: 0 0 8px 8px;
+    padding: 14px 10vw 12px;
+    align-items: flex-start;
+  }
+
+  .hero.hero9 h1,
+  .hero.hero9 h2,
+  .hero.hero9 h3,
+  .hero.hero9 h4,
+  .hero.hero9 h5,
+  .hero.hero9 h6 {
+    font-size: 1.1rem;
+    text-align: left;
+    max-width: 98vw;
+  }
+}
