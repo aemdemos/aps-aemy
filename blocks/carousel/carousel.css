@@ -1,3 +1,5 @@
+/* --- BASE CAROUSEL STYLES --- */
+
 .carousel .carousel-slides-container {
   position: relative;
 }
@@ -32,21 +34,6 @@
   min-height: min(50vw, calc(100dvh - var(--header-height)));
 }
 
-.carousel.carousel10 .carousel-slide {
-  flex: 1 1 0%;
-  max-width: 100%;
-  min-width: 330px;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  align-items: flex-start;
-  margin: 0;
-  position: static;
-  overflow: hidden;
-  box-shadow: none;
-  border-radius: 0;
-}
-
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
   align-items: center;
 }
@@ -60,8 +47,8 @@
   inset: 0;
 }
 
-.carousel.carousel10 .carousel-slide-image img,
-.carousel .carousel-slide .carousel-slide-image picture > img {
+.carousel .carousel-slide .carousel-slide-image picture > img,
+.carousel.carousel10 .carousel-slide-image img {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -158,6 +145,7 @@
 
   .carousel .carousel-slide .carousel-slide-content {
     --slide-content-width: calc((100% - 184px) / 2);
+
     margin: 92px;
   }
 
@@ -167,6 +155,14 @@
 }
 
 /* --- BEGIN GENERATED CSS --- */
+
+.carousel.carousel10 {
+  padding-top: 0;
+  padding-bottom: 0;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .carousel.carousel10 .carousel-navigation-buttons {
   display: none;
@@ -324,8 +320,3 @@
     display: flex;
   }
 }
-
-/* --- MERGED SELECTOR --- */
-
-/* No explicit .carousel.carousel10 block was present in base CSS or generated CSS beyond what is shown above for sub-selectors.
-   Thus, there is no need for a merged .carousel.carousel10 block itself, all rules are included in the descendant selectors above. */
