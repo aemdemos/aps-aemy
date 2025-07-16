@@ -1,8 +1,26 @@
 .embed {
-  width: unset;
-  text-align: center;
-  max-width: 800px;
-  margin: 32px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 56px;
+  background: #fff;
+  border: 1px solid #d2d2d2;
+  border-radius: 0;
+  box-sizing: border-box;
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.embed > * {
+  position: relative;
+  z-index: 1;
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .embed > div {
@@ -59,4 +77,17 @@
   border-left: 6px solid;
   top: 4px;
   left: 7px;
+}
+
+.embed::before {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: #dab9b8;
+  border-radius: 2px 0 0 2px;
+  z-index: 0;
+  content: "";
 }
