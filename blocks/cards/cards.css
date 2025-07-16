@@ -25,3 +25,119 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* Removed empty .cards.cards5 block */
+
+.cards.cards5 > ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(390px, 1fr));
+  gap: 2.2rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media (width <= 1200px) {
+  .cards.cards5 > ul {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+}
+
+@media (width <= 800px) {
+  .cards.cards5 > ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cards.cards5 > ul > li {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  min-width: 0;
+}
+
+.cards.cards5 .cards-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f5f5f5;
+  line-height: 0;
+  display: block;
+}
+
+.cards.cards5 .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.cards.cards5 .cards-card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.21rem 1.08rem 1.15rem;
+  background: #fff;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.cards.cards5 .cards-card-body p:first-child strong {
+  font-size: 1.15rem;
+  color: #111;
+  font-weight: 700;
+  line-height: 1.22;
+  display: block;
+  margin-bottom: 0.62em;
+}
+
+.cards.cards5 .cards-card-body p {
+  font-size: 1rem;
+  color: #444;
+  margin: 0 0 0.18em;
+  line-height: 1.56;
+}
+
+.cards.cards5 .cards-card-body .button-container {
+  margin-top: 0.05em;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.cards.cards5 .button {
+  font-weight: 400;
+  color: #111;
+  background: none;
+  border: none;
+  border-radius: 0;
+  display: inline-block;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  vertical-align: middle;
+  box-shadow: none;
+  text-decoration: none;
+  white-space: normal;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 1em 1em;
+  padding-right: 1.5em;
+  box-sizing: border-box;
+  transition: color .15s;
+}
+
+.cards.cards5 .button:hover,
+.cards.cards5 .button:focus {
+  color: #D72660;
+  text-decoration: underline;
+}
+
+.cards.cards5 .cards-card-body .button {
+  margin: 0;
+}
