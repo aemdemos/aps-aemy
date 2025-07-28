@@ -3,10 +3,10 @@
   "lastCrawled": "https://library.westernsydney.edu.au/",
   "urls": [
     {
-      "url": "https://library.westernsydney.edu.au/students/disability_services",
+      "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
       "source": "CRAWL",
-      "targetPath": "/students/disability-services",
-      "id": "02076c4fba6ce041f3d4b775236c91a281c58eb2"
+      "targetPath": "/about-us/whats-on/thought-leadership-events/thought-leadership-event-archive",
+      "id": "5f8a1424f11cf5d8a8387310b90f0673716a3f25"
     }
   ]
 }
