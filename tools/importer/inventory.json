@@ -1610,11 +1610,11 @@
       ]
     },
     {
-      "name": "Accordion",
+      "name": "Unknown Accordion",
       "cluster": 4,
-      "source": "Accordion",
-      "target": "Accordion (accordion4)",
-      "key": "accordion4",
+      "source": "Unknown Accordion",
+      "target": "Unknown Accordion (accordion4)",
+      "key": "unknownAccordion",
       "instances": [
         {
           "url": "https://library.westernsydney.edu.au/students/using_the_library",
