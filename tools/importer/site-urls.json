@@ -117,12 +117,6 @@
       "id": "e995df320902ee5676c8a69cbd74560798cd8fdc"
     },
     {
-      "url": "https://library.westernsydney.edu.au/about_us/rules_policies",
-      "source": "CRAWL",
-      "targetPath": "/about-us/rules-policies",
-      "id": "5be4ffd36f651cf57f0d073227fd94891cb3f87b"
-    },
-    {
       "url": "https://library.westernsydney.edu.au/about_us/rules_policies/code_of_conduct",
       "source": "CRAWL",
       "targetPath": "/about-us/rules-policies/code-of-conduct",
@@ -273,12 +267,6 @@
       "id": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8"
     },
     {
-      "url": "https://library.westernsydney.edu.au/collections/open_athens/create_an_openathens_link",
-      "source": "CRAWL",
-      "targetPath": "/collections/open-athens/create-an-openathens-link",
-      "id": "63c9d722081266eaa779fc46e0673655519c63bd"
-    },
-    {
       "url": "https://library.westernsydney.edu.au/collections/special_collections",
       "source": "CRAWL",
       "targetPath": "/collections/special-collections",
@@ -295,12 +283,6 @@
       "source": "CRAWL",
       "targetPath": "/home",
       "id": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/library_hours",
-      "source": "CRAWL",
-      "targetPath": "/library-hours",
-      "id": "e53cb3757a502f18403d09f3a5461d3ae8ea3dd0"
     },
     {
       "url": "https://library.westernsydney.edu.au/quick_links",
