@@ -11,7 +11,7 @@
  */
 /* eslint-disable no-console */
 (() => {
-  const mainElement = document.querySelector('main.main.left-nav-column');
+  const mainElement = document.querySelector('main.main.left-nav-column, main.main.all-three-column');
   if (mainElement) {
     mainElement.style.flexDirection = 'column';
 
