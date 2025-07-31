@@ -1,0 +1,21 @@
+name: Hourly EDS Permission Update
+
+on:
+  schedule:
+    # Runs at the beginning of every hour (e.g., 00:00, 01:00, 02:00, etc.)
+    - cron: '*/5 * * * *' 
+
+jobs:
+  run-hourly-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Perform hourly task
+        run: |
+          echo "This job runs every hour!"
+          # Add your specific commands or scripts here
+          # For example:
+          # python your_script.py
+          # ./your_executable
