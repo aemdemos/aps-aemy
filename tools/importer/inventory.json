@@ -2673,13 +2673,6 @@
       "key": "header20",
       "instances": [
         {
-          "url": "https://library.westernsydney.edu.au/home",
-          "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
-          "uuid": "3eb45cc1-00-e9726e977075141437c908ebee8ed79c65915f84",
-          "xpath": "/html[1]/body[1]/div[1]/a[1]",
-          "section": "section-3"
-        },
-        {
           "url": "https://library.westernsydney.edu.au/",
           "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
           "uuid": "b61d3d49-00-e9726e977075141437c908ebee8ed79c65915f84",
@@ -3220,6 +3213,19 @@
           "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
           "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        }
+      ]
+    },
+    {
+      "name": "Hero",
+      "cluster": 35,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/home",
+          "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
+          "uuid": "3eb45cc1-00-e9726e977075141437c908ebee8ed79c65915f84",
+          "xpath": "/html[1]/body[1]/div[1]/a[1]",
+          "section": "section-3"
         }
       ]
     }
