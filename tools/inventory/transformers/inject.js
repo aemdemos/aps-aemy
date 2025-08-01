@@ -20,4 +20,12 @@
       child.style.width = '100%';
     });
   }
+
+  // remove slide-out librarian element if present
+  document.getElementById('lcs_slide_out-11923')?.remove();
+
+  // remove left navigation, header, and footer elements if present
+  ['.left-nav', 'header.header', 'footer.footer'].forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => el.remove());
+  });
 })();
