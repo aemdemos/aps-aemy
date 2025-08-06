@@ -3025,6 +3025,12 @@
   ],
   "outliers": [
     {
+      "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
+      "urlHash": "527c1bed1df531014557f4323991722876c73a39",
+      "uuid": "527c1bed-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+    },
+    {
       "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
       "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
       "uuid": "009b8eeb-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -3593,12 +3599,6 @@
       "urlHash": "527c1bed1df531014557f4323991722876c73a39",
       "uuid": "527c1bed-02-d59d7eb439cf982369622d08082f404049853f25",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
-      "urlHash": "527c1bed1df531014557f4323991722876c73a39",
-      "uuid": "527c1bed-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
     },
     {
       "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
