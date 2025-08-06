@@ -3021,6 +3021,30 @@
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/h4[3]"
         }
       ]
+    },
+    {
+      "name": "Columns",
+      "cluster": 41,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
+          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
+          "uuid": "527c1bed-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        }
+      ]
+    },
+    {
+      "name": "Columns",
+      "cluster": 42,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
+          "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
+          "uuid": "52dae168-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -3595,12 +3619,6 @@
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
     },
     {
-      "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
-      "urlHash": "527c1bed1df531014557f4323991722876c73a39",
-      "uuid": "527c1bed-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-    },
-    {
       "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
       "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
       "uuid": "52dae168-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -3611,12 +3629,6 @@
       "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
       "uuid": "52dae168-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
-      "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
-      "uuid": "52dae168-02-d59d7eb439cf982369622d08082f404049853f25",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/conducting-research/sourcing_research_data",
