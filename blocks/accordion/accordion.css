@@ -2,7 +2,6 @@
   border: 1px solid #dadada;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 24px;
 }
@@ -58,4 +57,80 @@
 .accordion details[open] .accordion-item-body {
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
+}
+
+
+.accordion.accordion15 details {
+  border: none;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Summary row: restore visibility and crisp alignment */
+.accordion.accordion15 details summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+  padding: 0 8px;
+  background: #fff;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  gap: 6px;
+
+  /* Remove any fixed height to let content display naturally */
+  height: auto;
+}
+
+/* Restore heading visibility, maintain compact bold look */
+.accordion.accordion15 details summary h2 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  line-height: 1.2;
+  flex: 1 1 auto;
+  align-self: center;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* Allow default marker to appear (don't hide or override) */
+.accordion.accordion15 details summary::-webkit-details-marker,
+.accordion.accordion15 details summary::marker {
+  /* Do not hide so the default marker (chevron) shows up */
+}
+
+/* Remove background highlight on open, focus, or hover */
+.accordion.accordion15 details[open] summary,
+.accordion.accordion15 details summary:focus,
+.accordion.accordion15 details summary:hover {
+  background: #fff;
+}
+
+/* Accordion body: restore normal padding for alignment */
+.accordion.accordion15 details .accordion-item-body {
+  padding: 0 8px;
+  background: #fff;
+  border: none;
+}
+
+/* Table layout for accordion body */
+.accordion.accordion15 details .accordion-item-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.accordion.accordion15 details .accordion-item-body th,
+.accordion.accordion15 details .accordion-item-body td {
+  padding: 4px 8px;
+  text-align: left;
+  border: none;
 }
