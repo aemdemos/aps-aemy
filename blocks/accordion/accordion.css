@@ -1,8 +1,8 @@
+/* CSS code after fixing validation errors */
 .accordion details {
   border: 1px solid #dadada;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 24px;
 }
@@ -58,4 +58,84 @@
 .accordion details[open] .accordion-item-body {
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
+}
+
+.accordion.accordion2 details summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+  padding: 8px 14px;
+  background: #fafafa;
+  border: none;
+  border-bottom: 1px solid #ededed;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.accordion.accordion2 details[open] summary,
+.accordion.accordion2 details summary:focus,
+.accordion.accordion2 details summary:hover {
+  background: #fafafa;
+}
+
+.accordion.accordion2 details summary::-webkit-details-marker,
+.accordion.accordion2 details summary::marker {
+  display: none;
+}
+
+.accordion.accordion2 details summary h2 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  line-height: 1.1;
+  letter-spacing: 0;
+  background: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Improved plus icon: thinner, smaller, precisely centered, with more right margin */
+.accordion.accordion2 details summary::before,
+.accordion.accordion2 details summary::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  width: 10px;
+  height: 1px;
+  background: #000;
+  border-radius: 0.5px;
+  display: block;
+  pointer-events: none;
+}
+
+.accordion.accordion2 details summary::before {
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* horizontal bar */
+}
+
+.accordion.accordion2 details summary::after {
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+
+  /* vertical bar */
+}
+
+/* Accordion body untouched */
+.accordion.accordion2 details .accordion-item-body {
+  padding: 0 16px;
+  border: none;
+  background: none;
+}
+
+.accordion.accordion2 details[open] .accordion-item-body {
+  border-top: none;
+  background: none;
 }
