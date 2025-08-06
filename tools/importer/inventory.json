@@ -1540,22 +1540,6 @@
       ]
     },
     {
-      "name": "header",
-      "cluster": 10,
-      "source": "Header",
-      "target": "Header",
-      "key": "header10",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/",
-          "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
-          "uuid": "b61d3d49-00-e9726e977075141437c908ebee8ed79c65915f84",
-          "xpath": "/html[1]/body[1]/div[1]/a[1]",
-          "section": "section-3"
-        }
-      ]
-    },
-    {
       "name": "Accordion",
       "cluster": 11,
       "source": "Accordion",
@@ -3014,6 +2998,19 @@
           "url": "https://library.westernsydney.edu.au/home",
           "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
           "uuid": "3eb45cc1-00-e9726e977075141437c908ebee8ed79c65915f84",
+          "xpath": "/html[1]/body[1]/div[1]/a[1]",
+          "section": "section-3"
+        }
+      ]
+    },
+    {
+      "name": "Hero",
+      "cluster": 39,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/",
+          "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
+          "uuid": "b61d3d49-00-e9726e977075141437c908ebee8ed79c65915f84",
           "xpath": "/html[1]/body[1]/div[1]/a[1]",
           "section": "section-3"
         }
