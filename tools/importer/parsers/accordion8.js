@@ -1,48 +1,94 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .accordion block inside the element
-  const accordion = element.querySelector('.accordion');
-  if (!accordion) return;
+  // Build the header row as in the example
+  const cells = [
+    ['Accordion (accordion8)'],
+  ];
 
-  // Find all direct .card children of the accordion
-  const cards = accordion.querySelectorAll(':scope > .card');
+  // Get all immediate child .card elements (each is an accordion item)
+  const cards = element.querySelectorAll(':scope > .card');
 
-  // Prepare the rows for the block table
-  const rows = [['Accordion']]; // Header row exactly as required
-
-  cards.forEach(card => {
-    // Title cell extraction
-    let titleEl = null;
-    const header = card.querySelector('.card-header');
-    if (header) {
-      // Use the h2 if present, else use the .card-header itself
-      const h2 = header.querySelector('h2');
-      titleEl = h2 ? h2 : header;
-    }
-
-    // Content cell extraction
-    let contentEl = null;
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      // Only extract the .card-body, not all .collapse (avoids nested headers, etc.)
-      const body = collapse.querySelector('.card-body');
-      if (body) {
-        contentEl = body;
+  cards.forEach((card) => {
+    // --- TITLE CELL ---
+    // The card-header contains the clickable title (usually an <h2> inside)
+    let titleCell = '';
+    const cardHeader = card.querySelector('.card-header');
+    if (cardHeader) {
+      // Prefer a heading if present, else fall back to header's full content
+      const heading = cardHeader.querySelector('h1,h2,h3,h4,h5,h6');
+      if (heading) {
+        titleCell = heading;
       } else {
-        // fallback if .card-body is missing (shouldn't happen here)
-        contentEl = collapse;
+        // Use header's entire element as fallback
+        titleCell = cardHeader;
       }
     }
 
-    // Only add the row if both title and content are found
-    if (titleEl && contentEl) {
-      rows.push([titleEl, contentEl]);
+    // --- CONTENT CELL ---
+    // The card-body contains the content (text, lists, iframes, etc)
+    let contentCell = '';
+    const cardBody = card.querySelector('.card-body');
+    if (cardBody) {
+      // We'll build an array of elements (not their HTML!) to reference directly
+      const contentNodes = [];
+      for (const node of cardBody.childNodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          // For <iframe> elements that are not inside <img>, convert to <a href=src>
+          if (node.tagName === 'IFRAME') {
+            const src = node.getAttribute('src');
+            if (src) {
+              const a = document.createElement('a');
+              a.href = src;
+              a.textContent = src;
+              contentNodes.push(a);
+              continue;
+            }
+          }
+          // For <p> containing <iframe>
+          if (node.tagName === 'P' && node.querySelector('iframe')) {
+            const iframe = node.querySelector('iframe');
+            if (iframe) {
+              const src = iframe.getAttribute('src');
+              if (src) {
+                const a = document.createElement('a');
+                a.href = src;
+                a.textContent = src;
+                contentNodes.push(a);
+                // Also check for text content remaining in the <p> outside <iframe>
+                const temp = node.cloneNode(true);
+                temp.querySelector('iframe').remove();
+                if (temp.textContent.trim()) {
+                  // If there's additional text, keep it as a <p>
+                  const p = document.createElement('p');
+                  p.innerHTML = temp.innerHTML.trim();
+                  contentNodes.push(p);
+                }
+                continue;
+              }
+            }
+          }
+          // Otherwise, keep the element as is
+          contentNodes.push(node);
+        } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+          // Wrap in a <span> for text nodes, though this rarely occurs directly
+          const span = document.createElement('span');
+          span.textContent = node.textContent.trim();
+          contentNodes.push(span);
+        }
+      }
+      // If no elements, leave contentCell as ''
+      if (contentNodes.length === 1) {
+        contentCell = contentNodes[0];
+      } else if (contentNodes.length > 1) {
+        contentCell = contentNodes;
+      } else {
+        contentCell = '';
+      }
     }
+
+    cells.push([titleCell, contentCell]);
   });
 
-  // Create the block table using the required helper
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-
-  // Replace the .accordion element directly with the new table
-  accordion.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }
