@@ -26,8 +26,6 @@
   object-fit: cover;
 }
 
-/* Removed empty .cards.cards5 block */
-
 .cards.cards5 > ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -206,4 +204,164 @@
   background: #fff;
   position: relative;
   z-index: 1;
+}
+
+
+.cards.cards1 {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+  background: #fff;
+  box-sizing: border-box;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.cards.cards1 > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 32px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  max-width: 1040px;
+}
+
+@media (width <= 1024px) {
+  .cards.cards1 > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 700px;
+  }
+}
+
+@media (width <= 700px) {
+  .cards.cards1 > ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 100%;
+  }
+}
+
+.cards.cards1 > ul > li {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 320px;
+  min-width: 0;
+  width: 100%;
+  justify-self: center;
+}
+
+.cards.cards1 .cards-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  line-height: 0;
+}
+
+.cards.cards1 .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.cards.cards1 .cards-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: #fff;
+  padding: 24px 24px 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.cards.cards1 .cards-card-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 10px;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  line-height: 1.22;
+}
+
+.cards.cards1 .cards-card-body p:not(.button-container) {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.cards.cards1 .cards-card-body .button-container {
+  margin-top: 4px;
+  margin-bottom: 0;
+  text-align: left;
+  padding: 0;
+}
+
+.cards.cards1 .cards-card-body .button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #222;
+  font-size: 14px;
+  padding: 0 14px 0 0;
+  margin: 0;
+  text-align: left;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.3;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  transition: color .15s;
+  text-decoration: none;
+  position: relative;
+  background-image: url("data:image/svg+xml;utf8,<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 1em 1em;
+}
+
+.cards.cards1 .cards-card-body .button:hover,
+.cards.cards1 .cards-card-body .button:focus {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+.cards.cards1 ul,
+.cards.cards1 ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width <= 600px) {
+  .cards.cards1 {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .cards.cards1 .cards-card-body {
+    padding: 16px 10px 14px;
+  }
 }
