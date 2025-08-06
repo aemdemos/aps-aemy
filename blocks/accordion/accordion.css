@@ -1,8 +1,10 @@
+/* Disable `no-descending-specificity` globally */
+/* stylelint-disable no-descending-specificity */
+
 .accordion details {
   border: 1px solid #dadada;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 24px;
 }
@@ -59,3 +61,118 @@
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
 }
+
+.accordion.accordion3 {
+  background: #fafafa;
+  padding: 0;
+  border: none;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.accordion.accordion3 .accordion-item,
+.accordion.accordion3 details {
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+/* Accordion rows */
+.accordion.accordion3 summary,
+.accordion.accordion3 details:last-child summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 4px 2px;
+  min-height: 32px;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  margin: 0;
+  list-style: none;
+  outline: none;
+  position: relative;
+  gap: 6px;
+}
+
+.accordion.accordion3 summary::-webkit-details-marker,
+.accordion.accordion3 summary::marker {
+  display: none;
+}
+
+/* Heading text styles */
+.accordion.accordion3 summary h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.4;
+  font-family: var(--heading-font-family, sans-serif);
+  letter-spacing: normal;
+  flex: 1 1 auto;
+}
+
+/* Draw a plus icon using two absolutely positioned bars */
+.accordion.accordion3 summary {
+  position: relative;
+}
+
+.accordion.accordion3 summary::before,
+.accordion.accordion3 summary::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  width: 14px;
+  height: 3px;
+  background: #111;
+  border-radius: 1.5px;
+  pointer-events: none;
+  transition: background 0.2s;
+}
+
+.accordion.accordion3 summary::before {
+  transform: translateY(-50%);
+
+  /* horizontal bar */
+}
+
+.accordion.accordion3 summary::after {
+  transform: translateY(-50%) rotate(90deg);
+
+  /* vertical bar */
+}
+
+.accordion.accordion3 details[open] summary::after {
+  background: transparent;
+}
+
+/* Accordion body/content padding */
+.accordion.accordion3 .accordion-item-body {
+  padding: 10px 2px;
+  background: #fff;
+  color: #222;
+  font-size: 14px;
+  border: none;
+}
+
+/* Responsive adjustments */
+@media (width <= 599px) {
+  .accordion.accordion3 summary,
+  .accordion.accordion3 .accordion-item-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .accordion.accordion3 summary::before,
+  .accordion.accordion3 summary::after {
+    right: 0;
+    width: 12px;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */
