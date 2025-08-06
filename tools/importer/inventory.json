@@ -3037,6 +3037,12 @@
   ],
   "outliers": [
     {
+      "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
+      "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
+      "uuid": "52dae168-02-d59d7eb439cf982369622d08082f404049853f25",
+      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+    },
+    {
       "url": "https://library.westernsydney.edu.au/collections/indigenous_resources",
       "urlHash": "009b8eeb7ec5ec52bfdb4dcd27694aca0b792134",
       "uuid": "009b8eeb-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -3617,12 +3623,6 @@
       "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
       "uuid": "52dae168-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/students/using_the_library/study_spaces",
-      "urlHash": "52dae1683b16a2b9d8182bb02363cc80bd6109b2",
-      "uuid": "52dae168-02-d59d7eb439cf982369622d08082f404049853f25",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/conducting-research/sourcing_research_data",
