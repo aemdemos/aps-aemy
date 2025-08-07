@@ -1,77 +1,63 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header per spec
-  const headerRow = ['Cards (cards24)'];
-  const rows = [headerRow];
-
-  // Find all cards
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll(':scope > li.cards__item');
-
-  items.forEach((item) => {
-    // --- IMAGE CELL ---
-    let imgEl = null;
-    const imgAnchor = item.querySelector('.item-image');
-    if (imgAnchor && imgAnchor.style.backgroundImage) {
-      // Extract URL from background-image: url('...')
-      const bg = imgAnchor.style.backgroundImage;
-      const match = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-      if (match && match[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = match[1].trim();
-        imgEl.alt = imgAnchor.getAttribute('alt') || '';
-      }
+  // Helper to create an img from background-image style on anchor
+  function bgStyleToImg(aEl) {
+    const style = aEl.getAttribute('style') || '';
+    const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+    if (match && match[1]) {
+      const img = document.createElement('img');
+      img.src = match[1].trim();
+      img.alt = aEl.getAttribute('alt') || '';
+      return img;
     }
-    // If there is no image (e.g. final card), imgEl remains null
+    return '';
+  }
 
-    // --- TEXT CELL ---
-    let textCell = [];
-    const content = item.querySelector('.item-content');
-    if (content) {
-      // Title (h3)
-      const h3 = content.querySelector('h3');
-      if (h3) {
-        // Use <strong> to match bold title in sample
-        const strong = document.createElement('strong');
-        strong.innerHTML = h3.innerHTML;
-        textCell.push(strong);
-        // Add <br> if there is more content
-        if (content.querySelector('p, a')) {
-          textCell.push(document.createElement('br'));
-        }
-      }
-      // Description (p)
-      const p = content.querySelector('p');
-      if (p) {
-        textCell.push(p);
-        // Add <br> if there is a CTA link
-        if (content.querySelector('a')) {
-          textCell.push(document.createElement('br'));
-        }
-      }
-      // CTA link
-      const cta = content.querySelector('a');
-      if (cta) {
-        textCell.push(cta);
-      }
-    }
-    // Tag (e.g. 'Featured', 'Coming Soon')
-    const tag = item.querySelector('.tag');
-    if (tag) {
-      // Place tag on its own line after all content
-      textCell.push(document.createElement('br'));
-      textCell.push(tag);
-    }
-    // Remove leading or trailing <br> if present
-    while (textCell[0] && textCell[0].tagName === 'BR') textCell.shift();
-    while (textCell[textCell.length-1] && textCell[textCell.length-1].tagName === 'BR') textCell.pop();
-    // If textCell is empty, use empty string
-    const row = [imgEl, textCell.length === 0 ? '' : (textCell.length === 1 ? textCell[0] : textCell)];
-    rows.push(row);
-  });
+  // Find the list of card elements
+  const cardsList = element.querySelector('ul.cards__list');
+  if (!cardsList) return;
+  const cardEls = Array.from(cardsList.children).filter(li => li.classList.contains('cards__item'));
 
-  // Build and replace
+  const rows = [];
+  // Header row
+  rows.push(['Cards (cards24)']);
+
+  // Card rows
+  for (const cardEl of cardEls) {
+    const wrapper = cardEl.querySelector('.item-wrapper');
+    if (!wrapper) continue;
+
+    // Left (image or blank)
+    let imgCell = '';
+    const imgAnchor = wrapper.querySelector('a.item-image');
+    if (imgAnchor) {
+      imgCell = bgStyleToImg(imgAnchor);
+    }
+
+    // Right (content)
+    const contentDiv = wrapper.querySelector('.item-content');
+    const contentParts = [];
+    if (contentDiv) {
+      // Title
+      const titleEl = contentDiv.querySelector('.item-content__title');
+      if (titleEl) contentParts.push(titleEl);
+      // Description
+      const descEl = contentDiv.querySelector('.item-content__desc');
+      if (descEl) contentParts.push(descEl);
+      // Link
+      const linkEl = contentDiv.querySelector('.item-content__link');
+      if (linkEl) contentParts.push(linkEl);
+    }
+    // Tag (span.coming or .featured) - put at end
+    const tag = wrapper.querySelector('span.tag');
+    if (tag) contentParts.push(tag);
+
+    // If contentParts is empty, still provide an empty cell
+    const textCell = contentParts.length > 1 ? contentParts : (contentParts[0] || '');
+    rows.push([imgCell, textCell]);
+  }
+
+  // Create and replace table
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

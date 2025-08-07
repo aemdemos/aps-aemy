@@ -1,55 +1,48 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per example
-  const headerRow = ['Accordion (accordion7)'];
-  const rows = [headerRow];
-  // Get all immediate child .card elements (each accordion item)
-  const cards = element.querySelectorAll(':scope > .card');
+  // Extract all immediate .card children (each accordion panel)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+
+  // Header row exactly as specified
+  const rows = [['Accordion (accordion7)']];
+
   cards.forEach(card => {
-    // Extract the title cell
-    let title = '';
+    // Title cell: find the heading element inside .card-header
     const header = card.querySelector('.card-header');
+    let titleEl = null;
     if (header) {
-      const h2 = header.querySelector('h2');
-      if (h2) {
-        title = h2.textContent.trim();
-      } else {
-        title = header.textContent.trim();
+      // Try to find the first heading (h2-h6)
+      titleEl = header.querySelector('h2,h3,h4,h5,h6');
+      if (!titleEl) {
+        // If not found, create a span and use the textContent of header
+        titleEl = document.createElement('span');
+        titleEl.textContent = header.textContent.trim();
       }
+    } else {
+      // If no header, fallback to empty span
+      titleEl = document.createElement('span');
     }
-    // Extract the content cell, referencing the original elements
-    let contentCell = '';
+
+    // Content cell: use the .card-body as-is if available
+    let contentEl = null;
     const collapse = card.querySelector('.collapse');
     if (collapse) {
       const cardBody = collapse.querySelector('.card-body');
       if (cardBody) {
-        // Flatten if there are extra wrapper divs
-        let contentRoot = cardBody;
-        // If cardBody contains only one child and it is a div, use that div
-        while (
-          contentRoot.children.length === 1 &&
-          contentRoot.children[0].tagName === 'DIV'
-        ) {
-          contentRoot = contentRoot.children[0];
-        }
-        // If contentRoot has multiple direct children (e.g. <div>, <p>, etc.)
-        // Use all as the cell content (as array)
-        const nodes = Array.from(contentRoot.childNodes).filter(n => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
-        if (nodes.length === 1) {
-          contentCell = nodes[0];
-        } else if (nodes.length > 1) {
-          contentCell = nodes;
-        } else {
-          contentCell = '';
-        }
+        contentEl = cardBody;
       } else {
-        contentCell = '';
+        // fallback to empty span if no .card-body
+        contentEl = document.createElement('span');
       }
     } else {
-      contentCell = '';
+      // fallback to empty span if no .collapse
+      contentEl = document.createElement('span');
     }
-    rows.push([title, contentCell]);
+
+    rows.push([titleEl, contentEl]);
   });
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+
+  // Create and replace with the new block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

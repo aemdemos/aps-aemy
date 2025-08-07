@@ -1,35 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get left and right columns
-  const left = element.querySelector('.media-body');
-  const right = element.querySelector('.media-right');
+  // Get the left (media-body) and right (media-right) columns
+  const leftCol = element.querySelector('.media-body');
+  const rightCol = element.querySelector('.media-right');
 
-  // Extract left column content
-  const leftParts = [];
-  if (left) {
-    Array.from(left.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        leftParts.push(node);
-      }
-    });
+  // Prepare the left column content
+  const leftContent = document.createElement('div');
+  // Heading (preserve the <h3> and its child <a>)
+  const heading = leftCol.querySelector('.media-heading');
+  if (heading) leftContent.appendChild(heading);
+  // Description (all event description paragraphs)
+  const desc = leftCol.querySelector('.s-lc-c-evt-des');
+  if (desc) leftContent.appendChild(desc);
+  // Details list (dates, location, etc)
+  const details = leftCol.querySelector('dl');
+  if (details) leftContent.appendChild(details);
+
+  // For the right column, use the image inside the link (reference existing element)
+  let rightContent = '';
+  if (rightCol) {
+    const imgLink = rightCol.querySelector('a');
+    if (imgLink) {
+      rightContent = imgLink;
+    } else {
+      const img = rightCol.querySelector('img');
+      if (img) rightContent = img;
+    }
   }
 
-  // Extract right column content
-  const rightParts = [];
-  if (right) {
-    Array.from(right.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        rightParts.push(node);
-      }
-    });
-  }
-
-  // Ensure two columns, matching the columns33 example block
-  // The header row must have two cells: ['Columns (columns33)', '']
+  // The header row must have the same number of columns as the content row
   const headerRow = ['Columns (columns33)', ''];
-  const row = [leftParts.length === 1 ? leftParts[0] : leftParts, rightParts.length === 1 ? rightParts[0] : rightParts];
-  const cells = [headerRow, row];
+  const contentRow = [leftContent, rightContent];
 
+  const cells = [headerRow, contentRow];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

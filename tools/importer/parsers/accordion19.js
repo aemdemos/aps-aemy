@@ -1,48 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as per block name
+  // Header row per requirements
   const headerRow = ['Accordion (accordion19)'];
-  const rows = [headerRow];
 
-  // Get all accordion cards
-  const cards = element.querySelectorAll(':scope > .card');
-
-  cards.forEach(card => {
-    // --- TITLE CELL ---
-    // Find the title - h2 inside .card-header
-    let title = '';
-    const header = card.querySelector(':scope > .card-header h2');
-    if (header) {
-      // Reference the heading element directly (preserves heading semantics)
-      title = header;
-    } else {
-      // fallback: use .card-header textContent
-      const headerDiv = card.querySelector(':scope > .card-header');
-      title = headerDiv ? headerDiv.textContent.trim() : '';
-    }
-
-    // --- CONTENT CELL ---
-    // Reference the .card-body's children directly
-    let contentCell = '';
-    const body = card.querySelector(':scope > .collapse > .card-body');
-    if (body) {
-      // If more than one child, reference as array; if only one, just that element
-      if (body.children.length === 1) {
-        contentCell = body.children[0];
-      } else if (body.children.length > 1) {
-        contentCell = Array.from(body.children);
-      } else if (body.childNodes.length === 1 && body.childNodes[0].nodeType === 3) {
-        // single text node
-        contentCell = body.textContent.trim();
+  // Find all accordion items (cards)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+  const rows = cards.map((card) => {
+    // Title cell: use the content from card-header (prefer heading, fall back to text)
+    let titleEl;
+    const cardHeader = card.querySelector('.card-header');
+    if (cardHeader) {
+      // Use the first heading (h1-h6) if present, else the full .card-header
+      const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
+      if (heading) {
+        titleEl = heading;
       } else {
-        // fallback: reference the body element itself (in case of unstructured content)
-        contentCell = body;
+        titleEl = cardHeader;
       }
+    } else {
+      // Fallback: use a span with trimmed text content
+      titleEl = document.createElement('span');
+      titleEl.textContent = card.textContent.trim();
     }
-    rows.push([title, contentCell]);
+
+    // Content cell: use the contents of .card-body (not just innerHTML, but actual child nodes/elements)
+    let contentCell;
+    const cardBody = card.querySelector('.card-body');
+    if (cardBody) {
+      // If the .card-body contains only one table, use the table as one cell content
+      if (
+        cardBody.childNodes.length === 1 &&
+        cardBody.firstElementChild &&
+        cardBody.firstElementChild.tagName === 'TABLE'
+      ) {
+        contentCell = cardBody.firstElementChild;
+      } else {
+        // Otherwise include all (including text, paragraphs, links, etc). Use all childNodes to preserve text nodes.
+        contentCell = Array.from(cardBody.childNodes);
+      }
+    } else {
+      contentCell = '';
+    }
+
+    return [titleEl, contentCell];
   });
 
-  // Build and replace with block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
+
   element.replaceWith(table);
 }

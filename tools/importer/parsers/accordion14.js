@@ -1,52 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header for the block table, exactly as specified
+  // Header row as specified in the example
   const headerRow = ['Accordion (accordion14)'];
 
-  // Find all accordion items (cards)
+  // Gather all accordion cards (each is one panel)
   const cards = element.querySelectorAll(':scope > .card');
   const rows = [headerRow];
 
-  cards.forEach(card => {
-    // Title cell: get the header text/element
+  cards.forEach((card) => {
+    // Title: use the heading element inside card-header, fallback to card-header if needed
     const cardHeader = card.querySelector('.card-header');
-    let titleCell;
+    let titleElem = null;
     if (cardHeader) {
-      // Use the lowest-level heading if present, else the full header
-      const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-      titleCell = heading ? heading : cardHeader;
-    } else {
-      // Defensive: if no header, insert empty
-      titleCell = document.createTextNode('');
+      // Use first heading or .h6/.h5/etc, fallback to all children if nothing matches
+      titleElem = cardHeader.querySelector('h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6');
+      if (!titleElem && cardHeader.childNodes.length > 0) {
+        // If there's no heading, use everything inside cardHeader
+        const span = document.createElement('span');
+        cardHeader.childNodes.forEach((n) => span.appendChild(n.cloneNode(true)));
+        titleElem = span;
+      }
     }
-
-    // Content cell: get the .card-body, if present
-    const cardBody = card.querySelector('.card-body');
-    let contentCell;
-    if (cardBody) {
-      // For all iframes in the content, replace with links as required
-      const iframes = cardBody.querySelectorAll('iframe[src]');
-      iframes.forEach(iframe => {
-        const src = iframe.getAttribute('src');
-        // Only create a link if 'src' exists (defensive)
-        if (src) {
-          const link = document.createElement('a');
-          link.href = src;
-          link.textContent = src;
-          iframe.replaceWith(link);
-        }
+    // Content: find .card-body inside .collapse (the expanded area)
+    let contentElem = card.querySelector('.collapse .card-body, .card-body');
+    if (!contentElem) {
+      // fallback: if .card-body is missing, use .collapse or whole card
+      contentElem = card.querySelector('.collapse') || card;
+    }
+    // Replace iframes with links to their src, as specified
+    if (contentElem) {
+      contentElem.querySelectorAll('iframe[src]').forEach((iframe) => {
+        const href = iframe.getAttribute('src');
+        const a = document.createElement('a');
+        a.href = href;
+        a.textContent = href;
+        iframe.replaceWith(a);
       });
-      contentCell = cardBody;
-    } else {
-      // Defensive: if no body, insert empty
-      contentCell = document.createTextNode('');
     }
-
-    rows.push([titleCell, contentCell]);
+    // Push row as [title, content]
+    rows.push([
+      titleElem,
+      contentElem
+    ]);
   });
 
-  // Create the accordion table
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original element with the table
   element.replaceWith(table);
 }

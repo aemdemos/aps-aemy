@@ -1,54 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Block header row
+  // Accordion (accordion36) block header
   const headerRow = ['Accordion (accordion36)'];
 
-  // 2. Extract accordion title from card-header -> h2, fallback to card-header text
-  let titleCell;
-  const cardHeader = element.querySelector('.card-header');
-  if (cardHeader) {
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else if (cardHeader.childNodes.length > 0) {
-      // If no heading but text exists, use the cardHeader itself
-      titleCell = cardHeader;
-    } else {
-      titleCell = document.createTextNode('');
-    }
-  } else {
-    titleCell = document.createTextNode('');
+  // Get the accordion title (from card-header > h2 or card-header's text)
+  let titleCell = null;
+  const headerDiv = element.querySelector('.card-header');
+  if (headerDiv) {
+    // Prefer a heading element if present
+    const heading = headerDiv.querySelector('h1, h2, h3, h4, h5, h6');
+    titleCell = heading || headerDiv;
   }
 
-  // 3. Extract accordion content (card-body inside .collapse)
-  let contentCell;
-  const collapse = element.querySelector('.collapse');
-  if (collapse) {
-    // Use everything inside collapse (typically card-body)
-    // Prefer only the immediate card-body if it exists
-    const cardBody = collapse.querySelector('.card-body');
+  // Get the content cell: everything inside collapse > card-body
+  let contentCell = null;
+  const collapseDiv = element.querySelector('.collapse');
+  if (collapseDiv) {
+    const cardBody = collapseDiv.querySelector('.card-body');
     if (cardBody) {
-      contentCell = cardBody;
-    } else {
-      // fallback: all children of collapse
-      const nodes = Array.from(collapse.childNodes).filter(n => n.nodeType !== 3 || n.textContent.trim() !== '');
-      if (nodes.length === 1) {
-        contentCell = nodes[0];
+      // If the card-body only contains the table, reference the table directly
+      if (
+        cardBody.children.length === 1 &&
+        cardBody.firstElementChild && cardBody.firstElementChild.tagName === 'TABLE'
+      ) {
+        contentCell = cardBody.firstElementChild;
       } else {
-        contentCell = nodes;
+        // Otherwise, include all children (could be multiple nodes)
+        contentCell = Array.from(cardBody.childNodes).filter(
+          node => !(node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '')
+        );
       }
+    } else {
+      // Fallback: if there is no card-body, include all collapseDiv children
+      contentCell = Array.from(collapseDiv.childNodes).filter(
+        node => !(node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '')
+      );
     }
-  } else {
-    contentCell = document.createTextNode('');
   }
 
-  // 4. Build the final table structure
+  // Build rows for Accordion table
   const rows = [
     headerRow,
     [titleCell, contentCell],
   ];
 
-  // 5. Create the block and replace element
   const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }

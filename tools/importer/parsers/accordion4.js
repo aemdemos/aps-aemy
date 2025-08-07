@@ -1,54 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion block header (must match the example exactly)
-  const headerRow = ['Accordion (accordion4)'];
+  // Accordion block: 2 columns, first row is header, each additional row per accordion item
+  const rows = [
+    ['Accordion (accordion4)'],
+  ];
 
-  // Get all accordion panels/cards
+  // Find all direct .card children (each is an accordion item)
   const cards = element.querySelectorAll(':scope > .card');
-  const rows = [headerRow];
 
   cards.forEach((card) => {
-    // Title cell extraction: get the direct heading inside the card-header
-    let titleCell = '';
-    const header = card.querySelector(':scope > .card-header');
-    if (header) {
-      // The heading is typically an h2-h6 inside header
-      const heading = header.querySelector('h1, h2, h3, h4, h5, h6');
+    // Title cell: .card-header > h* (if present) or .card-header itself
+    let cardHeader = card.querySelector(':scope > .card-header');
+    // Defensive: header could be missing
+    let titleElem = cardHeader;
+    if (cardHeader) {
+      let heading = cardHeader.querySelector('h1,h2,h3,h4,h5,h6');
       if (heading) {
-        titleCell = heading;
-      } else {
-        // fallback: use header text node (ensure HTML, not markdown)
-        const span = document.createElement('span');
-        span.textContent = header.textContent.trim();
-        titleCell = span;
+        titleElem = heading;
       }
-    } else {
-      // fallback in case header is missing
-      const emptySpan = document.createElement('span');
-      titleCell = emptySpan;
     }
 
-    // Content cell: everything inside .collapse > .card-body
-    let contentCell = '';
-    const collapse = card.querySelector(':scope > .collapse');
+    // Content cell: find the .collapse and within it the .card-body
+    let collapse = card.querySelector(':scope > .collapse');
+    let contentElem = null;
     if (collapse) {
-      const cardBody = collapse.querySelector(':scope > .card-body');
-      if (cardBody) {
-        contentCell = cardBody;
-      } else {
-        // fallback: empty cell
-        const emptySpan = document.createElement('span');
-        contentCell = emptySpan;
-      }
-    } else {
-      // fallback: empty cell
-      const emptySpan = document.createElement('span');
-      contentCell = emptySpan;
+      // Use .card-body if present, else the entire collapse div
+      let cardBody = collapse.querySelector(':scope > .card-body');
+      contentElem = cardBody || collapse;
     }
 
-    rows.push([titleCell, contentCell]);
+    // Add row only if a title is found
+    if (titleElem && contentElem) {
+      rows.push([
+        titleElem,
+        contentElem
+      ]);
+    }
   });
 
+  // Replace element with structured accordion block table
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

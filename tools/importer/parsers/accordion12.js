@@ -1,49 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row for the Accordion block
+  // Accordion (accordion12) block table
+  // Header row as specified in the example
   const headerRow = ['Accordion (accordion12)'];
 
-  // Accordion block should have 2 columns: title, content
-  // Find the title cell: get the heading from the card-header
-  let titleCell;
-  const headerDiv = element.querySelector(':scope > .card-header');
+  // Get the accordion title element (prefer heading, else fallback to header div text)
+  let titleCell = '';
+  const headerDiv = element.querySelector('.card-header');
   if (headerDiv) {
-    // Use the first heading if present, else all headerDiv content
-    const heading = headerDiv.querySelector('h1,h2,h3,h4,h5,h6');
+    // Take the first heading element if present
+    const heading = headerDiv.querySelector('h1, h2, h3, h4, h5, h6');
     if (heading) {
       titleCell = heading;
     } else {
-      titleCell = headerDiv;
+      // If no heading, use the contents of headerDiv
+      titleCell = document.createElement('div');
+      Array.from(headerDiv.childNodes).forEach(node => titleCell.appendChild(node.cloneNode(true)));
     }
-  } else {
-    // fallback: blank
-    titleCell = document.createElement('div');
   }
 
-  // Content cell: get .card-body (inside the .collapse)
-  let contentCell;
-  const collapse = element.querySelector(':scope > .collapse');
-  if (collapse) {
-    const bodyDiv = collapse.querySelector('.card-body');
-    if (bodyDiv) {
-      contentCell = bodyDiv;
-    } else {
-      // fallback: any content in collapse
-      contentCell = collapse;
-    }
-  } else {
-    // fallback: blank
-    contentCell = document.createElement('div');
+  // Get the accordion content element (body)
+  let contentCell = '';
+  const bodyDiv = element.querySelector('.card-body');
+  if (bodyDiv) {
+    // Reference the bodyDiv directly (do not clone)
+    contentCell = bodyDiv;
   }
 
-  // Build the table array
+  // Construct the rows: [header], [title, content]
   const rows = [
     headerRow,
     [titleCell, contentCell],
   ];
 
-  // Create the block table
+  // Create the table block
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original element
+
+  // Replace the original element with the new block table
   element.replaceWith(table);
 }

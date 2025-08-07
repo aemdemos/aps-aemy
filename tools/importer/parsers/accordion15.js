@@ -1,43 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header row
-  const headerRow = ['Accordion (accordion15)'];
-  const rows = [headerRow];
+  // Header row must be a single cell array
+  const rows = [['Accordion (accordion15)']];
 
-  // Extract accordion title from .card-header (prefer heading)
+  // Extract the title (from .card-header)
   let titleCell = '';
-  const headerDiv = element.querySelector('.card-header');
-  if (headerDiv) {
-    // Look for a heading inside the header (h1-h6)
-    const heading = headerDiv.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else {
-      // fallback: use header div itself
-      titleCell = headerDiv;
-    }
+  const cardHeader = element.querySelector('.card-header');
+  if (cardHeader) {
+    // Use the original heading if present, else the cardHeader itself
+    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
+    titleCell = heading ? heading : cardHeader;
+  } else {
+    const emptySpan = document.createElement('span');
+    emptySpan.textContent = '';
+    titleCell = emptySpan;
   }
 
-  // Extract content cell from .collapse > .card-body
+  // Extract the content (from .card-body or .collapse)
   let contentCell = '';
-  const collapseDiv = element.querySelector('.collapse');
-  if (collapseDiv) {
-    // Prefer the .card-body div inside collapse
-    const bodyDiv = collapseDiv.querySelector('.card-body');
-    if (bodyDiv) {
-      contentCell = bodyDiv;
-    } else {
-      // fallback: use collapseDiv
-      contentCell = collapseDiv;
-    }
+  const collapse = element.querySelector('.collapse');
+  if (collapse) {
+    const cardBody = collapse.querySelector('.card-body');
+    contentCell = cardBody ? cardBody : collapse;
+  } else {
+    const emptySpan = document.createElement('span');
+    emptySpan.textContent = '';
+    contentCell = emptySpan;
   }
 
-  // Only add the accordion row if both a title and content are present
-  if (titleCell && contentCell) {
-    rows.push([titleCell, contentCell]);
-  }
+  // Push row: exactly two cells (title, content)
+  rows.push([titleCell, contentCell]);
 
-  // Create and replace with the Accordion block table
+  // Construct and replace
   const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }
