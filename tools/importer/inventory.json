@@ -138,12 +138,6 @@
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/span[1]"
         },
         {
-          "url": "https://library.westernsydney.edu.au/home",
-          "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
-          "uuid": "3eb45cc1-00-e9726e977075141437c908ebee8ed79c65915f84",
-          "xpath": "/html[1]/body[1]/div[1]/a[1]"
-        },
-        {
           "url": "https://library.westernsydney.edu.au/students/study_smart_skills/study_smart_librarians",
           "urlHash": "4101a49b71e4cdaa95240523efb4b46a3e1ef415",
           "uuid": "4101a49b-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -460,12 +454,6 @@
           "urlHash": "b41d6ec214173801a5699ec8e9d0cd51c5eac412",
           "uuid": "b41d6ec2-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/span[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/",
-          "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
-          "uuid": "b61d3d49-00-e9726e977075141437c908ebee8ed79c65915f84",
-          "xpath": "/html[1]/body[1]/div[1]/a[1]"
         },
         {
           "url": "https://library.westernsydney.edu.au/about_us/whats_on/undergraduate_student_sessions",
