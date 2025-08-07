@@ -1,37 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to extract icon + number + label for each card
-  function cardRow(cardDiv) {
-    // Left cell: icon (if present)
-    const icon = cardDiv.querySelector('i');
-    // Right cell: number and label
-    const fig = cardDiv.querySelector('.cartfig');
-    const desc = cardDiv.querySelector('p');
+  // The header row must have exactly one column: ['Cards (cards18)']
+  const headerRow = ['Cards (cards18)'];
 
-    // Compose the right cell, referencing actual elements
-    const rightCell = document.createElement('div');
-    if (fig) {
-      const strong = document.createElement('strong');
-      strong.textContent = fig.textContent;
-      rightCell.appendChild(strong);
-    }
-    if (desc) {
-      rightCell.appendChild(document.createElement('br'));
-      rightCell.appendChild(desc);
-    }
-    // If there is no icon, leave cell empty
-    return [icon || '', rightCell];
-  }
+  // Each card div is a direct child
+  const cards = Array.from(element.querySelectorAll(':scope > div'));
 
-  // Table header, per spec
-  const rows = [['Cards (cards18)']];
-  // Select immediate child divs for each card
-  const cards = element.querySelectorAll(':scope > div');
-  cards.forEach(card => {
-    rows.push(cardRow(card));
+  const rows = cards.map(card => {
+    // First cell: the icon
+    const icon = card.querySelector('i');
+    // Second cell: all other content except the icon
+    const textNodes = [];
+    card.childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'i') return;
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '') return;
+      textNodes.push(node);
+    });
+    let textCell;
+    if (textNodes.length === 1) {
+      textCell = textNodes[0];
+    } else {
+      textCell = textNodes;
+    }
+    return [icon, textCell];
   });
 
-  // Create table and replace the element
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Compose table: header row is one column, all following rows are two columns
+  // So table data is: [[header], [icon, text], [icon, text], ...]
+  const tableCells = [headerRow, ...rows];
+
+  const table = WebImporter.DOMUtils.createTable(tableCells, document);
   element.replaceWith(table);
 }

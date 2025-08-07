@@ -1,61 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Create the header row with the exact block name
-  const headerRow = ['Accordion (accordion6)'];
-  const rows = [headerRow];
-
-  // Each accordion item is a .card direct child
-  const cards = Array.from(element.querySelectorAll(':scope > .card'));
-
+  // Block header row matches exactly the block name
+  const cells = [
+    ['Accordion (accordion6)']
+  ];
+  // Get all accordion item cards
+  const cards = element.querySelectorAll(':scope > .card');
   cards.forEach((card) => {
-    // Get the title: prefer .card-header h2 but fallback to .card-header
-    let titleEl = card.querySelector('.card-header h2');
-    if (!titleEl) {
-      titleEl = card.querySelector('.card-header');
-    }
-
-    // Get the content cell: .card-body
-    const bodyEl = card.querySelector('.card-body');
-    let contentCell = '';
-    if (bodyEl) {
-      // Flatten nested divs (e.g., <div><div><p>...</p></div></div>)
-      let contentNodes = [];
-      let walker = bodyEl;
-      // If the only child is a DIV, and that DIV's only children are DIVs, collect all their children
-      // Otherwise, collect all children of .card-body
-      let children = Array.from(walker.childNodes);
+    // Title in first column: h2 inside the .card-header
+    let titleElem = card.querySelector(':scope > .card-header h2');
+    // Content in second column: get all nodes inside .card-body
+    let contentCellNodes = [];
+    const cardBody = card.querySelector('.card-body');
+    if (cardBody) {
+      // Usually, the .card-body has a single child div or sequence of divs/ps
+      let addNodes = [];
+      // If cardBody has only one child and it's a DIV, flatten its children
       if (
-        children.length === 1 &&
-        children[0].nodeType === Node.ELEMENT_NODE &&
-        children[0].tagName === 'DIV'
+        cardBody.children.length === 1 &&
+        cardBody.firstElementChild.tagName === 'DIV'
       ) {
-        let deepDivs = Array.from(children[0].childNodes);
-        // If all are divs, collect their children
-        if (deepDivs.length > 0 && deepDivs.every(n => n.nodeType === Node.ELEMENT_NODE && n.tagName === 'DIV')) {
-          deepDivs.forEach(d => {
-            contentNodes.push(...Array.from(d.childNodes));
-          });
-        } else {
-          contentNodes = deepDivs;
-        }
+        addNodes = Array.from(cardBody.firstElementChild.childNodes);
       } else {
-        contentNodes = children;
+        // Otherwise, use its direct children
+        addNodes = Array.from(cardBody.childNodes);
       }
-      // Remove whitespace-only text nodes
-      contentNodes = contentNodes.filter(n => {
-        if (n.nodeType === Node.TEXT_NODE) {
-          return n.textContent.trim().length > 0;
+      // Filter empty text nodes
+      addNodes.forEach(node => {
+        if (
+          node.nodeType === Node.ELEMENT_NODE ||
+          (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '')
+        ) {
+          contentCellNodes.push(node);
         }
-        return true;
       });
-      if (contentNodes.length > 0) {
-        contentCell = contentNodes;
-      }
     }
-    rows.push([titleEl, contentCell]);
+    cells.push([
+      titleElem,
+      contentCellNodes
+    ]);
   });
-
-  // Create accordion block table and replace
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

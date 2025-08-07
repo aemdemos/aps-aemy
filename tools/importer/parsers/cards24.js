@@ -1,77 +1,70 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header per spec
+  // Helper to extract image from <a> with background-image style
+  function extractImageFromLink(linkEl) {
+    if (!linkEl) return null;
+    const style = linkEl.getAttribute('style') || '';
+    const match = style.match(/background-image:\s*url\(['"]?([^'"\)]+)['"]?\)/i);
+    if (match && match[1]) {
+      const img = document.createElement('img');
+      img.src = match[1].trim();
+      // Use the next element sibling or fallback to empty alt
+      img.alt = linkEl.getAttribute('alt') || '';
+      return img;
+    }
+    return null;
+  }
+
+  // Get all cards
+  const cardsList = element.querySelector('.cards__list');
+  const cardItems = cardsList ? Array.from(cardsList.children) : [];
+
   const headerRow = ['Cards (cards24)'];
   const rows = [headerRow];
 
-  // Find all cards
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll(':scope > li.cards__item');
+  cardItems.forEach((li) => {
+    const wrapper = li.querySelector('.item-wrapper');
+    if (!wrapper) return;
 
-  items.forEach((item) => {
-    // --- IMAGE CELL ---
-    let imgEl = null;
-    const imgAnchor = item.querySelector('.item-image');
-    if (imgAnchor && imgAnchor.style.backgroundImage) {
-      // Extract URL from background-image: url('...')
-      const bg = imgAnchor.style.backgroundImage;
-      const match = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-      if (match && match[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = match[1].trim();
-        imgEl.alt = imgAnchor.getAttribute('alt') || '';
-      }
-    }
-    // If there is no image (e.g. final card), imgEl remains null
+    // Image/Icon (first cell)
+    const imageLink = wrapper.querySelector('.item-image');
+    const imgEl = extractImageFromLink(imageLink);
+    let imageCell = '';
+    if (imgEl) imageCell = imgEl;
 
-    // --- TEXT CELL ---
-    let textCell = [];
-    const content = item.querySelector('.item-content');
+    // Text content (second cell)
+    const content = wrapper.querySelector('.item-content');
+    let textCell = '';
     if (content) {
-      // Title (h3)
-      const h3 = content.querySelector('h3');
-      if (h3) {
-        // Use <strong> to match bold title in sample
+      const cellFragments = [];
+      // Title as <strong>
+      const title = content.querySelector('.item-content__title');
+      if (title) {
         const strong = document.createElement('strong');
-        strong.innerHTML = h3.innerHTML;
-        textCell.push(strong);
-        // Add <br> if there is more content
-        if (content.querySelector('p, a')) {
-          textCell.push(document.createElement('br'));
-        }
+        strong.textContent = title.textContent;
+        cellFragments.push(strong);
+        cellFragments.push(document.createElement('br'));
       }
-      // Description (p)
-      const p = content.querySelector('p');
-      if (p) {
-        textCell.push(p);
-        // Add <br> if there is a CTA link
-        if (content.querySelector('a')) {
-          textCell.push(document.createElement('br'));
-        }
+      // Description (as-is)
+      const desc = content.querySelector('.item-content__desc');
+      if (desc) {
+        cellFragments.push(desc);
+        cellFragments.push(document.createElement('br'));
       }
-      // CTA link
-      const cta = content.querySelector('a');
-      if (cta) {
-        textCell.push(cta);
+      // Call To Action link
+      const link = content.querySelector('.item-content__link');
+      if (link) {
+        cellFragments.push(link);
       }
+      // Remove trailing <br> if present
+      if (cellFragments.length && cellFragments[cellFragments.length - 1].tagName === 'BR') {
+        cellFragments.pop();
+      }
+      textCell = cellFragments;
     }
-    // Tag (e.g. 'Featured', 'Coming Soon')
-    const tag = item.querySelector('.tag');
-    if (tag) {
-      // Place tag on its own line after all content
-      textCell.push(document.createElement('br'));
-      textCell.push(tag);
-    }
-    // Remove leading or trailing <br> if present
-    while (textCell[0] && textCell[0].tagName === 'BR') textCell.shift();
-    while (textCell[textCell.length-1] && textCell[textCell.length-1].tagName === 'BR') textCell.pop();
-    // If textCell is empty, use empty string
-    const row = [imgEl, textCell.length === 0 ? '' : (textCell.length === 1 ? textCell[0] : textCell)];
-    rows.push(row);
+    rows.push([imageCell, textCell]);
   });
 
-  // Build and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

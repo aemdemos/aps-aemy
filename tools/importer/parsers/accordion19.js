@@ -1,48 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as per block name
+  // Prepare the header row with the exact block name
   const headerRow = ['Accordion (accordion19)'];
-  const rows = [headerRow];
 
-  // Get all accordion cards
-  const cards = element.querySelectorAll(':scope > .card');
+  // Get all immediate child .card elements (each accordion item)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
 
-  cards.forEach(card => {
-    // --- TITLE CELL ---
-    // Find the title - h2 inside .card-header
-    let title = '';
-    const header = card.querySelector(':scope > .card-header h2');
+  // Create table rows for each accordion item
+  const rows = cards.map(card => {
+    // Get the clickable title
+    let titleEl;
+    const header = card.querySelector(':scope > .card-header');
     if (header) {
-      // Reference the heading element directly (preserves heading semantics)
-      title = header;
+      // Try headline element first
+      const h = header.querySelector('h1, h2, h3, h4, h5, h6');
+      titleEl = h ? h : header;
     } else {
-      // fallback: use .card-header textContent
-      const headerDiv = card.querySelector(':scope > .card-header');
-      title = headerDiv ? headerDiv.textContent.trim() : '';
+      titleEl = document.createElement('span');
+      titleEl.textContent = '';
     }
 
-    // --- CONTENT CELL ---
-    // Reference the .card-body's children directly
-    let contentCell = '';
-    const body = card.querySelector(':scope > .collapse > .card-body');
-    if (body) {
-      // If more than one child, reference as array; if only one, just that element
-      if (body.children.length === 1) {
-        contentCell = body.children[0];
-      } else if (body.children.length > 1) {
-        contentCell = Array.from(body.children);
-      } else if (body.childNodes.length === 1 && body.childNodes[0].nodeType === 3) {
-        // single text node
-        contentCell = body.textContent.trim();
-      } else {
-        // fallback: reference the body element itself (in case of unstructured content)
-        contentCell = body;
-      }
+    // Get the content for the accordion item
+    let contentEl;
+    const collapse = card.querySelector(':scope > .collapse');
+    if (collapse) {
+      // Use the card-body if available
+      const body = collapse.querySelector(':scope > .card-body');
+      contentEl = body ? body : collapse;
+    } else {
+      contentEl = document.createElement('div');
+      contentEl.textContent = '';
     }
-    rows.push([title, contentCell]);
+
+    // Return the table row (2 columns)
+    return [titleEl, contentEl];
   });
 
-  // Build and replace with block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Create the block table
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
+
+  // Replace the original element with the new table
   element.replaceWith(table);
 }

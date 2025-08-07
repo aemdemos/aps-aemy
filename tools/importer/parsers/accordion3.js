@@ -1,53 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as specified
+  // Header row for the Accordion block
   const headerRow = ['Accordion (accordion3)'];
 
-  // Get all top-level .card child elements (one per accordion item)
-  const cards = Array.from(element.querySelectorAll(':scope > .card'));
-  const rows = [];
+  // Get all direct child .card elements (accordion items)
+  const cards = element.querySelectorAll(':scope > .card');
 
-  cards.forEach((card) => {
-    // Title cell: get the text or element from .card-header
-    let titleCell = null;
-    const header = card.querySelector(':scope > .card-header');
-    if (header) {
-      // Prefer the heading element, but fallback to the header itself
-      const heading = header.querySelector('h1,h2,h3,h4,h5,h6');
-      if (heading) {
-        titleCell = heading;
-      } else if (header.firstElementChild) {
-        titleCell = header.firstElementChild;
-      } else {
-        // fallback: wrap the header's textContent in a span
-        const span = document.createElement('span');
-        span.textContent = header.textContent.trim();
-        titleCell = span;
-      }
+  // For each card, extract the title and content referencing existing nodes directly
+  const rows = Array.from(cards).map(card => {
+    // Title cell: get the .card-header, and if it has only one child, use that child
+    let titleHeader = card.querySelector('.card-header');
+    let titleCell = titleHeader;
+    if (titleHeader && titleHeader.children.length === 1) {
+      titleCell = titleHeader.children[0];
     }
 
-    // Content cell: get the .card-body element (includes all text, lists, formatting, etc)
-    let contentCell = null;
-    const collapse = card.querySelector(':scope > .collapse');
-    if (collapse) {
-      const body = collapse.querySelector(':scope > .card-body');
-      if (body) {
-        contentCell = body;
-      } else {
-        // fallback: just use the collapse content
-        contentCell = collapse;
-      }
+    // Content cell: get the .collapse .card-body content, fallback to .collapse if needed
+    let contentCell = card.querySelector('.collapse .card-body');
+    if (!contentCell) {
+      contentCell = card.querySelector('.collapse');
     }
-
-    rows.push([titleCell, contentCell]);
+    return [titleCell, contentCell];
   });
 
-  // Compose the cells array
-  const cells = [headerRow, ...rows];
+  // Build the table data
+  const tableData = [headerRow, ...rows];
 
   // Create the block table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const block = WebImporter.DOMUtils.createTable(tableData, document);
 
-  // Replace the original element
-  element.replaceWith(table);
+  // Replace the original element with the block table
+  element.replaceWith(block);
 }

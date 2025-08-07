@@ -1,55 +1,72 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per example
+  // Header row as specified by block name
   const headerRow = ['Accordion (accordion7)'];
   const rows = [headerRow];
-  // Get all immediate child .card elements (each accordion item)
+  // All direct children .card (accordion items)
   const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach(card => {
-    // Extract the title cell
-    let title = '';
+  cards.forEach((card) => {
+    // TITLE cell: Find .card-header h2 (or fallback to .card-header text if needed)
+    let titleCell = '';
     const header = card.querySelector('.card-header');
     if (header) {
       const h2 = header.querySelector('h2');
       if (h2) {
-        title = h2.textContent.trim();
+        titleCell = h2;
       } else {
-        title = header.textContent.trim();
+        // fallback: text content of header
+        titleCell = document.createElement('span');
+        titleCell.textContent = header.textContent.trim();
       }
     }
-    // Extract the content cell, referencing the original elements
+
+    // CONTENT cell: find .collapse .card-body
     let contentCell = '';
     const collapse = card.querySelector('.collapse');
     if (collapse) {
-      const cardBody = collapse.querySelector('.card-body');
-      if (cardBody) {
-        // Flatten if there are extra wrapper divs
-        let contentRoot = cardBody;
-        // If cardBody contains only one child and it is a div, use that div
-        while (
-          contentRoot.children.length === 1 &&
-          contentRoot.children[0].tagName === 'DIV'
-        ) {
-          contentRoot = contentRoot.children[0];
-        }
-        // If contentRoot has multiple direct children (e.g. <div>, <p>, etc.)
-        // Use all as the cell content (as array)
-        const nodes = Array.from(contentRoot.childNodes).filter(n => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
-        if (nodes.length === 1) {
-          contentCell = nodes[0];
-        } else if (nodes.length > 1) {
-          contentCell = nodes;
+      const body = collapse.querySelector('.card-body');
+      if (body) {
+        // Collect all direct children of .card-body, flattening wrapper divs if present
+        const children = [];
+        // If card-body contains only one div, and *that* div contains multiple direct children, flatten one level
+        if (body.childElementCount === 1 && body.firstElementChild.tagName === 'DIV') {
+          const wrapper = body.firstElementChild;
+          // If wrapper contains all divs, flatten further
+          if ([...wrapper.children].every(e => e.tagName === 'DIV')) {
+            for (const child of wrapper.children) {
+              // If div contains only one child (e.g., <div><p>...</p></div>) unwrap it
+              if (child.childElementCount === 1) {
+                children.push(child.firstElementChild);
+              } else {
+                children.push(child);
+              }
+            }
+          } else {
+            // wrapper itself is meaningful
+            children.push(wrapper);
+          }
         } else {
-          contentCell = '';
+          // Otherwise, just use all children
+          for (const child of body.children) {
+            // If divs that only wrap a p, unwrap
+            if (child.tagName === 'DIV' && child.childElementCount === 1 && child.firstElementChild.tagName === 'P') {
+              children.push(child.firstElementChild);
+            } else {
+              children.push(child);
+            }
+          }
         }
+        // If nothing found, fallback to body itself
+        contentCell = children.length > 0 ? children : [body];
       } else {
-        contentCell = '';
+        contentCell = [''];
       }
     } else {
-      contentCell = '';
+      contentCell = [''];
     }
-    rows.push([title, contentCell]);
+    rows.push([titleCell, contentCell]);
   });
+
   const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }

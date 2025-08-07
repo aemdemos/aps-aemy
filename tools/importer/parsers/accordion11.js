@@ -1,44 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Accordion block header row
+  // Accordion (accordion11) block: extract all immediate child .card elements as rows.
   const headerRow = ['Accordion (accordion11)'];
-  const rows = [];
+  const rows = [headerRow];
 
-  // 2. Each immediate child .card is an accordion item
+  // Find all direct child .card elements (1 per accordion item)
   const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach((card) => {
-    // Title: Take heading (h1-h6) if found in card-header, else card-header itself
-    let cardHeader = card.querySelector('.card-header');
-    let titleEl = null;
-    if (cardHeader) {
-      // Prefer heading element if there is one
-      titleEl = cardHeader.querySelector('h1, h2, h3, h4, h5, h6') || cardHeader;
+
+  cards.forEach(card => {
+    // TITLE cell: find the heading inside .card-header (could be h2/h3/etc), or fallback to .card-header
+    let titleCell = '';
+    const header = card.querySelector('.card-header');
+    if (header) {
+      // Find the heading (h2/h3/h4/etc) inside header
+      const heading = header.querySelector('h1, h2, h3, h4, h5, h6');
+      if (heading) {
+        titleCell = heading;
+      } else {
+        // fallback: use the header as is
+        titleCell = header;
+      }
     }
-    // Defensive: if missing, use empty placeholder
-    if (!titleEl) {
-      titleEl = document.createElement('span');
-    }
-    // Content: main .card-body within the .collapse
-    let contentEl = null;
+
+    // CONTENT cell: find .collapse > .card-body, or fallback to .collapse, or empty string
+    let contentCell = '';
     const collapse = card.querySelector('.collapse');
     if (collapse) {
-      // Prefer .card-body, but if not present, use .collapse itself
-      contentEl = collapse.querySelector('.card-body') || collapse;
+      const cardBody = collapse.querySelector('.card-body');
+      if (cardBody) {
+        contentCell = cardBody;
+      } else {
+        contentCell = collapse;
+      }
     }
-    // Defensive: if content still missing, create empty placeholder
-    if (!contentEl) {
-      contentEl = document.createElement('div');
-    }
-    // Add the row [title, content]
-    rows.push([titleEl, contentEl]);
+
+    rows.push([titleCell, contentCell]);
   });
 
-  // 3. Create the table (header row, then each accordion item row)
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows
-  ], document);
-  
-  // 4. Replace the original element
+  // Create and replace block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

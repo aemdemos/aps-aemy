@@ -1,49 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row for the Accordion block
+  // Accordion block with 2 columns: title and content
+  // Header row must exactly match the required block name
   const headerRow = ['Accordion (accordion12)'];
+  const rows = [headerRow];
 
-  // Accordion block should have 2 columns: title, content
-  // Find the title cell: get the heading from the card-header
-  let titleCell;
-  const headerDiv = element.querySelector(':scope > .card-header');
+  // Defensive: get the title from the card-header
+  let titleCell = '';
+  const headerDiv = element.querySelector('.card-header');
   if (headerDiv) {
-    // Use the first heading if present, else all headerDiv content
+    // Use the first heading (strongest semantic match), or fallback to headerDiv's textContent
     const heading = headerDiv.querySelector('h1,h2,h3,h4,h5,h6');
     if (heading) {
       titleCell = heading;
-    } else {
-      titleCell = headerDiv;
+    } else if (headerDiv.textContent && headerDiv.textContent.trim()) {
+      titleCell = headerDiv.textContent.trim();
     }
-  } else {
-    // fallback: blank
-    titleCell = document.createElement('div');
   }
 
-  // Content cell: get .card-body (inside the .collapse)
-  let contentCell;
-  const collapse = element.querySelector(':scope > .collapse');
-  if (collapse) {
-    const bodyDiv = collapse.querySelector('.card-body');
-    if (bodyDiv) {
-      contentCell = bodyDiv;
-    } else {
-      // fallback: any content in collapse
-      contentCell = collapse;
-    }
+  // Defensive: get the content (single cell) from card-body
+  let contentCell = '';
+  const bodyDiv = element.querySelector('.card-body');
+  if (bodyDiv) {
+    contentCell = bodyDiv;
   } else {
-    // fallback: blank
-    contentCell = document.createElement('div');
+    // If for some reason, .card-body not found, find the first div after card-header
+    const candidates = Array.from(element.children);
+    const idx = candidates.indexOf(headerDiv);
+    if (idx !== -1 && candidates.length > idx + 1) {
+      contentCell = candidates[idx + 1];
+    }
   }
 
-  // Build the table array
-  const rows = [
-    headerRow,
-    [titleCell, contentCell],
-  ];
+  // Only add a row if there's at least a title
+  if (titleCell) {
+    rows.push([titleCell, contentCell]);
+  }
 
-  // Create the block table
+  // Build and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original element
   element.replaceWith(table);
 }

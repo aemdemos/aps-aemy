@@ -1,37 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Create header row exactly as required
+  // Build table rows
   const rows = [
     ['Accordion (accordion29)']
   ];
 
-  // Get all direct accordion card elements
+  // Get all accordion items (cards)
   const cards = element.querySelectorAll(':scope > .card');
-
   cards.forEach(card => {
-    // Title cell: get h2 within .card-header (reference the real element)
-    let title = '';
-    const cardHeader = card.querySelector(':scope > .card-header');
-    if (cardHeader) {
-      const h2 = cardHeader.querySelector('h2');
-      if (h2) {
-        title = h2;
+    // Title cell: .card-header -> try to get heading, else full .card-header
+    let titleCell;
+    const header = card.querySelector('.card-header');
+    if (header) {
+      const heading = header.querySelector('h1,h2,h3,h4,h5,h6');
+      if (heading) {
+        // Use the heading element directly
+        titleCell = heading;
       } else {
-        // fall back to all text content of the header
-        title = cardHeader;
+        // If heading missing, use header as is
+        titleCell = header;
       }
+    } else {
+      // fallback: empty cell
+      titleCell = document.createElement('div');
     }
 
-    // Content cell: get .card-body element directly
-    let content = '';
-    const cardBody = card.querySelector(':scope > .collapse > .card-body, :scope > .card-body');
-    if (cardBody) {
-      content = cardBody;
+    // Content cell: .collapse > .card-body, else .collapse, else empty
+    let contentCell;
+    const collapse = card.querySelector('.collapse');
+    if (collapse) {
+      const cardBody = collapse.querySelector('.card-body');
+      if (cardBody) {
+        contentCell = cardBody;
+      } else {
+        contentCell = collapse;
+      }
+    } else {
+      // fallback: empty div
+      contentCell = document.createElement('div');
     }
 
-    rows.push([title, content]);
+    rows.push([titleCell, contentCell]);
   });
 
+  // Create and replace table
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
