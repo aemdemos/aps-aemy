@@ -1,77 +1,62 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header per spec
+  // Helper to create <img> from a background-image style attribute on an <a>
+  function createImageFromBg(aEl) {
+    const style = aEl.getAttribute('style') || '';
+    const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
+    if (match && match[1]) {
+      const img = document.createElement('img');
+      img.src = match[1].trim();
+      img.alt = aEl.getAttribute('alt') || '';
+      return img;
+    }
+    return null;
+  }
+
   const headerRow = ['Cards (cards24)'];
   const rows = [headerRow];
 
   // Find all cards
   const list = element.querySelector('ul.cards__list');
   if (!list) return;
-  const items = list.querySelectorAll(':scope > li.cards__item');
 
-  items.forEach((item) => {
-    // --- IMAGE CELL ---
-    let imgEl = null;
-    const imgAnchor = item.querySelector('.item-image');
-    if (imgAnchor && imgAnchor.style.backgroundImage) {
-      // Extract URL from background-image: url('...')
-      const bg = imgAnchor.style.backgroundImage;
-      const match = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-      if (match && match[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = match[1].trim();
-        imgEl.alt = imgAnchor.getAttribute('alt') || '';
-      }
-    }
-    // If there is no image (e.g. final card), imgEl remains null
+  const items = Array.from(list.children).filter(li => li.classList.contains('cards__item'));
 
-    // --- TEXT CELL ---
-    let textCell = [];
-    const content = item.querySelector('.item-content');
-    if (content) {
-      // Title (h3)
-      const h3 = content.querySelector('h3');
-      if (h3) {
-        // Use <strong> to match bold title in sample
-        const strong = document.createElement('strong');
-        strong.innerHTML = h3.innerHTML;
-        textCell.push(strong);
-        // Add <br> if there is more content
-        if (content.querySelector('p, a')) {
-          textCell.push(document.createElement('br'));
-        }
-      }
-      // Description (p)
-      const p = content.querySelector('p');
-      if (p) {
-        textCell.push(p);
-        // Add <br> if there is a CTA link
-        if (content.querySelector('a')) {
-          textCell.push(document.createElement('br'));
-        }
-      }
-      // CTA link
-      const cta = content.querySelector('a');
-      if (cta) {
-        textCell.push(cta);
-      }
+  items.forEach((li) => {
+    const wrapper = li.querySelector('.item-wrapper');
+
+    // IMAGE cell (may be empty)
+    let imgCell = null;
+    const imageLink = wrapper && wrapper.querySelector('.item-image');
+    if (imageLink) {
+      imgCell = createImageFromBg(imageLink);
     }
-    // Tag (e.g. 'Featured', 'Coming Soon')
-    const tag = item.querySelector('.tag');
-    if (tag) {
-      // Place tag on its own line after all content
-      textCell.push(document.createElement('br'));
-      textCell.push(tag);
+
+    // TEXT cell
+    const textContentEls = [];
+    const itemContent = wrapper ? wrapper.querySelector('.item-content') : null;
+    if (itemContent) {
+      // Title
+      const title = itemContent.querySelector('.item-content__title');
+      if (title) textContentEls.push(title);
+      // Description
+      const desc = itemContent.querySelector('.item-content__desc');
+      if (desc) textContentEls.push(desc);
+      // CTA
+      const cta = itemContent.querySelector('.item-content__link');
+      if (cta) textContentEls.push(cta);
     }
-    // Remove leading or trailing <br> if present
-    while (textCell[0] && textCell[0].tagName === 'BR') textCell.shift();
-    while (textCell[textCell.length-1] && textCell[textCell.length-1].tagName === 'BR') textCell.pop();
-    // If textCell is empty, use empty string
-    const row = [imgEl, textCell.length === 0 ? '' : (textCell.length === 1 ? textCell[0] : textCell)];
-    rows.push(row);
+    // Feature/coming soon tag (visually important, should appear last)
+    const tag = wrapper ? wrapper.querySelector('.tag') : null;
+    if (tag) textContentEls.push(tag);
+
+    // Always provide 2 cells for each row
+    rows.push([
+      imgCell,
+      textContentEls.length === 1 ? textContentEls[0] : textContentEls
+    ]);
   });
 
-  // Build and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

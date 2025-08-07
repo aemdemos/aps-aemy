@@ -1,32 +1,51 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row with block name, as per requirements
+  // Header for the accordion block
   const headerRow = ['Accordion (accordion27)'];
   const rows = [headerRow];
 
-  // Find all cards (accordion items)
+  // Find all immediate card children (each accordion item)
   const cards = element.querySelectorAll(':scope > .card');
+
   cards.forEach(card => {
-    // Title cell: Use .card-header. If .card-header contains h2, use h2 for better semantics.
-    let titleElem = card.querySelector('.card-header h2');
-    if (!titleElem) {
-      titleElem = card.querySelector('.card-header');
+    // Title (mandatory): .card-header > h2, or fallback .card-header text
+    let titleCell = null;
+    const header = card.querySelector('.card-header');
+    if (header) {
+      const h2 = header.querySelector('h2');
+      if (h2) {
+        titleCell = h2;
+      } else {
+        // fallback: use header's text content
+        titleCell = document.createElement('span');
+        titleCell.textContent = header.textContent.trim();
+      }
+    } else {
+      // fallback in case .card-header is missing
+      titleCell = document.createElement('span');
+      titleCell.textContent = '';
     }
 
-    // Content cell: .collapse > .card-body (may contain p, ul, etc.)
-    const contentElem = card.querySelector('.collapse .card-body');
-
-    // Only include row if BOTH titleElem and contentElem exist
-    if (titleElem && contentElem) {
-      rows.push([
-        titleElem,
-        contentElem
-      ]);
+    // Content (mandatory): all inside .collapse > .card-body (reference node itself, not clone)
+    let contentCell = null;
+    const collapse = card.querySelector('.collapse');
+    if (collapse) {
+      const body = collapse.querySelector('.card-body');
+      if (body) {
+        contentCell = body;
+      } else {
+        // fallback: use collapse content (in case .card-body is missing)
+        contentCell = collapse;
+      }
+    } else {
+      // fallback: empty content
+      contentCell = document.createElement('div');
     }
+
+    rows.push([titleCell, contentCell]);
   });
 
-  // Create the table using the specified helper
+  // Create the accordion block table
   const table = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace original element with our table
   element.replaceWith(table);
 }

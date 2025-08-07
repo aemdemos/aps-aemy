@@ -1,55 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to extract the URL from background-image style
-  function extractImageFromStyle(style) {
-    if (!style) return null;
-    const match = style.match(/url\((['"]?)(.*?)\1\)/);
-    if (match && match[2]) {
-      const img = document.createElement('img');
-      img.src = match[2].trim();
-      img.alt = '';
-      return img;
-    }
-    return null;
-  }
-
+  // Header row matches the required block name and variant
   const headerRow = ['Cards (cards1)'];
   const rows = [headerRow];
-  const ul = element.querySelector('ul.cards__list');
-  if (!ul) return;
 
-  Array.from(ul.children).forEach((li) => {
-    const wrapper = li.querySelector('.item-wrapper');
-    // First cell: Image
-    let imgCell = null;
-    const imgLink = wrapper && wrapper.querySelector('.item-image');
-    if (imgLink) {
-      const img = extractImageFromStyle(imgLink.getAttribute('style'));
-      if (img) imgCell = img;
+  // Query all cards
+  const cardItems = element.querySelectorAll('.cards__item');
+
+  cardItems.forEach((card) => {
+    // First cell: Image (from background-image on <a>)
+    const imageLink = card.querySelector('.item-image');
+    let imgEl = null;
+    if (imageLink) {
+      const bgStyle = imageLink.getAttribute('style') || '';
+      const match = bgStyle.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+      if (match && match[1]) {
+        imgEl = document.createElement('img');
+        imgEl.src = match[1].trim();
+        imgEl.alt = imageLink.getAttribute('alt') || '';
+      }
     }
 
-    // Second cell: Title, Description, CTA in a fragment
-    const content = wrapper && wrapper.querySelector('.item-content');
-    const frag = document.createDocumentFragment();
-    if (content) {
-      // Title
-      const title = content.querySelector('.item-content__title');
+    // Second cell: Text content (Heading, description, CTA)
+    const contentDiv = card.querySelector('.item-content');
+    const textCellContent = [];
+    if (contentDiv) {
+      const title = contentDiv.querySelector('.item-content__title');
       if (title) {
-        frag.appendChild(title);
+        // Use <strong> to visually denote heading, as in example screenshot
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent.trim();
+        textCellContent.push(strong);
       }
-      // Description
-      const desc = content.querySelector('.item-content__desc');
-      if (desc) {
-        frag.appendChild(desc);
+      const desc = contentDiv.querySelector('.item-content__desc');
+      if (desc && desc.textContent.trim().length) {
+        textCellContent.push(document.createElement('br'));
+        // Reference the existing paragraph for description, keep semantic <p>
+        textCellContent.push(desc);
       }
-      // CTA/link
-      const cta = content.querySelector('.item-content__link');
+      const cta = contentDiv.querySelector('.item-content__link');
       if (cta) {
-        frag.appendChild(cta);
+        textCellContent.push(document.createElement('br'));
+        // Reference the existing link for CTA
+        textCellContent.push(cta);
       }
     }
 
-    rows.push([imgCell, frag]);
+    rows.push([
+      imgEl,
+      textCellContent
+    ]);
   });
 
   const table = WebImporter.DOMUtils.createTable(rows, document);

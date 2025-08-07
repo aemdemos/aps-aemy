@@ -1,37 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row: single cell as per spec
-  const headerRow = ['Cards (cards32)'];
-
-  // Get all direct child card divs
-  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
-
-  // Build 2-column rows for each card
-  const rows = cardDivs.map(card => {
-    // First column: Icon
+  // Gather all card elements (immediate children)
+  const cards = Array.from(element.querySelectorAll(':scope > div'));
+  // Build all data rows first to count columns
+  const dataRows = cards.map(card => {
     const icon = card.querySelector('i');
-    
-    // Second column: Number (bold) and description
-    const numberSpan = card.querySelector('.cartfig');
-    const desc = card.querySelector('p');
-    
-    const textCell = document.createElement('div');
-    if (numberSpan) {
+    const iconCell = icon || '';
+    const fig = card.querySelector('.cartfig');
+    const p = card.querySelector('p');
+    const textCellContent = [];
+    if (fig) {
       const strong = document.createElement('strong');
-      strong.textContent = numberSpan.textContent.trim();
-      textCell.appendChild(strong);
+      strong.textContent = fig.textContent.trim();
+      textCellContent.push(strong);
+      if (p) textCellContent.push(document.createElement('br'));
     }
-    if (desc) {
-      textCell.appendChild(document.createElement('br'));
-      textCell.appendChild(desc);
-    }
-    return [icon, textCell];
+    if (p) textCellContent.push(p);
+    return [iconCell, textCellContent];
   });
-
-  // Compose cells array: header is single-cell row, then 2-col rows
-  const cells = [headerRow, ...rows];
-
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Ensure the header row has the same number of columns as the data rows
+  const numCols = dataRows[0] ? dataRows[0].length : 2; // fallback to 2
+  const headerRow = ['Cards (cards32)'];
+  while (headerRow.length < numCols) headerRow.push('');
+  const rows = [headerRow, ...dataRows];
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Add colspan=2 to the header cell so it spans both columns
+  const th = table.querySelector('tr:first-child > th');
+  if (th && numCols > 1) th.setAttribute('colspan', numCols);
   element.replaceWith(table);
 }

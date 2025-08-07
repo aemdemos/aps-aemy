@@ -1,35 +1,17 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get left and right columns
-  const left = element.querySelector('.media-body');
-  const right = element.querySelector('.media-right');
-
-  // Extract left column content
-  const leftParts = [];
-  if (left) {
-    Array.from(left.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        leftParts.push(node);
-      }
-    });
+  // Find the main columns: .media-body (content), .media-right (image)
+  let mediaBody = null;
+  let mediaRight = null;
+  for (const child of element.children) {
+    if (child.classList.contains('media-body')) mediaBody = child;
+    if (child.classList.contains('media-right')) mediaRight = child;
   }
-
-  // Extract right column content
-  const rightParts = [];
-  if (right) {
-    Array.from(right.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        rightParts.push(node);
-      }
-    });
-  }
-
-  // Ensure two columns, matching the columns33 example block
-  // The header row must have two cells: ['Columns (columns33)', '']
-  const headerRow = ['Columns (columns33)', ''];
-  const row = [leftParts.length === 1 ? leftParts[0] : leftParts, rightParts.length === 1 ? rightParts[0] : rightParts];
-  const cells = [headerRow, row];
-
+  // Compose the table so the header row is a single column, and the second row is two columns
+  const headerRow = ['Columns (columns33)'];
+  const contentRow = [mediaBody, mediaRight].filter(Boolean); // Only include non-null columns
+  if (contentRow.length === 0) return;
+  const cells = [headerRow, contentRow];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

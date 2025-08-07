@@ -1,53 +1,52 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as specified
+  // Accordion block header, matches example exactly
   const headerRow = ['Accordion (accordion3)'];
+  const rows = [headerRow];
 
-  // Get all top-level .card child elements (one per accordion item)
+  // Get all direct .card children (each card = 1 accordion item)
   const cards = Array.from(element.querySelectorAll(':scope > .card'));
-  const rows = [];
 
-  cards.forEach((card) => {
-    // Title cell: get the text or element from .card-header
-    let titleCell = null;
+  cards.forEach(card => {
+    // Title cell: use the heading from the card-header
+    let titleElem = null;
     const header = card.querySelector(':scope > .card-header');
     if (header) {
-      // Prefer the heading element, but fallback to the header itself
-      const heading = header.querySelector('h1,h2,h3,h4,h5,h6');
+      // Find the strongest heading or fallback to text
+      const heading = header.querySelector('h1, h2, h3, h4, h5, h6, .h6');
       if (heading) {
-        titleCell = heading;
-      } else if (header.firstElementChild) {
-        titleCell = header.firstElementChild;
+        // Use the existing heading element (do not clone, reference directly)
+        titleElem = heading;
       } else {
-        // fallback: wrap the header's textContent in a span
-        const span = document.createElement('span');
-        span.textContent = header.textContent.trim();
-        titleCell = span;
+        // fallback: create a <span> referencing the header's text
+        titleElem = document.createElement('span');
+        titleElem.textContent = header.textContent.trim();
       }
+    } else {
+      // fallback: use empty cell
+      titleElem = document.createElement('span');
     }
-
-    // Content cell: get the .card-body element (includes all text, lists, formatting, etc)
-    let contentCell = null;
+    // Content cell: use the .card-body inside the .collapse
+    let contentElem = null;
     const collapse = card.querySelector(':scope > .collapse');
     if (collapse) {
       const body = collapse.querySelector(':scope > .card-body');
       if (body) {
-        contentCell = body;
+        contentElem = body;
       } else {
-        // fallback: just use the collapse content
-        contentCell = collapse;
+        // fallback: reference collapse div
+        contentElem = collapse;
       }
+    } else {
+      // fallback: empty
+      contentElem = document.createElement('span');
     }
-
-    rows.push([titleCell, contentCell]);
+    rows.push([
+      titleElem,
+      contentElem
+    ]);
   });
 
-  // Compose the cells array
-  const cells = [headerRow, ...rows];
-
-  // Create the block table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

@@ -1,31 +1,39 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header as specified in the example
+  // Accordion: two columns, each row is [title, content]
+  // Header row is: ['Accordion (accordion35)']
   const headerRow = ['Accordion (accordion35)'];
 
-  // Collect all accordion items (cards)
+  // Get all direct child cards (accordion items)
   const cards = Array.from(element.querySelectorAll(':scope > .card'));
-  const rows = [headerRow];
 
-  cards.forEach(card => {
-    // Find the title: look for first heading in .card-header, fallback to textContent
-    let titleElem = card.querySelector('.card-header h1, .card-header h2, .card-header h3, .card-header h4, .card-header h5, .card-header h6');
-    if (!titleElem) {
-      const cardHeader = card.querySelector('.card-header');
-      if (cardHeader) {
-        // create a paragraph element for the header text if no heading present (referencing existing element)
-        const p = document.createElement('p');
-        p.textContent = cardHeader.textContent.trim();
-        titleElem = p;
+  const rows = cards.map(card => {
+    // Title cell: .card-header > first heading or fallback to .card-header
+    const cardHeader = card.querySelector(':scope > .card-header');
+    let title = null;
+    if (cardHeader) {
+      title = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
+      if (!title) {
+        // Fallback to any text element
+        title = cardHeader.querySelector('p, div, span');
+      }
+      if (!title) {
+        // Fallback to header itself
+        title = cardHeader;
       }
     }
-    // Find the card-body
-    const contentElem = card.querySelector('.card-body');
-    if (titleElem && contentElem) {
-      rows.push([titleElem, contentElem]);
+
+    // Content cell: .collapse > .card-body (grabs ALL content, keeps formatting)
+    let content = null;
+    const collapse = card.querySelector(':scope > .collapse');
+    if (collapse) {
+      content = collapse.querySelector(':scope > .card-body') || collapse;
     }
+
+    return [title, content];
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const cells = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

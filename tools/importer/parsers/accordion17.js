@@ -2,36 +2,42 @@
 export default function parse(element, { document }) {
   // Header row as specified
   const headerRow = ['Accordion (accordion17)'];
-  const rows = [];
+  const rows = [headerRow];
 
-  // Find all direct .card children (each accordion item)
+  // Get all accordion items (cards)
   const cards = element.querySelectorAll(':scope > .card');
+
   cards.forEach(card => {
-    // TITLE CELL
-    let titleCell = '';
-    const header = card.querySelector(':scope > .card-header');
-    if (header) {
-      // Use the whole header, but prefer h2 inside if present
-      const h2 = header.querySelector('h2');
-      titleCell = h2 || header;
+    // Title cell: extract the h2 from card-header
+    let titleElem = card.querySelector('.card-header h2');
+    let titleCell = titleElem ? titleElem : document.createTextNode('');
+
+    // Content cell: extract all children from .card-body
+    let contentCell;
+    const body = card.querySelector('.card-body');
+    if (body) {
+      // If card-body only has whitespace text nodes, treat as empty
+      const contentNodes = Array.from(body.childNodes).filter(
+        node => node.nodeType !== Node.TEXT_NODE || node.textContent.trim()
+      );
+      if (contentNodes.length === 0) {
+        contentCell = document.createTextNode('');
+      } else if (contentNodes.length === 1) {
+        contentCell = contentNodes[0];
+      } else {
+        // If multiple nodes, put into a fragment
+        const frag = document.createDocumentFragment();
+        contentNodes.forEach(node => frag.appendChild(node));
+        contentCell = frag;
+      }
+    } else {
+      contentCell = document.createTextNode('');
     }
 
-    // CONTENT CELL
-    let contentCell = '';
-    // content is in .card-body inside .collapse
-    const collapse = card.querySelector(':scope > .collapse');
-    if (collapse) {
-      const body = collapse.querySelector('.card-body');
-      // If card-body exists, use it, else use collapse container
-      contentCell = body || collapse;
-    }
     rows.push([titleCell, contentCell]);
   });
 
-  // Build the table
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows
-  ], document);
+  // Create and replace with the accordion block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
