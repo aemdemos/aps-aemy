@@ -1,67 +1,62 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header as per specification
-  const headerRow = ['Cards (cards13)'];
-  const rows = [headerRow];
+  // Get the list of card items
+  const cardsList = element.querySelector('.cards__list');
+  if (!cardsList) return;
+  const cards = Array.from(cardsList.children);
 
-  // Find the list of cards
-  const ul = element.querySelector('ul.cards__list');
-  if (!ul) return;
-  const lis = ul.querySelectorAll(':scope > li.cards__item');
+  // Header row
+  const rows = [ ['Cards (cards13)'] ];
 
-  lis.forEach((li) => {
-    const itemWrapper = li.querySelector('.item-wrapper');
-
-    // --- IMAGE CELL ---
-    let imgEl = null;
-    const anchor = itemWrapper.querySelector('a.item-image');
-    if (anchor) {
-      const style = anchor.getAttribute('style') || '';
-      const urlMatch = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
-      if (urlMatch && urlMatch[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = urlMatch[1].trim();
-        imgEl.alt = anchor.getAttribute('alt') || '';
-        imgEl.loading = 'lazy';
+  cards.forEach((card) => {
+    // First cell: Image
+    let imgCell = null;
+    const itemImage = card.querySelector('.item-image');
+    if (itemImage) {
+      // Extract background-image url
+      const style = itemImage.getAttribute('style') || '';
+      const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+      if (match && match[1]) {
+        const img = document.createElement('img');
+        img.src = match[1].trim();
+        // Alt from card title
+        const itemContent = card.querySelector('.item-content');
+        const h3 = itemContent?.querySelector('h3');
+        img.alt = h3 ? h3.textContent.trim() : 'card image';
+        imgCell = img;
       }
     }
 
-    // --- TEXT CELL ---
-    const contentDiv = itemWrapper.querySelector('.item-content');
-    const cellContent = [];
-
-    // Title: strong element, preserve semantics
-    const titleEl = contentDiv.querySelector('.item-content__title');
-    if (titleEl && titleEl.textContent.trim()) {
-      const strong = document.createElement('strong');
-      strong.textContent = titleEl.textContent.trim();
-      cellContent.push(strong);
+    // Second cell: Title, Description, CTA link
+    const textCellParts = [];
+    const itemContent = card.querySelector('.item-content');
+    if (itemContent) {
+      // Title
+      const h3 = itemContent.querySelector('h3');
+      if (h3) {
+        // Use <strong> for title (no heading in markdown example)
+        const strong = document.createElement('strong');
+        strong.textContent = h3.textContent.trim();
+        textCellParts.push(strong);
+      }
+      // Description (if not empty)
+      const desc = itemContent.querySelector('p');
+      if (desc && desc.textContent.trim()) {
+        const descP = document.createElement('p');
+        descP.textContent = desc.textContent.trim();
+        textCellParts.push(descP);
+      }
+      // CTA link
+      const cta = itemContent.querySelector('a');
+      if (cta) {
+        const ctaA = cta; // reference the actual element
+        textCellParts.push(ctaA);
+      }
     }
 
-    // Description: only if non-empty
-    const descEl = contentDiv.querySelector('.item-content__desc');
-    if (descEl && descEl.textContent.trim()) {
-      if (cellContent.length) cellContent.push(document.createElement('br'));
-      cellContent.push(document.createTextNode(descEl.textContent.trim()));
-    }
-
-    // CTA link: only if exists
-    const ctaEl = contentDiv.querySelector('.item-content__link');
-    if (ctaEl) {
-      if (cellContent.length) cellContent.push(document.createElement('br'));
-      cellContent.push(ctaEl);
-    }
-
-    // If cellContent is empty, add a non-breaking space to visually preserve cell
-    if (cellContent.length === 0) {
-      cellContent.push(document.createTextNode('\u00A0'));
-    }
-
-    rows.push([
-      imgEl,  // null is fine, createTable will still work
-      cellContent.length === 1 ? cellContent[0] : cellContent,
-    ]);
+    rows.push([imgCell, textCellParts]);
   });
+
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

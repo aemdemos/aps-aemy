@@ -1,37 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row: single cell as per spec
+  // Header row as per block name (no extra Section Metadata block)
   const headerRow = ['Cards (cards32)'];
+  const rows = [headerRow];
 
-  // Get all direct child card divs
-  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
+  // Each card is a direct child <div> of the main container
+  const cards = element.querySelectorAll(':scope > div');
 
-  // Build 2-column rows for each card
-  const rows = cardDivs.map(card => {
-    // First column: Icon
+  cards.forEach((card) => {
+    // ICON/IMAGE CELL (first cell)
+    // Use the <i> as the visual, and append the number in bold for visual parity
     const icon = card.querySelector('i');
-    
-    // Second column: Number (bold) and description
-    const numberSpan = card.querySelector('.cartfig');
-    const desc = card.querySelector('p');
-    
-    const textCell = document.createElement('div');
-    if (numberSpan) {
+    const stat = card.querySelector('.cartfig');
+
+    let iconCell = document.createElement('div');
+    if (icon) {
+      iconCell.appendChild(icon);
+    }
+    if (stat) {
+      const statBlock = document.createElement('div');
+      statBlock.style.fontWeight = 'bold';
+      statBlock.style.fontSize = '1.25em';
+      statBlock.appendChild(stat);
+      iconCell.appendChild(statBlock);
+    }
+
+    // CONTENT CELL (second cell)
+    // Place stat as heading (bold), then p as description
+    const contentWrapper = document.createElement('div');
+    if (stat) {
       const strong = document.createElement('strong');
-      strong.textContent = numberSpan.textContent.trim();
-      textCell.appendChild(strong);
+      strong.textContent = stat.textContent;
+      contentWrapper.appendChild(strong);
+      contentWrapper.appendChild(document.createElement('br'));
     }
-    if (desc) {
-      textCell.appendChild(document.createElement('br'));
-      textCell.appendChild(desc);
+    const p = card.querySelector('p');
+    if (p) {
+      contentWrapper.appendChild(p);
     }
-    return [icon, textCell];
+
+    rows.push([iconCell, contentWrapper]);
   });
 
-  // Compose cells array: header is single-cell row, then 2-col rows
-  const cells = [headerRow, ...rows];
-
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

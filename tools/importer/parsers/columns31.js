@@ -1,47 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Collect the two column divs
-  const columns = element.querySelectorAll(':scope > div');
-  if (columns.length !== 2) return; // Defensive: expect only 2 columns
-
-  // FIRST COLUMN: Today's Hours (tab UI)
-  // Grab header and the whole pc-tab (includes tab labels + content)
-  const firstHeader = columns[0].querySelector('h2.snippet');
-  const pcTab = columns[0].querySelector('.pc-tab');
-  const col1Content = [];
-  if (firstHeader) col1Content.push(firstHeader);
-  if (pcTab) col1Content.push(pcTab);
-
-  // SECOND COLUMN: Online Librarian
-  // Grab header
-  const secondHeader = columns[1].querySelector('h2.snippet');
-  // Grab chat region (which contains iframe)
-  const chatRegion = columns[1].querySelector('[role="region"]');
-  let chatLink = null;
-  if (chatRegion) {
-    const iframe = chatRegion.querySelector('iframe');
-    if (iframe && iframe.src) {
-      const a = document.createElement('a');
-      a.href = iframe.src;
-      a.textContent = 'Open chat widget';
-      a.target = '_blank';
-      chatLink = a;
-    }
-  }
-  const col2Content = [];
-  if (secondHeader) col2Content.push(secondHeader);
-  if (chatRegion) {
-    if (chatLink) {
-      col2Content.push(chatLink);
-    } else {
-      col2Content.push(chatRegion);
-    }
+  // Helper to replace any non-img element with a src with a link (for iframes, etc)
+  function replaceNonImgSrcElements(root) {
+    const srcEls = Array.from(root.querySelectorAll('[src]')).filter(el => el.tagName.toLowerCase() !== 'img');
+    srcEls.forEach(el => {
+      const href = el.getAttribute('src');
+      if (href) {
+        const a = document.createElement('a');
+        a.href = href;
+        a.textContent = href;
+        el.parentNode && el.parentNode.replaceChild(a, el);
+      }
+    });
   }
 
-  // Table structure: header row, then content row with both columns
+  // Helper to get content for a column: keep all nodes (including text!)
+  function extractColumnContent(col) {
+    replaceNonImgSrcElements(col);
+    // Grabs all nodes (including text and elements), skips empty text
+    const nodes = Array.from(col.childNodes).filter(node => {
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent.trim() !== '';
+      return true;
+    });
+    // If only one node (element or text), just return it, else return array
+    if (nodes.length === 1) return nodes[0];
+    return nodes;
+  }
+
+  // Find the two top-level columns
+  // Look for direct children divs (not descendants)
+  const columns = Array.from(element.children).filter(el => el.tagName.toLowerCase() === 'div');
+
   const headerRow = ['Columns (columns31)'];
-  const cells = [headerRow, [col1Content, col2Content]];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  let cells;
+  if (columns.length === 2) {
+    const col1 = extractColumnContent(columns[0]);
+    const col2 = extractColumnContent(columns[1]);
+    cells = [headerRow, [col1, col2]];
+  } else {
+    // fallback: treat the element as one column (all content)
+    cells = [headerRow, [extractColumnContent(element)]];
+  }
 
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

@@ -1,95 +1,88 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to get unique slides by image src
-  function getUniqueSlides(slideElements) {
-    const seen = new Set();
-    const unique = [];
-    slideElements.forEach((slide) => {
-      const img = slide.querySelector('img');
-      if (img && !seen.has(img.src)) {
-        seen.add(img.src);
-        unique.push(slide);
-      }
-    });
-    return unique;
-  }
+  // Prepare the rows array for the table
+  const rows = [];
+  // Header row as required
+  rows.push(['Carousel']);
 
-  // Find slick slides (not .slick-cloned)
-  let slideDivs = [];
+  // Find the slides container
   const track = element.querySelector('.slick-track');
-  if (track) {
-    slideDivs = Array.from(track.children).filter(div => div.classList.contains('slick-slide') && !div.classList.contains('slick-cloned'));
+  if (!track) {
+    const block = WebImporter.DOMUtils.createTable(rows, document);
+    element.replaceWith(block);
+    return;
   }
-  if (slideDivs.length === 0) {
-    slideDivs = Array.from(element.querySelectorAll('.slick-slide')).filter(div => !div.classList.contains('slick-cloned'));
-  }
 
-  const uniqueSlides = getUniqueSlides(slideDivs);
+  // Only non-cloned slides
+  const slides = Array.from(track.children).filter(
+    (slide) => slide.classList.contains('slick-slide') && !slide.classList.contains('slick-cloned')
+  );
 
-  const rows = [['Carousel']];
-
-  uniqueSlides.forEach((slide) => {
-    // First cell: the image element (reference only)
+  // For each slide, extract image and associated text
+  slides.forEach((slide) => {
+    // Image cell
     const img = slide.querySelector('img');
-    let imgCell = '';
-    if (img) imgCell = img;
+    const imageCell = img || '';
 
-    // Second cell: try to find all relevant text content for the slide
-    let textContent = [];
-    const anchor = slide.querySelector('a[data-target]');
-    if (anchor && anchor.getAttribute('data-target')) {
-      let modalId = anchor.getAttribute('data-target');
-      if (modalId.startsWith('#')) modalId = modalId.substring(1);
-      const modal = document.getElementById(modalId);
-      if (modal) {
-        // Modal title (h5)
-        const h5 = modal.querySelector('.modal-title');
-        if (h5 && h5.textContent.trim()) {
-          const h2 = document.createElement('h2');
-          h2.textContent = h5.textContent.trim();
-          textContent.push(h2);
-        }
-        // Modal body paragraphs/text except the image
-        const modalBody = modal.querySelector('.modal-body');
-        if (modalBody) {
-          Array.from(modalBody.childNodes).forEach((node) => {
-            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-              const p = document.createElement('p');
-              p.textContent = node.textContent.trim();
-              textContent.push(p);
-            }
-            if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'img') {
-              // Only push if it contains text
-              if(node.textContent.trim()) textContent.push(node);
-            }
-          });
-        }
-        // Modal footer p or plain text
-        const modalFooter = modal.querySelector('.modal-footer');
-        if (modalFooter) {
-          Array.from(modalFooter.childNodes).forEach((node) => {
-            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-              const p = document.createElement('p');
-              p.textContent = node.textContent.trim();
-              textContent.push(p);
-            }
-            if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'p' && node.textContent.trim()) {
-              textContent.push(node);
-            }
-          });
+    // Text cell: title and any extra content from modal (footer, etc)
+    let textCell = '';
+    if (img && img.src) {
+      // Find corresponding modal
+      const modals = document.querySelectorAll('div[id^="sliderImgModal-"]');
+      let foundModal = null;
+      for (const modal of modals) {
+        const modalImg = modal.querySelector('.modal-body img');
+        if (modalImg && modalImg.src === img.src) {
+          foundModal = modal;
+          break;
         }
       }
+      const textContents = [];
+      if (foundModal) {
+        // Title from modal
+        const modalTitle = foundModal.querySelector('.modal-title');
+        if (modalTitle && modalTitle.textContent.trim()) {
+          const h2 = document.createElement('h2');
+          h2.textContent = modalTitle.textContent.trim();
+          textContents.push(h2);
+        }
+        // Modal footer and body text (description/additional)
+        // Collect any non-empty paragraphs from modal-footer
+        const modalFooters = foundModal.querySelectorAll('.modal-footer p');
+        modalFooters.forEach((p) => {
+          if (p.textContent && p.textContent.trim()) {
+            const para = document.createElement('p');
+            para.textContent = p.textContent.trim();
+            textContents.push(para);
+          }
+        });
+        // Also include any additional paragraphs in the modal-body (not image)
+        const modalBody = foundModal.querySelector('.modal-body');
+        if (modalBody) {
+          Array.from(modalBody.children).forEach((child) => {
+            if (child.tagName === 'P' && child.textContent.trim()) {
+              const para = document.createElement('p');
+              para.textContent = child.textContent.trim();
+              textContents.push(para);
+            }
+          });
+        }
+      } else if (img.alt && img.alt.trim()) {
+        // Fall back to image alt as heading
+        const h2 = document.createElement('h2');
+        h2.textContent = img.alt.trim();
+        textContents.push(h2);
+      }
+      if (textContents.length > 1) {
+        textCell = textContents;
+      } else if (textContents.length === 1) {
+        textCell = textContents[0];
+      }
     }
-    // Fallback: use image alt as heading if no modal and not already present
-    if (textContent.length === 0 && img && img.alt && img.alt.trim()) {
-      const h2 = document.createElement('h2');
-      h2.textContent = img.alt.trim();
-      textContent.push(h2);
-    }
-    // Compose row: If no text, use empty string for cell
-    rows.push([imgCell, textContent.length === 1 ? textContent[0] : (textContent.length > 1 ? textContent : '')]);
+    rows.push([imageCell, textCell]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Create and replace the block
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

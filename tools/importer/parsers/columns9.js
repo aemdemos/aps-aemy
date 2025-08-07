@@ -1,32 +1,27 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract columns from links in the first <p> element
+  // Get the direct <p> child, which contains the two links
+  // Defensive: if there is no <p>, fallback to the element's content
+  let contentCell;
   const p = element.querySelector('p');
-  let columns = [];
   if (p) {
-    columns = Array.from(p.querySelectorAll('a'));
-  }
-  if (columns.length === 0) {
-    columns = [''];
+    contentCell = p;
+  } else {
+    // If <p> is not present, create a fragment with all children
+    const frag = document.createDocumentFragment();
+    Array.from(element.childNodes).forEach(node => frag.appendChild(node));
+    contentCell = frag;
   }
 
-  // Create the table manually so that the header cell gets the correct colspan
-  const table = document.createElement('table');
-  // Header row
-  const trHead = document.createElement('tr');
-  const th = document.createElement('th');
-  th.textContent = 'Columns (columns9)';
-  th.setAttribute('colspan', columns.length);
-  trHead.appendChild(th);
-  table.appendChild(trHead);
-  // Content row
-  const trContent = document.createElement('tr');
-  columns.forEach(col => {
-    const td = document.createElement('td');
-    td.append(col);
-    trContent.appendChild(td);
-  });
-  table.appendChild(trContent);
+  // Compose the table structure
+  const cells = [
+    ['Columns (columns9)'], // header must match the spec
+    [contentCell]
+  ];
 
+  // Create the table block
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element with the new table
   element.replaceWith(table);
 }

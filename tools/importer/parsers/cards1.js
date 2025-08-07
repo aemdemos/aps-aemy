@@ -1,57 +1,69 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to extract the URL from background-image style
-  function extractImageFromStyle(style) {
-    if (!style) return null;
-    const match = style.match(/url\((['"]?)(.*?)\1\)/);
-    if (match && match[2]) {
-      const img = document.createElement('img');
-      img.src = match[2].trim();
-      img.alt = '';
-      return img;
-    }
-    return null;
-  }
+  // Header row as per example
+  const cells = [
+    ['Cards (cards1)']
+  ];
 
-  const headerRow = ['Cards (cards1)'];
-  const rows = [headerRow];
-  const ul = element.querySelector('ul.cards__list');
-  if (!ul) return;
+  // Find all card items
+  const list = element.querySelector('ul.cards__list');
+  if (!list) return;
+  const items = list.querySelectorAll(':scope > li.cards__item');
 
-  Array.from(ul.children).forEach((li) => {
-    const wrapper = li.querySelector('.item-wrapper');
-    // First cell: Image
-    let imgCell = null;
-    const imgLink = wrapper && wrapper.querySelector('.item-image');
-    if (imgLink) {
-      const img = extractImageFromStyle(imgLink.getAttribute('style'));
-      if (img) imgCell = img;
+  items.forEach((item) => {
+    // --- IMAGE ---
+    let imgEl = null;
+    const imageLink = item.querySelector('.item-image');
+    if (imageLink) {
+      const style = imageLink.getAttribute('style') || '';
+      const match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
+      if (match && match[1]) {
+        imgEl = document.createElement('img');
+        imgEl.src = match[1].trim();
+        // Use the card title for alt, fallback to empty string
+        const title = item.querySelector('.item-content__title');
+        imgEl.alt = title ? title.textContent.trim() : '';
+      }
     }
 
-    // Second cell: Title, Description, CTA in a fragment
-    const content = wrapper && wrapper.querySelector('.item-content');
+    // --- TEXT CONTENT ---
+    const content = item.querySelector('.item-content');
+    // We'll use a fragment to assemble the contents
     const frag = document.createDocumentFragment();
     if (content) {
-      // Title
+      // Title as <strong>, as in the example
       const title = content.querySelector('.item-content__title');
       if (title) {
-        frag.appendChild(title);
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent.trim();
+        frag.appendChild(strong);
+        frag.appendChild(document.createElement('br'));
       }
-      // Description
+
+      // Description as <p>
       const desc = content.querySelector('.item-content__desc');
       if (desc) {
-        frag.appendChild(desc);
+        const p = document.createElement('p');
+        p.textContent = desc.textContent.trim();
+        frag.appendChild(p);
       }
-      // CTA/link
+
+      // Call to action link, as a regular <a> (no list)
       const cta = content.querySelector('.item-content__link');
       if (cta) {
+        // Reference the existing element
         frag.appendChild(cta);
       }
     }
 
-    rows.push([imgCell, frag]);
+    // Add row: [img, text]
+    cells.push([
+      imgEl,
+      frag
+    ]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Create and replace
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

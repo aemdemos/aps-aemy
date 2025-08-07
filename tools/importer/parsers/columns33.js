@@ -1,35 +1,56 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get left and right columns
-  const left = element.querySelector('.media-body');
-  const right = element.querySelector('.media-right');
-
-  // Extract left column content
-  const leftParts = [];
-  if (left) {
-    Array.from(left.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        leftParts.push(node);
-      }
-    });
+  function getChildByClass(parent, className) {
+    for (const child of parent.children) {
+      if (child.classList && child.classList.contains(className)) return child;
+    }
+    return null;
   }
 
-  // Extract right column content
-  const rightParts = [];
-  if (right) {
-    Array.from(right.childNodes).forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
-        rightParts.push(node);
-      }
-    });
+  const leftCol = getChildByClass(element, 'media-body');
+  const rightCol = getChildByClass(element, 'media-right');
+
+  const leftContent = [];
+  if (leftCol) {
+    const h3 = leftCol.querySelector('h3');
+    if (h3) leftContent.push(h3);
+    const descDiv = leftCol.querySelector('.s-lc-c-evt-des');
+    if (descDiv) {
+      Array.from(descDiv.children).forEach(child => {
+        leftContent.push(child);
+      });
+    }
+    const dl = leftCol.querySelector('dl');
+    if (dl) leftContent.push(dl);
   }
 
-  // Ensure two columns, matching the columns33 example block
-  // The header row must have two cells: ['Columns (columns33)', '']
-  const headerRow = ['Columns (columns33)', ''];
-  const row = [leftParts.length === 1 ? leftParts[0] : leftParts, rightParts.length === 1 ? rightParts[0] : rightParts];
-  const cells = [headerRow, row];
+  const rightContent = [];
+  if (rightCol) {
+    const imgLink = rightCol.querySelector('a');
+    if (imgLink && imgLink.querySelector('img')) {
+      const img = imgLink.querySelector('img');
+      rightContent.push(img);
+    } else {
+      const img = rightCol.querySelector('img');
+      if (img) rightContent.push(img);
+    }
+  }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Compose the table rows
+  const dataRow = [leftContent, rightContent];
+
+  // Create table using DOMUtils and then fix header colspan
+  const table = WebImporter.DOMUtils.createTable([
+    ['Columns (columns33)'],
+    dataRow,
+  ], document);
+
+  // Fix the header row to have a single th with correct colspan
+  const headerRow = table.querySelector('tr');
+  const th = headerRow && headerRow.querySelector('th');
+  if (th && dataRow.length > 1) {
+    th.setAttribute('colspan', dataRow.length);
+  }
+
   element.replaceWith(table);
 }
