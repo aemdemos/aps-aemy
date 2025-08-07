@@ -1,39 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Collect immediate children, including text nodes
-  const contentNodes = Array.from(element.childNodes).filter(node => {
-    if (node.nodeType === Node.ELEMENT_NODE && (node.tagName === 'SCRIPT' || node.tagName === 'STYLE')) return false;
-    return true;
-  });
+  // Gather all content inside the element (including text nodes)
+  const nodes = Array.from(element.childNodes);
 
-  const cellContent = [];
-  contentNodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      // Only include non-empty text nodes
-      if (node.textContent.trim()) {
-        cellContent.push(document.createTextNode(node.textContent));
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'IFRAME' && node.src) {
-        // Replace iframe with a link to the src
-        const link = document.createElement('a');
-        link.href = node.src;
-        link.textContent = node.src;
-        cellContent.push(link);
-      } else {
-        cellContent.push(node);
-      }
-    }
-  });
+  // Find the first iframe (should only be one for an Embed block)
+  const iframe = nodes.find(n => n.nodeType === 1 && n.tagName === 'IFRAME');
 
-  // If cellContent is empty, ensure table is still structurally correct
-  const cell = cellContent.length === 0 ? document.createTextNode('')
-               : cellContent.length === 1 ? cellContent[0]
-               : cellContent;
+  // Prepare a link to the iframe src if present
+  let link = null;
+  if (iframe && iframe.src) {
+    link = document.createElement('a');
+    link.href = iframe.src;
+    link.textContent = iframe.src;
+  }
+
+  // Gather all content except the iframe (preserving text, possible extra text, or html)
+  const preIframeNodes = nodes.filter(n => !(n.nodeType === 1 && n.tagName === 'IFRAME'));
+
+  // Compose cell content: any pre-iframe nodes (text, html), then the link if present
+  // If there is only the iframe, cell content is just the link
+  let content = [];
+  if (preIframeNodes.length > 0) {
+    content = preIframeNodes;
+  }
+  if (link) {
+    content.push(link);
+  }
+  if (content.length === 0) {
+    content = [''];
+  }
 
   const cells = [
     ['Embed'],
-    [cell]
+    [content]
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);

@@ -1,67 +1,81 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header as per specification
-  const headerRow = ['Cards (cards13)'];
-  const rows = [headerRow];
+  // Header row as shown in the example
+  const cells = [['Cards (cards13)']];
 
-  // Find the list of cards
-  const ul = element.querySelector('ul.cards__list');
-  if (!ul) return;
-  const lis = ul.querySelectorAll(':scope > li.cards__item');
+  // Get all card items from the direct list (should be robust to class or structure variations)
+  const list = element.querySelector('ul');
+  if (!list) return;
 
-  lis.forEach((li) => {
-    const itemWrapper = li.querySelector('.item-wrapper');
-
-    // --- IMAGE CELL ---
+  list.querySelectorAll(':scope > li').forEach((item) => {
+    // --- COLUMN 1: Image ---
     let imgEl = null;
-    const anchor = itemWrapper.querySelector('a.item-image');
-    if (anchor) {
-      const style = anchor.getAttribute('style') || '';
-      const urlMatch = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
-      if (urlMatch && urlMatch[1]) {
+    // Find an element with a background image
+    const imgLink = item.querySelector('[style*="background-image"]');
+    if (imgLink && imgLink.style && imgLink.style.backgroundImage) {
+      const match = imgLink.style.backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/);
+      if (match && match[1]) {
         imgEl = document.createElement('img');
-        imgEl.src = urlMatch[1].trim();
-        imgEl.alt = anchor.getAttribute('alt') || '';
-        imgEl.loading = 'lazy';
+        imgEl.src = match[1].trim();
+        // Use card's heading as alt if present
+        const heading = item.querySelector('h3, .item-content__title');
+        imgEl.alt = heading ? heading.textContent.trim() : '';
       }
     }
 
-    // --- TEXT CELL ---
-    const contentDiv = itemWrapper.querySelector('.item-content');
-    const cellContent = [];
+    // --- COLUMN 2: Text content ---
+    // We will combine all text (title, description, link) as in the example
+    const content = item.querySelector('.item-content');
+    const col2 = document.createElement('div');
 
-    // Title: strong element, preserve semantics
-    const titleEl = contentDiv.querySelector('.item-content__title');
-    if (titleEl && titleEl.textContent.trim()) {
-      const strong = document.createElement('strong');
-      strong.textContent = titleEl.textContent.trim();
-      cellContent.push(strong);
+    if (content) {
+      // Title (strong)
+      const title = content.querySelector('h3, .item-content__title');
+      if (title && title.textContent.trim()) {
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent.trim();
+        col2.appendChild(strong);
+      }
+
+      // Description (if present)
+      const desc = content.querySelector('p, .item-content__desc');
+      if (desc && desc.textContent.trim()) {
+        if (col2.childNodes.length > 0) col2.appendChild(document.createElement('br'));
+        col2.appendChild(document.createTextNode(desc.textContent.trim()));
+      }
+
+      // CTA (if present)
+      const link = content.querySelector('a');
+      if (link) {
+        if (col2.childNodes.length > 0) col2.appendChild(document.createElement('br'));
+        col2.appendChild(link);
+      }
     }
 
-    // Description: only if non-empty
-    const descEl = contentDiv.querySelector('.item-content__desc');
-    if (descEl && descEl.textContent.trim()) {
-      if (cellContent.length) cellContent.push(document.createElement('br'));
-      cellContent.push(document.createTextNode(descEl.textContent.trim()));
+    // If for some reason .item-content is missing, try to get any heading and CTA
+    if (!content) {
+      const title = item.querySelector('h3');
+      if (title && title.textContent.trim()) {
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent.trim();
+        col2.appendChild(strong);
+      }
+      const desc = item.querySelector('p');
+      if (desc && desc.textContent.trim()) {
+        if (col2.childNodes.length > 0) col2.appendChild(document.createElement('br'));
+        col2.appendChild(document.createTextNode(desc.textContent.trim()));
+      }
+      const link = item.querySelector('a');
+      if (link) {
+        if (col2.childNodes.length > 0) col2.appendChild(document.createElement('br'));
+        col2.appendChild(link);
+      }
     }
 
-    // CTA link: only if exists
-    const ctaEl = contentDiv.querySelector('.item-content__link');
-    if (ctaEl) {
-      if (cellContent.length) cellContent.push(document.createElement('br'));
-      cellContent.push(ctaEl);
-    }
-
-    // If cellContent is empty, add a non-breaking space to visually preserve cell
-    if (cellContent.length === 0) {
-      cellContent.push(document.createTextNode('\u00A0'));
-    }
-
-    rows.push([
-      imgEl,  // null is fine, createTable will still work
-      cellContent.length === 1 ? cellContent[0] : cellContent,
-    ]);
+    cells.push([imgEl, col2]);
   });
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+
+  // Build and replace the table
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

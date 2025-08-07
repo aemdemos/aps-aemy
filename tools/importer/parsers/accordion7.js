@@ -1,55 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per example
+  // Block header row as per requirement
   const headerRow = ['Accordion (accordion7)'];
   const rows = [headerRow];
-  // Get all immediate child .card elements (each accordion item)
-  const cards = element.querySelectorAll(':scope > .card');
+
+  // Get all cards (accordion items)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+
   cards.forEach(card => {
-    // Extract the title cell
-    let title = '';
+    // Title cell: use the heading inside .card-header
+    let titleCell = '';
     const header = card.querySelector('.card-header');
     if (header) {
-      const h2 = header.querySelector('h2');
+      // Find first heading or <h2> (which is required for semantic meaning)
+      const h2 = header.querySelector('h2, .h6');
       if (h2) {
-        title = h2.textContent.trim();
+        titleCell = h2;
       } else {
-        title = header.textContent.trim();
+        // If heading missing, use the .card-header's text content
+        const div = document.createElement('div');
+        div.textContent = header.textContent.trim();
+        titleCell = div;
       }
     }
-    // Extract the content cell, referencing the original elements
+
+    // Content cell: body of accordion
     let contentCell = '';
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      const cardBody = collapse.querySelector('.card-body');
-      if (cardBody) {
-        // Flatten if there are extra wrapper divs
-        let contentRoot = cardBody;
-        // If cardBody contains only one child and it is a div, use that div
-        while (
-          contentRoot.children.length === 1 &&
-          contentRoot.children[0].tagName === 'DIV'
-        ) {
-          contentRoot = contentRoot.children[0];
-        }
-        // If contentRoot has multiple direct children (e.g. <div>, <p>, etc.)
-        // Use all as the cell content (as array)
-        const nodes = Array.from(contentRoot.childNodes).filter(n => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
-        if (nodes.length === 1) {
-          contentCell = nodes[0];
-        } else if (nodes.length > 1) {
-          contentCell = nodes;
-        } else {
-          contentCell = '';
-        }
+    const body = card.querySelector('.card-body');
+    if (body) {
+      // If the body has only one main container, use it, else wrap in a div
+      // Use all ELEMENT children (preserve structure)
+      const nodes = Array.from(body.childNodes).filter(n => {
+        // only non-empty text nodes or element nodes
+        return (
+          (n.nodeType === Node.ELEMENT_NODE) ||
+          (n.nodeType === Node.TEXT_NODE && n.textContent.trim())
+        )
+      });
+      if (nodes.length === 1 && nodes[0].nodeType === Node.ELEMENT_NODE) {
+        contentCell = nodes[0];
       } else {
-        contentCell = '';
+        // Wrap in a div to keep all content in a single cell
+        const wrapper = document.createElement('div');
+        nodes.forEach(n => wrapper.appendChild(n));
+        contentCell = wrapper;
       }
-    } else {
-      contentCell = '';
     }
-    rows.push([title, contentCell]);
+    rows.push([titleCell, contentCell]);
   });
+
+  // Create and replace with the block table
   const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }

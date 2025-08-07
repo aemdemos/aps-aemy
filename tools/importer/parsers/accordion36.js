@@ -1,54 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Block header row
+  // Table header as specified in requirements
   const headerRow = ['Accordion (accordion36)'];
 
-  // 2. Extract accordion title from card-header -> h2, fallback to card-header text
-  let titleCell;
+  // Get the title from the .card-header > heading element (reference the actual element)
+  let titleElement = null;
   const cardHeader = element.querySelector('.card-header');
   if (cardHeader) {
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else if (cardHeader.childNodes.length > 0) {
-      // If no heading but text exists, use the cardHeader itself
-      titleCell = cardHeader;
-    } else {
-      titleCell = document.createTextNode('');
-    }
+    titleElement = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
+    // If for some reason no heading, fallback to cardHeader itself
+    if (!titleElement) titleElement = cardHeader;
   } else {
-    titleCell = document.createTextNode('');
+    // Fallback: use text node
+    titleElement = document.createElement('div');
+    titleElement.textContent = element.textContent.trim();
   }
 
-  // 3. Extract accordion content (card-body inside .collapse)
-  let contentCell;
+  // Get the content from .collapse > .card-body (reference, do not clone)
+  let contentElement = null;
   const collapse = element.querySelector('.collapse');
   if (collapse) {
-    // Use everything inside collapse (typically card-body)
-    // Prefer only the immediate card-body if it exists
     const cardBody = collapse.querySelector('.card-body');
-    if (cardBody) {
-      contentCell = cardBody;
-    } else {
-      // fallback: all children of collapse
-      const nodes = Array.from(collapse.childNodes).filter(n => n.nodeType !== 3 || n.textContent.trim() !== '');
-      if (nodes.length === 1) {
-        contentCell = nodes[0];
-      } else {
-        contentCell = nodes;
-      }
-    }
+    contentElement = cardBody || collapse;
   } else {
-    contentCell = document.createTextNode('');
+    // Fallback: everything except card-header
+    contentElement = document.createElement('div');
+    Array.from(element.children).forEach(child => {
+      if (!child.classList.contains('card-header')) {
+        contentElement.appendChild(child);
+      }
+    });
   }
 
-  // 4. Build the final table structure
-  const rows = [
+  // Compose table rows
+  const tableRows = [
     headerRow,
-    [titleCell, contentCell],
+    [titleElement, contentElement]
   ];
 
-  // 5. Create the block and replace element
-  const block = WebImporter.DOMUtils.createTable(rows, document);
+  // Create the block table using referenced nodes
+  const block = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(block);
 }

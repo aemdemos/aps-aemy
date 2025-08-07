@@ -1,32 +1,25 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract columns from links in the first <p> element
+  // Table header: exactly one cell, as required
+  const headerRow = ['Columns (columns9)'];
+
+  // Find the main paragraph containing the buttons/links
   const p = element.querySelector('p');
-  let columns = [];
-  if (p) {
-    columns = Array.from(p.querySelectorAll('a'));
-  }
-  if (columns.length === 0) {
-    columns = [''];
+  // Get all <a> tags inside the paragraph
+  const links = p ? Array.from(p.querySelectorAll('a')) : [];
+
+  // Second row: one column per link (<a>), as shown in the markdown example
+  const contentRow = links.map(link => link);
+  // If there are fewer than 2 links, fill with empty cells to ensure at least 2 columns
+  while (contentRow.length < 2) {
+    contentRow.push('');
   }
 
-  // Create the table manually so that the header cell gets the correct colspan
-  const table = document.createElement('table');
-  // Header row
-  const trHead = document.createElement('tr');
-  const th = document.createElement('th');
-  th.textContent = 'Columns (columns9)';
-  th.setAttribute('colspan', columns.length);
-  trHead.appendChild(th);
-  table.appendChild(trHead);
-  // Content row
-  const trContent = document.createElement('tr');
-  columns.forEach(col => {
-    const td = document.createElement('td');
-    td.append(col);
-    trContent.appendChild(td);
-  });
-  table.appendChild(trContent);
+  // Build the table structure: first row is one cell, second row has N columns
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
 
   element.replaceWith(table);
 }

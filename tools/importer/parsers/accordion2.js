@@ -1,52 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare the table rows following the 2-column accordion block structure
-  const rows = [];
-  // 1. Header row
-  rows.push(['Accordion (accordion2)']);
-
-  // 2. Accordion item rows
-  // Each card represents a single accordion item.
-  // Title cell: The label in the card-header
-  // Content cell: The element that will be revealed/hidden when expanded (all content inside card-body)
-
-  // Title: find inside card-header, prefer heading, else fallback to textContent
-  const cardHeader = element.querySelector('.card-header');
-  let titleCell;
-  if (cardHeader) {
-    // Try to use the heading (h1-h6) if present, otherwise use the card-header itself
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else {
-      titleCell = cardHeader;
-    }
-  } else {
-    titleCell = '';
+  // Helper: get direct child by class
+  function getDirectChildByClass(el, className) {
+    return Array.from(el.children).find(child => child.classList.contains(className));
   }
 
-  // Content: card-body contains all the visible content when expanded
-  let contentCell;
-  const collapse = element.querySelector('.collapse');
-  if (collapse) {
-    // Try to find .card-body inside collapse
-    const cardBody = collapse.querySelector('.card-body');
+  // 1. Get the accordion item title
+  let title = '';
+  const headerDiv = getDirectChildByClass(element, 'card-header');
+  if (headerDiv) {
+    // Prefer heading if present
+    const heading = headerDiv.querySelector('h1,h2,h3,h4,h5,h6');
+    if (heading) {
+      title = heading.textContent.trim();
+    } else {
+      title = headerDiv.textContent.trim();
+    }
+  }
+
+  // 2. Get the accordion content (all content inside the card-body)
+  let contentCell = '';
+  const collapseDiv = getDirectChildByClass(element, 'collapse');
+  if (collapseDiv) {
+    const cardBody = getDirectChildByClass(collapseDiv, 'card-body');
     if (cardBody) {
+      // Use the card-body as the content (preserve all markup/structure)
       contentCell = cardBody;
     } else {
-      // fallback: use all children of collapse
-      // Create a fragment to hold all children
+      // fallback: use all children of collapseDiv
       const frag = document.createDocumentFragment();
-      Array.from(collapse.childNodes).forEach(child => frag.appendChild(child));
+      Array.from(collapseDiv.childNodes).forEach(child => frag.appendChild(child));
       contentCell = frag;
     }
-  } else {
-    contentCell = '';
   }
 
-  rows.push([titleCell, contentCell]);
+  // 3. Compose the table rows
+  const tableRows = [
+    ['Accordion (accordion2)'],
+    [title, contentCell]
+  ];
 
-  // Create the table and replace the original element
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // 4. Create the table and replace original element
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

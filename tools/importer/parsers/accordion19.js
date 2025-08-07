@@ -1,48 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as per block name
+  // Ensure we use the correct header as in the example
   const headerRow = ['Accordion (accordion19)'];
-  const rows = [headerRow];
 
-  // Get all accordion cards
-  const cards = element.querySelectorAll(':scope > .card');
+  // Find all immediate children .card elements (one per accordion item)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
 
-  cards.forEach(card => {
-    // --- TITLE CELL ---
-    // Find the title - h2 inside .card-header
-    let title = '';
-    const header = card.querySelector(':scope > .card-header h2');
-    if (header) {
-      // Reference the heading element directly (preserves heading semantics)
-      title = header;
-    } else {
-      // fallback: use .card-header textContent
-      const headerDiv = card.querySelector(':scope > .card-header');
-      title = headerDiv ? headerDiv.textContent.trim() : '';
+  // Each card -> [title cell, content cell]
+  const rows = cards.map(card => {
+    // Title: from .card-header's heading child or its textContent if not present
+    let titleEl = card.querySelector('.card-header');
+    let titleContent = '';
+    if (titleEl) {
+      // Prefer h2/h3/h4/etc inside titleEl for semantic heading, else the titleEl itself
+      let heading = titleEl.querySelector('h1,h2,h3,h4,h5,h6');
+      titleContent = heading ? heading : titleEl;
     }
-
-    // --- CONTENT CELL ---
-    // Reference the .card-body's children directly
-    let contentCell = '';
-    const body = card.querySelector(':scope > .collapse > .card-body');
-    if (body) {
-      // If more than one child, reference as array; if only one, just that element
-      if (body.children.length === 1) {
-        contentCell = body.children[0];
-      } else if (body.children.length > 1) {
-        contentCell = Array.from(body.children);
-      } else if (body.childNodes.length === 1 && body.childNodes[0].nodeType === 3) {
-        // single text node
-        contentCell = body.textContent.trim();
-      } else {
-        // fallback: reference the body element itself (in case of unstructured content)
-        contentCell = body;
-      }
+    // Content: .card-body inside .collapse, fallback to .collapse, else blank
+    let collapse = card.querySelector('.collapse');
+    let contentEl = '';
+    if (collapse) {
+      let body = collapse.querySelector('.card-body');
+      contentEl = body ? body : collapse;
     }
-    rows.push([title, contentCell]);
+    return [titleContent, contentEl];
   });
 
-  // Build and replace with block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Compose the cells and create the block table
+  const cells = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

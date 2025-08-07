@@ -1,47 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Collect the two column divs
+  // Helper: Convert iframes (non-images) to links
+  function iframeToLink(iframeEl) {
+    if (!iframeEl) return null;
+    const src = iframeEl.getAttribute('src');
+    if (!src) return null;
+    const a = document.createElement('a');
+    a.href = src;
+    a.textContent = iframeEl.title || 'Chat Widget';
+    return a;
+  }
+
+  // Select the immediate child columns
   const columns = element.querySelectorAll(':scope > div');
-  if (columns.length !== 2) return; // Defensive: expect only 2 columns
+  if (columns.length !== 2) return;
 
-  // FIRST COLUMN: Today's Hours (tab UI)
-  // Grab header and the whole pc-tab (includes tab labels + content)
-  const firstHeader = columns[0].querySelector('h2.snippet');
-  const pcTab = columns[0].querySelector('.pc-tab');
-  const col1Content = [];
-  if (firstHeader) col1Content.push(firstHeader);
-  if (pcTab) col1Content.push(pcTab);
+  // LEFT COLUMN: combine all child nodes (including text!) for robust text extraction
+  const leftCol = columns[0];
+  const leftContent = Array.from(leftCol.childNodes).filter(
+    node => node.nodeType !== Node.COMMENT_NODE && !(node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '')
+  );
 
-  // SECOND COLUMN: Online Librarian
-  // Grab header
-  const secondHeader = columns[1].querySelector('h2.snippet');
-  // Grab chat region (which contains iframe)
-  const chatRegion = columns[1].querySelector('[role="region"]');
-  let chatLink = null;
-  if (chatRegion) {
-    const iframe = chatRegion.querySelector('iframe');
-    if (iframe && iframe.src) {
-      const a = document.createElement('a');
-      a.href = iframe.src;
-      a.textContent = 'Open chat widget';
-      a.target = '_blank';
-      chatLink = a;
-    }
-  }
-  const col2Content = [];
-  if (secondHeader) col2Content.push(secondHeader);
-  if (chatRegion) {
-    if (chatLink) {
-      col2Content.push(chatLink);
+  // RIGHT COLUMN: combine all child nodes, but iframes must be replaced by links
+  const rightCol = columns[1];
+  const rightContent = [];
+  Array.from(rightCol.childNodes).forEach((node) => {
+    if (node.nodeName === 'IFRAME') {
+      // Replace iframe with link
+      const link = iframeToLink(node);
+      if (link) rightContent.push(link);
     } else {
-      col2Content.push(chatRegion);
+      rightContent.push(node);
     }
-  }
+  });
 
-  // Table structure: header row, then content row with both columns
-  const headerRow = ['Columns (columns31)'];
-  const cells = [headerRow, [col1Content, col2Content]];
+  // Only create the table if at least one of the columns has content
+  if (leftContent.length === 0 && rightContent.length === 0) return;
+
+  // Block header must match the spec exactly
+  const cells = [
+    ['Columns (columns31)'],
+    [leftContent, rightContent]
+  ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
-
   element.replaceWith(table);
 }

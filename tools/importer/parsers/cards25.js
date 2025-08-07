@@ -1,49 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the slides container
-  const track = element.querySelector('.glide__track');
-  if (!track) return;
-  const slidesList = track.querySelector('.glide__slides');
-  if (!slidesList) return;
+  // Helper to get unique slides by image src
+  function getUniqueSlides(slides) {
+    const seen = new Set();
+    const unique = [];
+    slides.forEach(li => {
+      const img = li.querySelector('img');
+      if (img) {
+        const src = img.getAttribute('src');
+        if (!seen.has(src)) {
+          seen.add(src);
+          unique.push(li);
+        }
+      }
+    });
+    return unique;
+  }
 
-  // Only get slides that are not clones
-  const slides = Array.from(slidesList.children).filter(slide =>
-    slide.classList.contains('glide__slide') && !slide.classList.contains('glide__slide--clone')
-  );
-  if (slides.length === 0) return;
+  // 1. Get the list of slides
+  const ul = element.querySelector('.glide__slides');
+  if (!ul) return;
+  const allSlides = Array.from(ul.children).filter(li => li.classList.contains('glide__slide'));
+  const slides = getUniqueSlides(allSlides);
 
-  // Prepare table rows
+  // 2. Prepare table rows
   const rows = [['Cards (cards25)']];
-
-  // For each slide, extract the image and the card text content as a single block of elements
   slides.forEach(slide => {
-    let img = slide.querySelector('img');
-    // Find the card text container
-    let textBlock = null;
-    const contentDiv = slide.querySelector('.slide-content');
-    if (contentDiv) {
-      // Create a container for all content so we preserve structure and do not miss text
-      textBlock = document.createElement('div');
-      // Preserve order and structure of children
-      Array.from(contentDiv.childNodes).forEach(child => {
-        // Only include elements or text nodes with content
-        if (child.nodeType === Node.ELEMENT_NODE || (child.nodeType === Node.TEXT_NODE && child.textContent.trim())) {
-          textBlock.appendChild(child);
-        }
-      });
-    } else {
-      // Fallback: collect all text nodes and elements except the image
-      textBlock = document.createElement('div');
-      Array.from(slide.childNodes).forEach(child => {
-        if (child !== img && ((child.nodeType === Node.ELEMENT_NODE && child.textContent.trim()) || (child.nodeType === Node.TEXT_NODE && child.textContent.trim()))) {
-          textBlock.appendChild(child);
-        }
-      });
+    // Image cell: the first <img> inside .slide-wrapper
+    const wrapper = slide.querySelector('.slide-wrapper');
+    if (!wrapper) return;
+    const image = wrapper.querySelector('img');
+    // Text cell: reference the .slide-content node directly to include all content
+    const textContent = wrapper.querySelector('.slide-content');
+    // Defensive: only add row if both image and textContent exist
+    if (image && textContent) {
+      rows.push([image, textContent]);
     }
-    rows.push([img, textBlock]);
   });
 
-  // Build and replace
+  // 3. Create the block table and replace original element
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

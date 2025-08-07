@@ -1,43 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header row
+  // Header row: as specified
   const headerRow = ['Accordion (accordion15)'];
-  const rows = [headerRow];
 
-  // Extract accordion title from .card-header (prefer heading)
+  // 1. Extract the accordion title (required)
+  // The title is inside .card-header, typically in a heading
   let titleCell = '';
-  const headerDiv = element.querySelector('.card-header');
-  if (headerDiv) {
-    // Look for a heading inside the header (h1-h6)
-    const heading = headerDiv.querySelector('h1, h2, h3, h4, h5, h6');
+  const cardHeader = element.querySelector('.card-header');
+  if (cardHeader) {
+    // Prefer heading element for semantic value
+    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
     if (heading) {
       titleCell = heading;
     } else {
-      // fallback: use header div itself
-      titleCell = headerDiv;
+      // fallback: use the full .card-header element (to preserve any markup)
+      titleCell = cardHeader;
     }
   }
 
-  // Extract content cell from .collapse > .card-body
+  // 2. Extract the content cell (body of the accordion item)
+  // Content is in .collapse > .card-body
   let contentCell = '';
-  const collapseDiv = element.querySelector('.collapse');
-  if (collapseDiv) {
-    // Prefer the .card-body div inside collapse
-    const bodyDiv = collapseDiv.querySelector('.card-body');
-    if (bodyDiv) {
-      contentCell = bodyDiv;
+  const collapse = element.querySelector('.collapse');
+  if (collapse) {
+    const cardBody = collapse.querySelector('.card-body');
+    if (cardBody) {
+      // If cardBody only has a single table, use the table, else use the body.
+      if (cardBody.children.length === 1 && cardBody.children[0].tagName === 'TABLE') {
+        contentCell = cardBody.children[0];
+      } else {
+        contentCell = cardBody;
+      }
     } else {
-      // fallback: use collapseDiv
-      contentCell = collapseDiv;
+      // fallback: put the entire .collapse element (should be adequate if structure varies)
+      contentCell = collapse;
     }
   }
 
-  // Only add the accordion row if both a title and content are present
-  if (titleCell && contentCell) {
-    rows.push([titleCell, contentCell]);
-  }
+  // 3. Compose the rows as per required structure (header, then 1 row for this item)
+  const rows = [
+    headerRow,
+    [titleCell, contentCell]
+  ];
 
-  // Create and replace with the Accordion block table
+  // 4. Create and replace
   const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }

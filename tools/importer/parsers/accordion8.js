@@ -1,94 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build the header row as in the example
-  const cells = [
-    ['Accordion (accordion8)'],
-  ];
+  // Header row: one column, must match example exactly
+  const headerRow = ['Accordion (accordion8)'];
+  const rows = [headerRow];
 
-  // Get all immediate child .card elements (each is an accordion item)
-  const cards = element.querySelectorAll(':scope > .card');
+  // Get all direct child cards (accordion items)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
 
   cards.forEach((card) => {
-    // --- TITLE CELL ---
-    // The card-header contains the clickable title (usually an <h2> inside)
-    let titleCell = '';
-    const cardHeader = card.querySelector('.card-header');
-    if (cardHeader) {
-      // Prefer a heading if present, else fall back to header's full content
-      const heading = cardHeader.querySelector('h1,h2,h3,h4,h5,h6');
-      if (heading) {
-        titleCell = heading;
-      } else {
-        // Use header's entire element as fallback
-        titleCell = cardHeader;
-      }
+    // Title: the .card-header > h2 (or fallback to .card-header)
+    let titleEl = card.querySelector(':scope > .card-header h2');
+    if (!titleEl) {
+      titleEl = card.querySelector(':scope > .card-header') || document.createElement('span');
     }
 
-    // --- CONTENT CELL ---
-    // The card-body contains the content (text, lists, iframes, etc)
-    let contentCell = '';
-    const cardBody = card.querySelector('.card-body');
+    // Content: .card-body (reference, do not clone)
+    const cardBody = card.querySelector(':scope > .collapse > .card-body');
+    let contentCell;
     if (cardBody) {
-      // We'll build an array of elements (not their HTML!) to reference directly
-      const contentNodes = [];
-      for (const node of cardBody.childNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          // For <iframe> elements that are not inside <img>, convert to <a href=src>
-          if (node.tagName === 'IFRAME') {
-            const src = node.getAttribute('src');
-            if (src) {
-              const a = document.createElement('a');
-              a.href = src;
-              a.textContent = src;
-              contentNodes.push(a);
-              continue;
-            }
-          }
-          // For <p> containing <iframe>
-          if (node.tagName === 'P' && node.querySelector('iframe')) {
-            const iframe = node.querySelector('iframe');
-            if (iframe) {
-              const src = iframe.getAttribute('src');
-              if (src) {
-                const a = document.createElement('a');
-                a.href = src;
-                a.textContent = src;
-                contentNodes.push(a);
-                // Also check for text content remaining in the <p> outside <iframe>
-                const temp = node.cloneNode(true);
-                temp.querySelector('iframe').remove();
-                if (temp.textContent.trim()) {
-                  // If there's additional text, keep it as a <p>
-                  const p = document.createElement('p');
-                  p.innerHTML = temp.innerHTML.trim();
-                  contentNodes.push(p);
-                }
-                continue;
-              }
-            }
-          }
-          // Otherwise, keep the element as is
-          contentNodes.push(node);
-        } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-          // Wrap in a <span> for text nodes, though this rarely occurs directly
-          const span = document.createElement('span');
-          span.textContent = node.textContent.trim();
-          contentNodes.push(span);
+      // Replace all iframes (not images) with links in place
+      cardBody.querySelectorAll('iframe').forEach((iframe) => {
+        const src = iframe.getAttribute('src');
+        if (src) {
+          const a = document.createElement('a');
+          a.href = src;
+          a.textContent = src;
+          iframe.replaceWith(a);
         }
-      }
-      // If no elements, leave contentCell as ''
-      if (contentNodes.length === 1) {
-        contentCell = contentNodes[0];
-      } else if (contentNodes.length > 1) {
-        contentCell = contentNodes;
-      } else {
-        contentCell = '';
-      }
+      });
+      contentCell = cardBody;
+    } else {
+      contentCell = document.createElement('span'); // empty cell fallback
     }
 
-    cells.push([titleCell, contentCell]);
+    // Each row must be a two-column array to match table structure, even if header row is one column
+    rows.push([titleEl, contentCell]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // To ensure the header row visually spans two columns, set colSpan after table creation
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  const firstRow = block.querySelector('tr');
+  if (firstRow && firstRow.children.length === 1) {
+    firstRow.children[0].setAttribute('colspan', '2');
+  }
+  element.replaceWith(block);
 }

@@ -1,44 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion block header row
+  // Header row: match the required header exactly
   const headerRow = ['Accordion (accordion23)'];
   const rows = [headerRow];
 
-  // Each accordion item is a .card
+  // Find all direct .card children (accordion items)
   const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach((card) => {
-    // Title cell extraction: Prefer h1-h6 inside .card-header
-    let titleCell;
-    const cardHeader = card.querySelector('.card-header');
-    if (cardHeader) {
-      let heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-      if (heading) {
-        titleCell = heading;
-      } else {
-        // Use the entire header if no heading element
-        titleCell = cardHeader;
-      }
-    } else {
-      // fallback: blank cell
-      titleCell = document.createElement('div');
+  cards.forEach(card => {
+    // Title cell: the visible title is in .card-header (prefer first heading, fallback to full header)
+    let titleCell = '';
+    const header = card.querySelector(':scope > .card-header');
+    if (header) {
+      // Prefer first heading element (h2-h6)
+      const heading = header.querySelector('h2, h3, h4, h5, h6');
+      titleCell = heading ? heading : header;
     }
-
-    // Content cell extraction: all content of .card-body (if present)
-    let contentCell;
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      const cardBody = collapse.querySelector('.card-body');
-      if (cardBody) {
-        contentCell = cardBody;
+    // Content cell: main content is in .card-body
+    let contentCell = '';
+    const body = card.querySelector('.card-body');
+    if (body) {
+      // If there's only 1 child, use it directly, else array of children
+      if (body.children.length === 1) {
+        contentCell = body.children[0];
+      } else if (body.children.length > 1) {
+        contentCell = Array.from(body.children);
       } else {
-        // fallback: use collapse content
-        contentCell = collapse;
+        // fallback: put the whole body if there is text only
+        contentCell = body;
       }
-    } else {
-      // fallback: blank cell
-      contentCell = document.createElement('div');
     }
-
     rows.push([titleCell, contentCell]);
   });
 
