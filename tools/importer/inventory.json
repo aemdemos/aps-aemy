@@ -2993,6 +2993,8 @@
     {
       "name": "Hero",
       "cluster": 38,
+      "source": "Hero",
+      "target": "Hero (hero38)",
       "key": "hero38",
       "instances": [
         {
@@ -3007,6 +3009,8 @@
     {
       "name": "Hero",
       "cluster": 39,
+      "source": "Hero",
+      "target": "Hero (hero39)",
       "key": "hero39",
       "instances": [
         {
