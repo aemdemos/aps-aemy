@@ -2993,6 +2993,7 @@
     {
       "name": "Hero",
       "cluster": 38,
+      "key": "hero38",
       "instances": [
         {
           "url": "https://library.westernsydney.edu.au/home",
@@ -3006,6 +3007,7 @@
     {
       "name": "Hero",
       "cluster": 39,
+      "key": "hero39",
       "instances": [
         {
           "url": "https://library.westernsydney.edu.au/",
