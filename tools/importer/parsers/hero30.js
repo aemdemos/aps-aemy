@@ -1,28 +1,20 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row must match exactly
-  const headerRow = ['Hero'];
-  // Background image row (empty for this case)
-  const imgRow = [''];
-
-  // Content: include everything inside the element (all children)
-  // If the element is empty, provide an empty string
-  let content;
-  if (element.childNodes.length > 0) {
-    // Collect all child nodes in an array for the cell
-    content = Array.from(element.childNodes);
-  } else {
-    content = [''];
+  // Extract all content from the element, including text and links
+  // For this HTML, the element is a <p> with text and an <a> (CTA button)
+  // To ensure all content is preserved, move child nodes into a div
+  const contentDiv = document.createElement('div');
+  while (element.firstChild) {
+    contentDiv.appendChild(element.firstChild);
   }
-  const contentRow = [content];
 
-  // Build the table as per the required structure
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    imgRow,
-    contentRow,
-  ], document);
+  // Build table structure: header, background image (empty), content
+  const cells = [
+    ['Hero'],
+    [''],
+    [contentDiv]
+  ];
 
-  // Replace the original element with the table
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
