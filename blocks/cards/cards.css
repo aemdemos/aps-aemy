@@ -1,5 +1,4 @@
 /* stylelint-disable no-descending-specificity */
-
 .cards > ul {
   list-style: none;
   margin: 0;
@@ -40,13 +39,13 @@
   width: 100%;
 }
 
-@media (width <= 1200px) {
+@media (max-width: 1200px) {
   .cards.cards5 > ul {
     grid-template-columns: repeat(2, minmax(280px, 1fr));
   }
 }
 
-@media (width <= 1080px) {
+@media (max-width: 1080px) {
   .cards.cards5 {
     max-width: 100%;
     padding-left: 16px;
@@ -58,13 +57,13 @@
   }
 }
 
-@media (width <= 800px) {
+@media (max-width: 800px) {
   .cards.cards5 > ul {
     grid-template-columns: 1fr;
   }
 }
 
-@media (width <= 740px) {
+@media (max-width: 740px) {
   .cards.cards5 {
     padding-left: 12px;
     padding-right: 12px;
@@ -231,7 +230,7 @@
   max-width: 1040px;
 }
 
-@media (width <= 1024px) {
+@media (max-width: 1024px) {
   .cards.cards1 > ul {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
@@ -239,7 +238,7 @@
   }
 }
 
-@media (width <= 700px) {
+@media (max-width: 700px) {
   .cards.cards1 > ul {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -356,7 +355,7 @@
   padding: 0;
 }
 
-@media (width <= 600px) {
+@media (max-width: 600px) {
   .cards.cards1 {
     padding-left: 8px;
     padding-right: 8px;
@@ -387,14 +386,14 @@
   place-items: stretch stretch;
 }
 
-@media (width <= 1040px) {
+@media (max-width: 1040px) {
   .cards > ul {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
   }
 }
 
-@media (width <= 700px) {
+@media (max-width: 700px) {
   .cards > ul {
     grid-template-columns: 1fr;
     gap: 4px;
@@ -500,11 +499,138 @@
   background-size: 1em 1em;
 }
 
-/* Remove any extra spacing at the bottom of the card body and button */
 .cards > ul > li,
 .cards .cards-card-body,
 .cards .cards-card-body .button-container,
 .cards .cards-card-body .button {
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  place-items: start stretch;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards > ul {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.cards > ul > li {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.cards .cards-card-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: #fff;
+  display: block;
+  margin: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.cards .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.cards .cards-card-body {
+  padding: 8px 4px 0;
+  background: #fff;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.cards .cards-card-body h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 8px;
+  line-height: 1.22;
+  text-align: left;
+}
+
+.cards .cards-card-body p {
+  font-size: 16px;
+  color: #222;
+  margin: 0 0 13px;
+  text-align: left;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.cards .cards-card-body .button-container {
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+}
+
+.cards .cards-card-body .button {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cards .cards-card-body .button::after {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 4px;
+  background: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg>") no-repeat center center;
+  background-size: 1em 1em;
+}
+
+.cards .cards-card-body .button:hover,
+.cards .cards-card-body .button:focus {
+  color: #222;
+  text-decoration: underline;
+}
+
+.cards .cards-card-body > *:last-child {
+  margin-bottom: 0;
 }
