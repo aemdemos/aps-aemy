@@ -1,28 +1,22 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row must match exactly
+  // The "Hero" block expects: header, (optional) background image row, then content row.
+  // There is no background image, so leave that row empty.
+  // Content row should include all text and child nodes of the original element.
   const headerRow = ['Hero'];
-  // Background image row (empty for this case)
-  const imgRow = [''];
+  const bgRow = ['']; // no background image
 
-  // Content: include everything inside the element (all children)
-  // If the element is empty, provide an empty string
-  let content;
-  if (element.childNodes.length > 0) {
-    // Collect all child nodes in an array for the cell
-    content = Array.from(element.childNodes);
-  } else {
-    content = [''];
-  }
-  const contentRow = [content];
+  // To ensure we capture all text and inline nodes (not just elements)
+  // collect all childNodes, not just children
+  const contentNodes = Array.from(element.childNodes);
+  // If there is only one node, use it as is, otherwise pass as array
+  const contentRow = [contentNodes.length === 1 ? contentNodes[0] : contentNodes];
 
-  // Build the table as per the required structure
-  const table = WebImporter.DOMUtils.createTable([
+  const cells = [
     headerRow,
-    imgRow,
+    bgRow,
     contentRow,
-  ], document);
-
-  // Replace the original element with the table
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

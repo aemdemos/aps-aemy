@@ -1,37 +1,48 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row: single cell as per spec
-  const headerRow = ['Cards (cards32)'];
+  // Get all cards (direct children)
+  const cards = element.querySelectorAll(':scope > .cart');
 
-  // Get all direct child card divs
-  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
+  // Build content rows first to determine column count
+  const rows = [];
 
-  // Build 2-column rows for each card
-  const rows = cardDivs.map(card => {
-    // First column: Icon
+  cards.forEach((card) => {
     const icon = card.querySelector('i');
-    
-    // Second column: Number (bold) and description
-    const numberSpan = card.querySelector('.cartfig');
+    const fig = card.querySelector('.cartfig');
     const desc = card.querySelector('p');
-    
-    const textCell = document.createElement('div');
-    if (numberSpan) {
+
+    // LEFT cell: icon and number
+    const cell1 = document.createElement('div');
+    if (icon) cell1.appendChild(icon); // Moves the icon node
+    if (fig) cell1.appendChild(fig); // Moves the fig node
+
+    // RIGHT cell: number as heading, description
+    const rightCell = document.createElement('div');
+    const figText = fig ? fig.textContent.trim() : '';
+    if (figText) {
       const strong = document.createElement('strong');
-      strong.textContent = numberSpan.textContent.trim();
-      textCell.appendChild(strong);
+      strong.textContent = figText;
+      rightCell.appendChild(strong);
+      rightCell.appendChild(document.createElement('br'));
     }
     if (desc) {
-      textCell.appendChild(document.createElement('br'));
-      textCell.appendChild(desc);
+      rightCell.appendChild(document.createTextNode(desc.textContent));
     }
-    return [icon, textCell];
+
+    rows.push([cell1, rightCell]);
   });
 
-  // Compose cells array: header is single-cell row, then 2-col rows
-  const cells = [headerRow, ...rows];
+  // Header row: single cell (should span two columns in rendering), followed by two-column rows.
+  const headerRow = ['Cards (cards32)', ''];
+  rows.unshift(headerRow);
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Optionally set colspan for the header cell
+  const firstRow = table.querySelector('tr');
+  if (firstRow && firstRow.children.length === 2) {
+    firstRow.children[0].setAttribute('colspan', '2');
+    firstRow.removeChild(firstRow.children[1]);
+  }
+
   element.replaceWith(table);
 }

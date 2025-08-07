@@ -1,52 +1,48 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare the table rows following the 2-column accordion block structure
-  const rows = [];
-  // 1. Header row
-  rows.push(['Accordion (accordion2)']);
+  // 1. Header row must match the block name from requirements
+  const headerRow = ['Accordion (accordion2)'];
 
-  // 2. Accordion item rows
-  // Each card represents a single accordion item.
-  // Title cell: The label in the card-header
-  // Content cell: The element that will be revealed/hidden when expanded (all content inside card-body)
-
-  // Title: find inside card-header, prefer heading, else fallback to textContent
-  const cardHeader = element.querySelector('.card-header');
-  let titleCell;
-  if (cardHeader) {
-    // Try to use the heading (h1-h6) if present, otherwise use the card-header itself
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
+  // 2. Get the accordion title: .card-header > h2 (or all text if h2 missing)
+  let title = '';
+  const headerDiv = element.querySelector('.card-header');
+  if (headerDiv) {
+    const h2 = headerDiv.querySelector('h2');
+    if (h2) {
+      title = h2.textContent.trim();
     } else {
-      titleCell = cardHeader;
+      title = headerDiv.textContent.trim();
     }
-  } else {
-    titleCell = '';
   }
 
-  // Content: card-body contains all the visible content when expanded
-  let contentCell;
-  const collapse = element.querySelector('.collapse');
-  if (collapse) {
-    // Try to find .card-body inside collapse
-    const cardBody = collapse.querySelector('.card-body');
+  // 3. Get the accordion content: everything inside .collapse (prefer .card-body)
+  let contentCell = '';
+  const collapseDiv = element.querySelector('.collapse');
+  if (collapseDiv) {
+    // If .card-body exists, use its contents, else use collapseDiv's
+    const cardBody = collapseDiv.querySelector('.card-body');
     if (cardBody) {
-      contentCell = cardBody;
+      // Take all child nodes (not just elements) to preserve all text, structure, lists etc.
+      const contentEls = Array.from(cardBody.childNodes).filter(n => (
+        n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim())
+      ));
+      // If only whitespace, fallback to empty string
+      contentCell = contentEls.length > 0 ? contentEls : '';
     } else {
-      // fallback: use all children of collapse
-      // Create a fragment to hold all children
-      const frag = document.createDocumentFragment();
-      Array.from(collapse.childNodes).forEach(child => frag.appendChild(child));
-      contentCell = frag;
+      // fallback: just all children of collapseDiv
+      const contentEls = Array.from(collapseDiv.childNodes).filter(n => (
+        n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim())
+      ));
+      contentCell = contentEls.length > 0 ? contentEls : '';
     }
-  } else {
-    contentCell = '';
   }
 
-  rows.push([titleCell, contentCell]);
+  // 4. Compose the rows: header, then [title, content]
+  const rows = [ headerRow, [title, contentCell] ];
 
-  // Create the table and replace the original element
+  // 5. Create the block table
   const table = WebImporter.DOMUtils.createTable(rows, document);
+
+  // 6. Replace the original element with the new table
   element.replaceWith(table);
 }

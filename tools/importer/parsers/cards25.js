@@ -1,49 +1,50 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the slides container
-  const track = element.querySelector('.glide__track');
+  // Find the carousel slides container
+  const glide = element.querySelector('.glide');
+  if (!glide) return;
+  const track = glide.querySelector('.glide__track');
   if (!track) return;
-  const slidesList = track.querySelector('.glide__slides');
+  const slidesList = track.querySelector('ul.glide__slides');
   if (!slidesList) return;
 
-  // Only get slides that are not clones
-  const slides = Array.from(slidesList.children).filter(slide =>
-    slide.classList.contains('glide__slide') && !slide.classList.contains('glide__slide--clone')
+  // Get all original slides (ignore clones)
+  const slides = Array.from(slidesList.children).filter(li =>
+    li.classList.contains('glide__slide') && !li.classList.contains('glide__slide--clone')
   );
-  if (slides.length === 0) return;
 
-  // Prepare table rows
-  const rows = [['Cards (cards25)']];
+  // Deduplicate using the combined text of .slide-content
+  const seen = new Set();
+  const rows = [];
 
-  // For each slide, extract the image and the card text content as a single block of elements
-  slides.forEach(slide => {
-    let img = slide.querySelector('img');
-    // Find the card text container
-    let textBlock = null;
-    const contentDiv = slide.querySelector('.slide-content');
-    if (contentDiv) {
-      // Create a container for all content so we preserve structure and do not miss text
-      textBlock = document.createElement('div');
-      // Preserve order and structure of children
-      Array.from(contentDiv.childNodes).forEach(child => {
-        // Only include elements or text nodes with content
-        if (child.nodeType === Node.ELEMENT_NODE || (child.nodeType === Node.TEXT_NODE && child.textContent.trim())) {
-          textBlock.appendChild(child);
-        }
-      });
-    } else {
-      // Fallback: collect all text nodes and elements except the image
-      textBlock = document.createElement('div');
-      Array.from(slide.childNodes).forEach(child => {
-        if (child !== img && ((child.nodeType === Node.ELEMENT_NODE && child.textContent.trim()) || (child.nodeType === Node.TEXT_NODE && child.textContent.trim()))) {
-          textBlock.appendChild(child);
-        }
-      });
-    }
-    rows.push([img, textBlock]);
-  });
+  for (const li of slides) {
+    const wrapper = li.querySelector('.slide-wrapper');
+    if (!wrapper) continue;
+    // Image (first <img> in the wrapper)
+    const img = wrapper.querySelector('img');
+    // Use .slide-content if available, else the wrapper itself
+    const content = wrapper.querySelector('.slide-content') || wrapper;
+    // Reference child elements directly (not clones)
+    const textChildren = [];
+    Array.from(content.childNodes).forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
+        textChildren.push(node);
+      }
+    });
+    if (textChildren.length === 0) continue;
+    // Deduplicate by full text content
+    const dedupeKey = textChildren.map(n => n.textContent).join(' ').trim();
+    if (seen.has(dedupeKey)) continue;
+    seen.add(dedupeKey);
+    // Compose the text cell as an array of direct references
+    rows.push([img, textChildren]);
+  }
 
-  // Build and replace
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Compose the table
+  const cells = [
+    ['Cards (cards25)'],
+    ...rows
+  ];
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

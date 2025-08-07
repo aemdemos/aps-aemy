@@ -1,32 +1,21 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract columns from links in the first <p> element
+  // Get the immediate <p> child containing the links
   const p = element.querySelector('p');
-  let columns = [];
-  if (p) {
-    columns = Array.from(p.querySelectorAll('a'));
-  }
-  if (columns.length === 0) {
-    columns = [''];
-  }
+  if (!p) return;
 
-  // Create the table manually so that the header cell gets the correct colspan
-  const table = document.createElement('table');
-  // Header row
-  const trHead = document.createElement('tr');
-  const th = document.createElement('th');
-  th.textContent = 'Columns (columns9)';
-  th.setAttribute('colspan', columns.length);
-  trHead.appendChild(th);
-  table.appendChild(trHead);
-  // Content row
-  const trContent = document.createElement('tr');
-  columns.forEach(col => {
-    const td = document.createElement('td');
-    td.append(col);
-    trContent.appendChild(td);
-  });
-  table.appendChild(trContent);
+  // Get all <a> elements directly inside the <p>
+  const links = Array.from(p.querySelectorAll('a'));
+  if (links.length === 0) return; // No links, do nothing
+
+  // Each link should be a separate column
+  const header = ['Columns (columns9)'];
+  const row = links;
+
+  const table = WebImporter.DOMUtils.createTable([
+    header,
+    row
+  ], document);
 
   element.replaceWith(table);
 }

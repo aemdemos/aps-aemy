@@ -1,57 +1,60 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to extract the URL from background-image style
-  function extractImageFromStyle(style) {
-    if (!style) return null;
-    const match = style.match(/url\((['"]?)(.*?)\1\)/);
-    if (match && match[2]) {
-      const img = document.createElement('img');
-      img.src = match[2].trim();
-      img.alt = '';
-      return img;
-    }
-    return null;
-  }
-
+  // Header row as in the example
   const headerRow = ['Cards (cards1)'];
   const rows = [headerRow];
-  const ul = element.querySelector('ul.cards__list');
-  if (!ul) return;
 
-  Array.from(ul.children).forEach((li) => {
-    const wrapper = li.querySelector('.item-wrapper');
-    // First cell: Image
-    let imgCell = null;
-    const imgLink = wrapper && wrapper.querySelector('.item-image');
+  // Locate all cards - this gets <li class="cards__item">
+  const cardItems = element.querySelectorAll('.cards__item');
+
+  cardItems.forEach((card) => {
+    // ----- IMAGE CELL -----
+    let imgEl = null;
+    const imgLink = card.querySelector('.item-image');
     if (imgLink) {
-      const img = extractImageFromStyle(imgLink.getAttribute('style'));
-      if (img) imgCell = img;
+      // background-image: url('src')
+      const style = imgLink.getAttribute('style') || '';
+      const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
+      if (match && match[1]) {
+        imgEl = document.createElement('img');
+        imgEl.src = match[1].trim();
+        imgEl.alt = imgLink.getAttribute('alt') || '';
+      }
     }
 
-    // Second cell: Title, Description, CTA in a fragment
-    const content = wrapper && wrapper.querySelector('.item-content');
-    const frag = document.createDocumentFragment();
+    // ----- TEXT CONTENT CELL -----
+    const content = card.querySelector('.item-content');
+    const cellContent = [];
     if (content) {
-      // Title
+      // Title (use H3 for semantic consistency)
       const title = content.querySelector('.item-content__title');
       if (title) {
-        frag.appendChild(title);
+        // Reference the existing title element (as <h3>), but remove class for cleanliness
+        const titleElement = title;
+        titleElement.removeAttribute('class');
+        cellContent.push(titleElement);
       }
       // Description
       const desc = content.querySelector('.item-content__desc');
-      if (desc) {
-        frag.appendChild(desc);
+      if (desc && desc.textContent.trim()) {
+        cellContent.push(desc);
       }
-      // CTA/link
+      // CTA
       const cta = content.querySelector('.item-content__link');
       if (cta) {
-        frag.appendChild(cta);
+        cellContent.push(cta);
       }
     }
-
-    rows.push([imgCell, frag]);
+    // Remove any empty text nodes or redundant whitespace
+    const cleanCellContent = cellContent.filter(
+      (el) => (typeof el === 'string' && el.trim()) || (el && el.textContent && el.textContent.trim())
+    );
+    rows.push([
+      imgEl,
+      cleanCellContent
+    ]);
   });
-
+  // Create and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

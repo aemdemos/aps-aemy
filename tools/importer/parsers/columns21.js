@@ -1,23 +1,21 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header: must be a single cell according to the example
+  // Create the header row (exactly one column)
   const headerRow = ['Columns (columns21)'];
 
-  // Collect all <a> elements within the given element, each should be a column
+  // Get all <a> elements (the content for each column)
   const links = Array.from(element.querySelectorAll('a'));
 
-  // If there are no links, don't create the block
-  if (links.length === 0) return;
+  // Each link goes into its own cell in the content row
+  const contentRow = links;
 
-  // The second row is one cell per link
-  const columnsRow = links;
-
-  // Compose the table: first row is header (single cell), second row is columns (one cell per link)
+  // Compose the table rows: header is always a single cell, content row is N columns
   const cells = [
-    headerRow,    // [ 'Columns (columns21)' ]
-    columnsRow    // [link1, link2, link3]
+    headerRow,
+    contentRow
   ];
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  // Create the block table and replace the original element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }
