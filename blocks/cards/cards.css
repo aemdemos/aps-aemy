@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity */
+
 .cards > ul {
   list-style: none;
   margin: 0;
@@ -206,7 +208,6 @@
   z-index: 1;
 }
 
-
 .cards.cards1 {
   max-width: 1120px;
   margin-left: auto;
@@ -364,4 +365,146 @@
   .cards.cards1 .cards-card-body {
     padding: 16px 10px 14px;
   }
+}
+
+.cards {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  place-items: stretch stretch;
+}
+
+@media (width <= 1040px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
+
+@media (width <= 700px) {
+  .cards > ul {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+.cards > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  min-width: 0;
+}
+
+.cards .cards-card-image {
+  width: 100%;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  margin: 0;
+  background: #fff;
+  line-height: 0;
+  display: block;
+}
+
+.cards .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.cards .cards-card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+}
+
+.cards .cards-card-body h3 {
+  color: #000;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 10px 0 6px;
+  text-align: left;
+  line-height: 1.22;
+}
+
+.cards .cards-card-body p {
+  color: #bbb;
+  font-size: 15px;
+  margin: 0 0 8px;
+  text-align: left;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.cards .cards-card-body > h3 + p {
+  margin-top: 0;
+}
+
+.cards .cards-card-body .button-container {
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+}
+
+.cards .cards-card-body .button {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.4;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-image: none;
+}
+
+.cards .cards-card-body .button::after {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 2px;
+  background: url("data:image/svg+xml;utf8,<svg fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg>") no-repeat center center;
+  background-size: 1em 1em;
+}
+
+/* Remove any extra spacing at the bottom of the card body and button */
+.cards > ul > li,
+.cards .cards-card-body,
+.cards .cards-card-body .button-container,
+.cards .cards-card-body .button {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
