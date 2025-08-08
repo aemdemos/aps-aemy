@@ -213,11 +213,6 @@ export default function decorate(block) {
           </a>
         </div>
         <div class="search-catalogue">
-          <div class="search-catalogue-title">Find books, journals, databases and more...</div>
-          <button type="button" class="search-catalogue__btn">
-            <span class="sr-only">Search icon</span>
-          </button>
-
           <form data-role="wsu-search-switcher" id="uws-library-BJA-search-form" class="search-catalogue__form" method="get"
             action="https://uws.primo.exlibrisgroup.com/discovery/search?vid=61UWSTSYD_INST:UWS_ALMA&amp;search_scope=MyInst_and_CI&amp;lang=en&amp;tab=Everything&amp;offset=0&amp;query=any,contains,"
             onsubmit="return BJA_form_submit();" target="_blank">
@@ -490,6 +485,12 @@ export default function decorate(block) {
     </div>
   `;
 
+  // Update the search form placeholder to match the screenshot
+  const searchInput = block.querySelector('#uws-search-form');
+  if (searchInput) {
+    searchInput.placeholder = 'Find books, journals, databases and more...';
+  }
+
   // Initialize header functionality
   initializeHeader(block);
 }
@@ -537,15 +538,15 @@ function initializeHeader(headerBlock) {
     quicklinksTab.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       quicklinksTab.classList.toggle('quicklinks_tab_active');
       const quicklinks = headerBlock.querySelector('.quicklinks');
       const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
-      
+
       if (quicklinks) {
         quicklinks.classList.toggle('active');
       }
-      
+
       if (quicklinksSlider) {
         quicklinksSlider.classList.toggle('active');
       }
@@ -556,12 +557,12 @@ function initializeHeader(headerBlock) {
       if (!event.target.closest('#component_1932595') && !event.target.closest('.quicklinks')) {
         const quicklinks = headerBlock.querySelector('.quicklinks');
         const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
-        
+
         if (quicklinks && quicklinks.classList.contains('active')) {
           quicklinks.classList.remove('active');
           quicklinksTab.classList.remove('quicklinks_tab_active');
         }
-        
+
         if (quicklinksSlider && quicklinksSlider.classList.contains('active')) {
           quicklinksSlider.classList.remove('active');
         }
@@ -640,5 +641,11 @@ function setupSearchForm(headerBlock) {
         }
       });
     });
+
+    // Ensure the search button has the right styling
+    const searchButton = searchForm.querySelector('.search-catalogue_btn');
+    if (searchButton) {
+      searchButton.innerHTML = 'Search';
+    }
   }
 }
