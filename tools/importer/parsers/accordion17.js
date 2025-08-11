@@ -1,31 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build the table header
+  // Prepare the header row per specification
   const headerRow = ['Accordion (accordion17)'];
-  const rows = [headerRow];
-
-  // Get all direct .card children (each card is an accordion item)
-  const cards = Array.from(element.querySelectorAll(':scope > .card'));
-  cards.forEach(card => {
-    // Title cell: the heading in .card-header (prefer h2, fallback to textContent)
+  const rows = [];
+  // Find all cards (direct children)
+  const cards = element.querySelectorAll(':scope > .card');
+  cards.forEach((card) => {
+    // Title: from card-header h2
     let titleCell = '';
-    const cardHeader = card.querySelector('.card-header');
+    const cardHeader = card.querySelector(':scope > .card-header');
     if (cardHeader) {
       const h2 = cardHeader.querySelector('h2');
-      titleCell = h2 ? h2 : cardHeader;
+      if (h2) {
+        titleCell = h2;
+      } else {
+        // fallback: entire cardHeader content
+        titleCell = document.createTextNode(cardHeader.textContent.trim());
+      }
     }
-    // Content cell: all content of .card-body, referenced as a fragment
+    // Content: all children of card-body inside .collapse
     let contentCell = '';
-    const collapse = card.querySelector('.collapse');
+    const collapse = card.querySelector(':scope > .collapse');
     if (collapse) {
-      const cardBody = collapse.querySelector('.card-body');
+      const cardBody = collapse.querySelector(':scope > .card-body');
       if (cardBody) {
-        // If only one child, use directly, else use array of nodes
-        const childNodes = Array.from(cardBody.childNodes).filter(n => !(n.nodeType === 3 && !n.textContent.trim()));
-        if (childNodes.length === 1) {
-          contentCell = childNodes[0];
-        } else if (childNodes.length > 1) {
-          contentCell = childNodes;
+        // Only include element and non-empty text nodes
+        const contentNodes = Array.from(cardBody.childNodes).filter(
+          (n) => (n.nodeType === 1) || (n.nodeType === 3 && n.textContent.trim())
+        );
+        if (contentNodes.length === 1) {
+          contentCell = contentNodes[0];
+        } else if (contentNodes.length > 1) {
+          contentCell = contentNodes;
         } else {
           contentCell = '';
         }
@@ -33,6 +39,11 @@ export default function parse(element, { document }) {
     }
     rows.push([titleCell, contentCell]);
   });
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+
+  // Build the table and replace the element
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows,
+  ], document);
+  element.replaceWith(table);
 }

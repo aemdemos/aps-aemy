@@ -1,69 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per example
-  const cells = [
-    ['Cards (cards1)']
-  ];
+  const headerRow = ['Cards (cards1)'];
+  const rows = [headerRow];
 
-  // Find all card items
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll(':scope > li.cards__item');
+  // Get all direct card items
+  const cardItems = element.querySelectorAll('.cards__list > .cards__item');
 
-  items.forEach((item) => {
-    // --- IMAGE ---
+  cardItems.forEach((card) => {
+    // For image: find the 'a.item-image' and get the URL from style.backgroundImage
+    const imageAnchor = card.querySelector('.item-image');
     let imgEl = null;
-    const imageLink = item.querySelector('.item-image');
-    if (imageLink) {
-      const style = imageLink.getAttribute('style') || '';
-      const match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
-      if (match && match[1]) {
+    if (imageAnchor) {
+      const style = imageAnchor.getAttribute('style');
+      // Extract url('...') from style string
+      const match = style && style.match(/url\(['"]?(.*?)['"]?\)/);
+      if (match) {
         imgEl = document.createElement('img');
         imgEl.src = match[1].trim();
-        // Use the card title for alt, fallback to empty string
-        const title = item.querySelector('.item-content__title');
-        imgEl.alt = title ? title.textContent.trim() : '';
+        imgEl.alt = imageAnchor.getAttribute('alt') || '';
       }
     }
 
-    // --- TEXT CONTENT ---
-    const content = item.querySelector('.item-content');
-    // We'll use a fragment to assemble the contents
-    const frag = document.createDocumentFragment();
+    // For text cell: use the actual elements from the DOM
+    const content = card.querySelector('.item-content');
+    const textElements = [];
     if (content) {
-      // Title as <strong>, as in the example
+      // Title
       const title = content.querySelector('.item-content__title');
-      if (title) {
-        const strong = document.createElement('strong');
-        strong.textContent = title.textContent.trim();
-        frag.appendChild(strong);
-        frag.appendChild(document.createElement('br'));
-      }
-
-      // Description as <p>
+      if (title) textElements.push(title);
+      // Description
       const desc = content.querySelector('.item-content__desc');
-      if (desc) {
-        const p = document.createElement('p');
-        p.textContent = desc.textContent.trim();
-        frag.appendChild(p);
-      }
-
-      // Call to action link, as a regular <a> (no list)
+      if (desc) textElements.push(desc);
+      // CTA link
       const cta = content.querySelector('.item-content__link');
-      if (cta) {
-        // Reference the existing element
-        frag.appendChild(cta);
-      }
+      if (cta) textElements.push(cta);
     }
-
-    // Add row: [img, text]
-    cells.push([
+    rows.push([
       imgEl,
-      frag
+      textElements
     ]);
   });
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

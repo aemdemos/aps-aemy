@@ -1,56 +1,68 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  function getChildByClass(parent, className) {
-    for (const child of parent.children) {
-      if (child.classList && child.classList.contains(className)) return child;
+  // Extract left and right columns
+  const leftCol = element.querySelector('.media-body');
+  const rightCol = element.querySelector('.media-right');
+
+  // 1. LEFT COLUMN CONTENT
+  // a. Title (h3 > a)
+  const h3 = leftCol.querySelector('.media-heading');
+  // Use the heading from h3, referencing the original element
+  // b. Description paragraphs
+  const descDiv = leftCol.querySelector('.s-lc-c-evt-des');
+  // All paragraphs in description
+  const descParas = Array.from(descDiv ? descDiv.children : []);
+  // c. Details (<dl>)
+  const detailsDl = leftCol.querySelector('dl');
+  let detailsList = null;
+  if (detailsDl) {
+    // For each dt/dd pair, create a <li><strong>dt</strong> dd/link</li>
+    const list = document.createElement('ul');
+    const nodes = Array.from(detailsDl.children);
+    for (let i = 0; i < nodes.length - 1; i += 2) {
+      const dt = nodes[i];
+      const dd = nodes[i+1];
+      if (dt.tagName.toLowerCase() === 'dt' && dd.tagName.toLowerCase() === 'dd') {
+        const li = document.createElement('li');
+        const strong = document.createElement('strong');
+        strong.textContent = dt.textContent.trim();
+        li.appendChild(strong);
+        li.append(' ');
+        if (dd.querySelector('a')) {
+          li.appendChild(dd.querySelector('a'));
+        } else {
+          li.append(dd.textContent.trim());
+        }
+        list.appendChild(li);
+      }
     }
-    return null;
+    detailsList = list;
   }
 
-  const leftCol = getChildByClass(element, 'media-body');
-  const rightCol = getChildByClass(element, 'media-right');
-
+  // Assemble all left column content as a single cell (array of elements)
   const leftContent = [];
-  if (leftCol) {
-    const h3 = leftCol.querySelector('h3');
-    if (h3) leftContent.push(h3);
-    const descDiv = leftCol.querySelector('.s-lc-c-evt-des');
-    if (descDiv) {
-      Array.from(descDiv.children).forEach(child => {
-        leftContent.push(child);
-      });
-    }
-    const dl = leftCol.querySelector('dl');
-    if (dl) leftContent.push(dl);
-  }
+  if (h3) leftContent.push(h3);
+  descParas.forEach(p => leftContent.push(p));
+  if (detailsList) leftContent.push(detailsList);
 
-  const rightContent = [];
+  // 2. RIGHT COLUMN CONTENT
+  // Reference the original image element
+  let rightContent = [];
   if (rightCol) {
-    const imgLink = rightCol.querySelector('a');
-    if (imgLink && imgLink.querySelector('img')) {
-      const img = imgLink.querySelector('img');
-      rightContent.push(img);
-    } else {
-      const img = rightCol.querySelector('img');
-      if (img) rightContent.push(img);
-    }
+    const img = rightCol.querySelector('img');
+    if (img) rightContent.push(img);
   }
 
-  // Compose the table rows
-  const dataRow = [leftContent, rightContent];
+  // 3. Table header row
+  const headerRow = ['Columns (columns33)'];
 
-  // Create table using DOMUtils and then fix header colspan
-  const table = WebImporter.DOMUtils.createTable([
-    ['Columns (columns33)'],
-    dataRow,
-  ], document);
+  // 4. Assemble table rows
+  const cells = [
+    headerRow,
+    [leftContent, rightContent]
+  ];
 
-  // Fix the header row to have a single th with correct colspan
-  const headerRow = table.querySelector('tr');
-  const th = headerRow && headerRow.querySelector('th');
-  if (th && dataRow.length > 1) {
-    th.setAttribute('colspan', dataRow.length);
-  }
-
+  // 5. Create block table and replace original element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

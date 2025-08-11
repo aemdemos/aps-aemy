@@ -1,56 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as specified in the example
+  // Header row as in the example
   const headerRow = ['Hero (hero38)'];
 
-  // --- Row 2: Background image ---
-  // Extract background image URL from style attribute
-  let bgImgUrl = null;
+  // Row 2: Background image (from style attribute)
+  let imageCell = '';
   const style = element.getAttribute('style') || '';
-  const urlMatch = style.match(/url\(['"]?([^'")]+)['"]?\)/i);
-  if (urlMatch) {
-    bgImgUrl = urlMatch[1];
+  const bgMatch = style.match(/background(?:-image)?:[^;]*url\(['"]?([^'")]+)['"]?\)/i);
+  if (bgMatch && bgMatch[1]) {
+    const img = document.createElement('img');
+    img.src = bgMatch[1];
+    img.alt = '';
+    imageCell = img;
   }
 
-  // If present, create a single <img> element (do not clone, create new)
-  let bgImgEl = null;
-  if (bgImgUrl) {
-    bgImgEl = document.createElement('img');
-    bgImgEl.src = bgImgUrl;
-    bgImgEl.alt = '';
+  // Row 3: Content (headline, subheading, CTA)
+  // In this example, there is only a paragraph of text, no heading or button
+  // The full text is inside .home-banner__desc
+  let contentCell = '';
+  const descWrapper = element.querySelector('.home-banner__desc-wrapper');
+  if (descWrapper) {
+    // Instead of cloning or creating new elements, reference the existing structure
+    // However, since the description is just a div, we can use it directly
+    const desc = descWrapper.querySelector('.home-banner__desc');
+    if (desc) {
+      contentCell = desc;
+    }
   }
 
-  // --- Row 3: Text content and CTA ---
-  // Try to find the main text
-  let contentCellNodes = [];
-  const desc = element.querySelector('.home-banner__desc');
-  // Use the descriptive div if present, otherwise fallback to the element's text, trimmed
-  let textContent = '';
-  if (desc) {
-    textContent = desc.textContent.trim();
-  } else {
-    textContent = element.textContent.trim();
-  }
-  // Is there a link (CTA)? The entire banner is a link
-  if (element.href && textContent) {
-    // Create a single <a> element, referencing the source element
-    const ctaLink = document.createElement('a');
-    ctaLink.href = element.href;
-    ctaLink.textContent = textContent;
-    contentCellNodes.push(ctaLink);
-  } else if (textContent) {
-    // If there's only text, output as plain text
-    contentCellNodes.push(textContent);
-  }
-
-  // Build the table rows, as per the block spec: 1 column, 3 rows
-  const rows = [
+  const cells = [
     headerRow,
-    [bgImgEl ? bgImgEl : ''],
-    [contentCellNodes.length > 0 ? contentCellNodes : '']
+    [imageCell],
+    [contentCell],
   ];
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Create and replace the table
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

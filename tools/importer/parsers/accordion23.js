@@ -1,34 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row must be a single cell (spanning two columns in effect)
+  // Define header row as in example
   const headerRow = ['Accordion (accordion23)'];
-  const rows = [headerRow];
+  const cells = [headerRow];
 
-  // Each .card is an accordion item
+  // Find all .card children (accordion items)
   const cards = element.querySelectorAll(':scope > .card');
-  // For each item, push [title, content] as a row
-  cards.forEach((card) => {
-    // Title cell: heading if present, otherwise .card-header text
+  cards.forEach(card => {
+    // Title cell: Use h2 inside .card-header (preferred for semantic consistency)
     let titleCell = '';
-    const cardHeader = card.querySelector('.card-header');
-    if (cardHeader) {
-      const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-      if (heading) {
-        titleCell = heading;
+    const header = card.querySelector('.card-header');
+    if (header) {
+      const h2 = header.querySelector('h2');
+      titleCell = h2 ? h2 : header;
+    }
+    // Content cell: All children of .card-body inside .collapse
+    let contentCell = '';
+    const collapse = card.querySelector('.collapse');
+    if (collapse) {
+      const cardBody = collapse.querySelector('.card-body');
+      if (cardBody) {
+        // Gather all meaningful children (elements and non-empty text)
+        const children = Array.from(cardBody.childNodes).filter(n => {
+          return (n.nodeType === 1) || (n.nodeType === 3 && n.textContent.trim());
+        });
+        if (children.length > 1) {
+          contentCell = children;
+        } else if (children.length === 1) {
+          contentCell = children[0];
+        } else {
+          contentCell = cardBody;
+        }
       } else {
-        titleCell = document.createTextNode(cardHeader.textContent.trim());
+        contentCell = collapse;
       }
     }
-    // Content cell: .card-body as element if present
-    let contentCell = '';
-    const cardBody = card.querySelector('.card-body');
-    if (cardBody) {
-      contentCell = cardBody;
-    }
-    rows.push([titleCell, contentCell]);
+    cells.push([titleCell, contentCell]);
   });
 
-  // Create a table with the rows (header row = 1 cell, others = 2 cells)
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Create and replace with the block table
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

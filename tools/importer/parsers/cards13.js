@@ -1,62 +1,69 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the list of card items
-  const cardsList = element.querySelector('.cards__list');
-  if (!cardsList) return;
-  const cards = Array.from(cardsList.children);
+  // Helper: extract image url from anchor with background-image style and create <img>
+  function createImgFromAnchor(aEl, titleAlt) {
+    const style = aEl.getAttribute('style') || '';
+    const match = style.match(/url\(['"]?([^'")]+)['"]?\)/);
+    const url = match ? match[1].trim() : '';
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = titleAlt || '';
+    return img;
+  }
 
-  // Header row
-  const rows = [ ['Cards (cards13)'] ];
+  // Find the card list
+  const ul = element.querySelector('ul');
+  if (!ul) return;
 
-  cards.forEach((card) => {
-    // First cell: Image
-    let imgCell = null;
-    const itemImage = card.querySelector('.item-image');
-    if (itemImage) {
-      // Extract background-image url
-      const style = itemImage.getAttribute('style') || '';
-      const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
-      if (match && match[1]) {
-        const img = document.createElement('img');
-        img.src = match[1].trim();
-        // Alt from card title
-        const itemContent = card.querySelector('.item-content');
-        const h3 = itemContent?.querySelector('h3');
-        img.alt = h3 ? h3.textContent.trim() : 'card image';
-        imgCell = img;
+  // Table header EXACTLY as required
+  const cells = [['Cards (cards13)']];
+
+  // Process each card item
+  Array.from(ul.children).forEach(li => {
+    if (!li.classList.contains('cards__item')) return;
+    const wrapper = li.querySelector('.item-wrapper');
+    if (!wrapper) return;
+
+    // Get image anchor and title (for alt text)
+    const imageAnchor = wrapper.querySelector('.item-image');
+    const contentDiv = wrapper.querySelector('.item-content');
+    let title = '';
+    let titleEl = null;
+    if (contentDiv) {
+      const h = contentDiv.querySelector('h3');
+      if (h) {
+        title = h.textContent.trim();
+        titleEl = h;
       }
     }
+    // First column: image
+    let imgEl = null;
+    if (imageAnchor) {
+      imgEl = createImgFromAnchor(imageAnchor, title);
+    }
 
-    // Second cell: Title, Description, CTA link
-    const textCellParts = [];
-    const itemContent = card.querySelector('.item-content');
-    if (itemContent) {
-      // Title
-      const h3 = itemContent.querySelector('h3');
-      if (h3) {
-        // Use <strong> for title (no heading in markdown example)
-        const strong = document.createElement('strong');
-        strong.textContent = h3.textContent.trim();
-        textCellParts.push(strong);
-      }
-      // Description (if not empty)
-      const desc = itemContent.querySelector('p');
+    // Second column: text content
+    const contentEls = [];
+    if (titleEl) contentEls.push(titleEl);
+    // Only push description if non-empty
+    if (contentDiv) {
+      const desc = contentDiv.querySelector('p');
       if (desc && desc.textContent.trim()) {
-        const descP = document.createElement('p');
-        descP.textContent = desc.textContent.trim();
-        textCellParts.push(descP);
+        contentEls.push(desc);
       }
-      // CTA link
-      const cta = itemContent.querySelector('a');
-      if (cta) {
-        const ctaA = cta; // reference the actual element
-        textCellParts.push(ctaA);
+      // Only push CTA link if it exists
+      const link = contentDiv.querySelector('a');
+      if (link) {
+        contentEls.push(link);
       }
     }
 
-    rows.push([imgCell, textCellParts]);
+    cells.push([
+      imgEl,
+      contentEls.length === 1 ? contentEls[0] : contentEls
+    ]);
   });
-
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Create the table block
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

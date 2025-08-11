@@ -1,41 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion block header as specified in the markdown example
+  // Block header as a single-cell row
   const headerRow = ['Accordion (accordion36)'];
 
-  // Get the title element from the card header
+  // Get the accordion title
+  let title = '';
   const headerDiv = element.querySelector('.card-header');
-  let titleElem = null;
   if (headerDiv) {
-    // Look for a heading (h2-h6), fallback to headerDiv itself if none
     const heading = headerDiv.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleElem = heading;
-    } else {
-      titleElem = headerDiv;
-    }
+    title = heading ? heading.textContent.trim() : headerDiv.textContent.trim();
   }
 
-  // Get the content element from within the collapse div
+  // Get the content for the accordion
   let contentElem = null;
   const collapseDiv = element.querySelector('.collapse');
   if (collapseDiv) {
-    // Prefer .card-body inside collapse, otherwise use collapseDiv directly
-    const cardBody = collapseDiv.querySelector('.card-body');
-    if (cardBody) {
-      contentElem = cardBody;
-    } else {
-      contentElem = collapseDiv;
-    }
+    contentElem = collapseDiv.querySelector('.card-body') || collapseDiv;
   }
+  if (!contentElem) contentElem = element;
 
-  // If either title or content is missing, do not add the row
-  const rows = [headerRow];
-  if (titleElem && contentElem) {
-    rows.push([titleElem, contentElem]);
-  }
+  // Each item is a row: [title, contentElem]
+  const rows = [[title, contentElem]];
 
-  // Create the accordion block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // The block table: header row is always a single cell
+  const cells = [headerRow, ...rows];
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

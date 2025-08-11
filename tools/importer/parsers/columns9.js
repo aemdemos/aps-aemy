@@ -1,27 +1,20 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the direct <p> child, which contains the two links
-  // Defensive: if there is no <p>, fallback to the element's content
-  let contentCell;
-  const p = element.querySelector('p');
-  if (p) {
-    contentCell = p;
-  } else {
-    // If <p> is not present, create a fragment with all children
-    const frag = document.createDocumentFragment();
-    Array.from(element.childNodes).forEach(node => frag.appendChild(node));
-    contentCell = frag;
-  }
+  // Header row must be a single column with the block name
+  const headerRow = ['Columns (columns9)'];
 
-  // Compose the table structure
-  const cells = [
-    ['Columns (columns9)'], // header must match the spec
-    [contentCell]
-  ];
+  // For this HTML, we want a content row with two columns, one per link
+  const links = Array.from(element.querySelectorAll('a'));
 
-  // Create the table block
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Content row: each <a> as a column
+  const contentRow = links;
 
-  // Replace the original element with the new table
-  element.replaceWith(table);
+  // Table is header + content row
+  const cells = [headerRow, contentRow];
+
+  // Create block table
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element
+  element.replaceWith(block);
 }

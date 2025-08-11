@@ -1,39 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion (accordion4) block header row
+  // HEADER ROW - block name exactly as in requirements
   const headerRow = ['Accordion (accordion4)'];
-  // Gather all direct .card children (each is one accordion item)
-  const cards = element.querySelectorAll(':scope > .card');
-  const rows = [headerRow];
-  cards.forEach((card) => {
-    // Title cell extraction: find .card-header > heading element (h2, h3, h4, h5, h6)
-    let titleEl = null;
-    const cardHeader = card.querySelector(':scope > .card-header');
-    if (cardHeader) {
-      // Try to find a heading tag in .card-header
-      titleEl = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-      // If not, fallback to cardHeader itself
-      if (!titleEl) {
-        titleEl = cardHeader;
-      }
-    } else {
-      // If no card-header, fallback to first child
-      titleEl = card.firstElementChild;
-    }
+  const cells = [headerRow];
 
-    // Content cell extraction: find .collapse > .card-body
-    let contentEl = null;
-    const collapseEl = card.querySelector(':scope > .collapse');
-    if (collapseEl) {
-      contentEl = collapseEl.querySelector(':scope > .card-body') || collapseEl;
-    } else {
-      // If no .collapse, try next sibling or fallback to card
-      contentEl = card;
+  // Get all accordion cards (immediate .card children)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+  cards.forEach(card => {
+    // Title cell extraction
+    // Prefer h2/h5 inside .card-header, else fallback to full .card-header
+    let titleElem = card.querySelector('.card-header h2, .card-header h5');
+    if (!titleElem) {
+      const header = card.querySelector('.card-header');
+      // create a div to reference the header text if h2/h5 missing
+      titleElem = document.createElement('div');
+      if (header) titleElem.textContent = header.textContent.trim();
     }
-    
-    // Push the row as [title, content] referencing actual elements
-    rows.push([titleEl, contentEl]);
+    // Content cell: reference the full .card-body (preserves nested elements)
+    const contentElem = card.querySelector('.card-body');
+    // If no .card-body, fallback to empty div
+    cells.push([
+      titleElem,
+      contentElem || document.createElement('div')
+    ]);
   });
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+
+  // Create the block table and replace
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

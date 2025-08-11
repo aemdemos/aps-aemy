@@ -1,47 +1,39 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as per block name (no extra Section Metadata block)
-  const headerRow = ['Cards (cards32)'];
-  const rows = [headerRow];
+  const headerRow = ['Cards (cards32)']; // header EXACT match
+  // Get all immediate card divs
+  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
 
-  // Each card is a direct child <div> of the main container
-  const cards = element.querySelectorAll(':scope > div');
-
-  cards.forEach((card) => {
-    // ICON/IMAGE CELL (first cell)
-    // Use the <i> as the visual, and append the number in bold for visual parity
+  const rows = cardDivs.map(card => {
+    // Find the icon (i.fa), the value (span.cartfig), and the description (p)
     const icon = card.querySelector('i');
-    const stat = card.querySelector('.cartfig');
+    const value = card.querySelector('.cartfig');
+    const description = card.querySelector('p');
 
-    let iconCell = document.createElement('div');
-    if (icon) {
-      iconCell.appendChild(icon);
-    }
-    if (stat) {
-      const statBlock = document.createElement('div');
-      statBlock.style.fontWeight = 'bold';
-      statBlock.style.fontSize = '1.25em';
-      statBlock.appendChild(stat);
-      iconCell.appendChild(statBlock);
+    // Left cell: icon and value centered/stacked
+    const leftCell = document.createElement('div');
+    if (icon) leftCell.appendChild(icon);
+    if (value) {
+      leftCell.appendChild(document.createElement('br'));
+      leftCell.appendChild(value);
     }
 
-    // CONTENT CELL (second cell)
-    // Place stat as heading (bold), then p as description
-    const contentWrapper = document.createElement('div');
-    if (stat) {
+    // Right cell: bolded value and description below
+    const rightCell = document.createElement('div');
+    if (value) {
       const strong = document.createElement('strong');
-      strong.textContent = stat.textContent;
-      contentWrapper.appendChild(strong);
-      contentWrapper.appendChild(document.createElement('br'));
+      strong.textContent = value.textContent.trim();
+      rightCell.appendChild(strong);
+      rightCell.appendChild(document.createElement('br'));
     }
-    const p = card.querySelector('p');
-    if (p) {
-      contentWrapper.appendChild(p);
+    if (description) {
+      rightCell.appendChild(description);
     }
 
-    rows.push([iconCell, contentWrapper]);
+    return [leftCell, rightCell];
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  const cells = [headerRow, ...rows];
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

@@ -1,57 +1,53 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Compose header row as specified
-  const cells = [['Accordion (accordion14)']];
-  // Each card is an accordion item
+  // Header: block name exactly as required
+  const headerRow = ['Accordion (accordion14)'];
+  const rows = [headerRow];
+
+  // Find all top-level cards in the accordion
   const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach((card) => {
-    // Title cell
-    let titleEl = card.querySelector('.card-header');
-    let titleCell = '';
-    if (titleEl) {
-      // Prefer the heading if present, but reference the actual heading element
-      let heading = titleEl.querySelector('h2, h3, h4, h5, h6');
+  cards.forEach(card => {
+    // TITLE: .card-header > h2 (or fallback to all .card-header text)
+    let titleCell = null;
+    const header = card.querySelector('.card-header');
+    if (header) {
+      // prefer direct heading element
+      const heading = header.querySelector('h1,h2,h3,h4,h5,h6');
       if (heading) {
         titleCell = heading;
       } else {
-        // If no heading, use the card-header itself
-        titleCell = titleEl;
+        // fallback: use all text as a div
+        const div = document.createElement('div');
+        div.textContent = header.textContent.trim();
+        titleCell = div;
       }
+    } else {
+      // fallback: blank cell
+      titleCell = document.createElement('div');
     }
-    // Content cell
-    // Use the .card-body, but replace iframes with links (reference existing element when possible)
-    let contentCellNodes = [];
-    const cardBody = card.querySelector('.collapse > .card-body');
-    if (cardBody) {
-      // For each child of cardBody, use as-is, but for iframes, convert to link
-      cardBody.childNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'P') {
-          // If <p> contains an iframe, replace with a link
-          const iframe = node.querySelector('iframe');
-          if (iframe) {
-            const src = iframe.getAttribute('src');
-            if (src) {
-              const a = document.createElement('a');
-              a.href = src;
-              a.textContent = src;
-              // Make a new <p> to match block structure
-              const p = document.createElement('p');
-              p.appendChild(a);
-              contentCellNodes.push(p);
-              return;
-            }
-          }
-        }
-        // For all nodes not handled above, reference directly
-        contentCellNodes.push(node);
-      });
+
+    // CONTENT: .collapse > .card-body (reference the element directly)
+    let contentCell = card.querySelector('.collapse > .card-body');
+    if (!contentCell) {
+      contentCell = card.querySelector('.collapse');
     }
-    // Push the row: two columns: title, content
-    cells.push([
-      titleCell,
-      contentCellNodes
-    ]);
+    // Defensive fallback: if even .collapse not found, create an empty div
+    if (!contentCell) {
+      contentCell = document.createElement('div');
+    }
+    // TRANSFORM: Replace all iframes (not images) with anchor links to src
+    contentCell.querySelectorAll('iframe').forEach(iframe => {
+      if (iframe.src) {
+        const a = document.createElement('a');
+        a.href = iframe.src;
+        a.textContent = iframe.src;
+        iframe.replaceWith(a);
+      }
+    });
+    rows.push([titleCell, contentCell]);
   });
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Create and replace with the block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
