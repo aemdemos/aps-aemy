@@ -40,9 +40,9 @@ async function updateEDSPermission() {
           updateResults.push(...batchResults);
         }
     
-        // return result.data.siteUsersMapping;
+        return result.data.siteUsersMapping;
       } catch (err) {
-        setStatus({ type: 'error', message: err.message });
+        //setStatus({ type: 'error', message: err.message });
         throw err;
       }
 
