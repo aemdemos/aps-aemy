@@ -75,7 +75,7 @@ async function updateEDSPermission() {
     return result;
   };
 
-  export function getHeaders({ type } = { type: 'json' }) {
+  function getHeaders() {
     return {
       Authorization: process.env.AUTHTOKEN,
       'Content-Type': 'application/json',
