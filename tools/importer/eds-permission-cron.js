@@ -1,8 +1,8 @@
 
-import {
-    API_ADD_PERMISSIONS,
-    API_UPDATE_EDS_CONFIG,
-  } from '../constants/index.js';
+// import {
+//     API_ADD_PERMISSIONS,
+//     API_UPDATE_EDS_CONFIG,
+//   } from '../constants/index.js';
 
 async function updateEDSPermission() {
     
@@ -27,7 +27,7 @@ async function updateEDSPermission() {
             'x-cm-ims-org-id': IMSORGID,
           };
         
-        const res = await fetch(API_ADD_PERMISSIONS, {
+        const res = await fetch('https://113408-edsconfigautomation-stage.adobeioruntime.net/api/v1/web/eds-cm-config-automation-sa/cdn-add-permissions', {
           method: 'POST',
           headers: apiHeaders,
         });
