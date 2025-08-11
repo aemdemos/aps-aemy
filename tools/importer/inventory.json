@@ -1274,6 +1274,12 @@
       "key": "accordion3",
       "instances": [
         {
+          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
+          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
+          "uuid": "ac1c0cc8-06-e926359b29ba0df6c4b0eea2799556f7a79cd75c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]"
+        },
+        {
           "url": "https://library.westernsydney.edu.au/researchers/develop_publishing_plan",
           "urlHash": "36af50ba8bde50a65ffa7875cf331da1460d189c",
           "uuid": "36af50ba-03-ea74c947c21cb371847451b049d95e1ea7d387d3",
