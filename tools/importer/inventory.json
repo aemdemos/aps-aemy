@@ -1658,7 +1658,6 @@
         }
       ]
     },
-
     {
       "name": "unknown",
       "cluster": 5,
@@ -1677,11 +1676,8 @@
         }
       ]
     },
-
-
-
     {
-      "name": "Columns",
+      "name": "unknown",
       "cluster": 9,
       "source": "Columns",
       "target": "Columns (columns9)",
@@ -2028,7 +2024,6 @@
         }
       ]
     },
-
     {
       "name": "Cards",
       "cluster": 18,
@@ -2056,7 +2051,6 @@
         }
       ]
     },
-
     {
       "name": "unknown",
       "cluster": 20,
@@ -2708,7 +2702,6 @@
         }
       ]
     },
-    
     {
       "name": "Carousel",
       "cluster": 26,
@@ -2724,7 +2717,6 @@
         }
       ]
     },
-
     {
       "name": "Embed (video)",
       "cluster": 28,
@@ -2740,7 +2732,6 @@
         }
       ]
     },
-
     {
       "name": "Hero",
       "cluster": 30,
@@ -2783,7 +2774,6 @@
         }
       ]
     },
-    
     {
       "name": "Columns",
       "cluster": 33,
@@ -2805,7 +2795,6 @@
         }
       ]
     },
-    
     {
       "name": "Hero",
       "cluster": 38,
