@@ -22,4 +22,10 @@ jobs:
       - name: Run JavaScript file
         env:
           FROMCRON: ${{ secrets.FROMCRON }}
+          AUTHTOKEN: ${{ secrets.AUTHTOKEN }}
+          CLIENTID: ${{ secrets.CLIENTID }}
+          CLIENTSECRET: ${{ secrets.CLIENTSECRET }}
+          GITORGID: ${{ secrets.GITORGID }}
+          IMSORGID: ${{ secrets.IMSORGID }}
+          PROGRAMID: ${{ secrets.PROGRAMID }}
         run: node tools/importer/eds-permission-cron.js
