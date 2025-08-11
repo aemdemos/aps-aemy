@@ -34,9 +34,11 @@ async function updateEDSPermission() {
         if (!res.ok) throw new Error(`Failed to add persmissison: ${res.statusText}`);
         const result = await res.json();
 
-        console.log(result);
+        for (const groups of result.data.siteUsersMapping) {
+            console.log(groups.userEmails);
+        }
     
-        // // Process updateEDSConfig in batches of 10
+        // Process updateEDSConfig in batches of 10
         // const batchSize = 10;
         // const updateResults = [];
         // for (let i = 0; i < result.data.siteUsersMapping.length; i += batchSize) {
@@ -55,5 +57,7 @@ async function updateEDSPermission() {
 
 
   }
+
+
 
   updateEDSPermission();
