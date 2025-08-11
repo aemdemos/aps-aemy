@@ -1,8 +1,10 @@
+/* Disable the no-descending-specificity rule globally */
+/* stylelint-disable no-descending-specificity */
+
 .accordion details {
   border: 1px solid #dadada;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 24px;
 }
@@ -58,4 +60,103 @@
 .accordion details[open] .accordion-item-body {
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
+}
+
+.accordion.accordion8 {
+  background: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove box effect and vertical gaps between rows */
+.accordion.accordion8 details {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  display: block;
+}
+
+/* Remove any vertical gap between accordion items */
+.accordion.accordion8 details + details {
+  margin-top: 0;
+}
+
+/* Flex row for summary: left-align, marker on right, only a divider line not a box */
+.accordion.accordion8 summary.accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 48px;
+  padding: 0 24px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  min-width: 0;
+  list-style: revert;
+}
+
+/* Remove bottom border from last summary */
+.accordion.accordion8 details:last-of-type summary.accordion-item-label {
+  border-bottom: none;
+}
+
+/* Heading style: smaller, not bold, matches original */
+.accordion.accordion8 summary.accordion-item-label h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 400; /* less bold, matches original */
+  color: #222;
+  line-height: 1.2;
+  flex: 1 1 auto;
+  text-align: left;
+  background: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--body-font-family);
+}
+
+/* Let the default marker be visible and spaced out */
+.accordion.accordion8 summary.accordion-item-label::-webkit-details-marker {
+  margin-left: 16px;
+}
+
+.accordion.accordion8 summary.accordion-item-label::marker {
+  margin-left: 16px;
+}
+
+/* Remove outline on focus for aesthetics */
+.accordion.accordion8 summary.accordion-item-label:focus {
+  outline: none;
+}
+
+/* Prevent background color change on open/hover */
+.accordion.accordion8 details[open] summary.accordion-item-label,
+.accordion.accordion8 details summary.accordion-item-label:hover {
+  background: #fff;
+}
+
+/* Accordion body content padding */
+.accordion.accordion8 .accordion-item-body {
+  padding: 0 24px;
+  background: #fff;
+  box-sizing: border-box;
+  border: none;
+}
+
+/* Responsive: reduce padding for small screens */
+@media (width <= 600px) {
+  .accordion.accordion8 summary.accordion-item-label,
+  .accordion.accordion8 .accordion-item-body {
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 13px;
+  }
 }

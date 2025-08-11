@@ -1,4 +1,3 @@
-/* Variables and root settings */
 .columns.columns3 {
   --wsu-pink: #b11e47;
   --wsu-gray: #f3f3f3;
@@ -26,8 +25,6 @@
 .columns > div > .columns-img-col img {
   display: block;
 }
-
-/* Main Layout: tightly wrap columns, center as a block, modest gap */
 .columns.columns3 > div {
   display: flex;
   flex-direction: row;
@@ -39,8 +36,6 @@
   gap: 28px;
   padding: 0;
 }
-
-/* Responsive: Stack columns on small screens */
 @media (width <= 900px), (width <= 850px) {
   .columns.columns3 > div {
     flex-direction: column;
@@ -66,8 +61,6 @@
     order: unset;
   }
 }
-
-/* Column widths and alignment */
 .columns.columns3 > div > div {
   min-width: 0;
   flex: 0 1 360px;
@@ -93,8 +86,6 @@
   display: flex;
   flex-direction: column;
 }
-
-/* Headings */
 .columns.columns3 h2 {
   font-weight: 700;
   color: var(--text-color);
@@ -105,8 +96,6 @@
   margin-bottom: 0.25em;
   font-size: var(--heading-font-size-xl);
 }
-
-/* Compact vertical spacing between all elements in columns */
 .columns.columns3 > div > div > * {
   margin-bottom: 0.28em;
 }
@@ -122,8 +111,6 @@
 .columns.columns3 > div > div:first-child > *:nth-child(2) {
   margin-top: 0.04em;
 }
-
-/* Date + Tab Bar (merged duplicate selector) */
 .columns.columns3 > div > div:first-child > ul {
   display: flex;
   gap: 0.6em;
@@ -151,8 +138,6 @@
   margin: 0;
   font-size: 1em;
 }
-
-/* Table Styling */
 .columns.columns3 > div > div:first-child table {
   width: 100%;
   background: var(--wsu-gray);
@@ -217,8 +202,6 @@
   font-weight: 600;
   color: #222;
 }
-
-/* Buttons and links */
 .columns.columns3 > div > div:first-child .button-container {
   margin: 0.18em 0 0.02em;
 }
@@ -283,4 +266,205 @@
 
 .columns.columns3 > div > div:last-child {
   align-items: flex-start;
+}
+
+
+.columns.columns31 {
+  --wsu-pink: #b31b34;
+  --wsu-bg-table: #ededed;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Ensure the block sits at the natural flow of the document (top-aligned) */
+.columns.columns31,
+.columns.columns31 > div {
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 0;
+}
+
+/* Main two-column flex layout; even tighter gap for side-by-side grouping */
+.columns.columns31 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+}
+
+/* Responsive: stack columns vertically on small screens */
+@media (max-width: 900px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 16px;
+    max-width: 100%;
+    margin: 0 8px;
+  }
+}
+
+/* Left column (hours) - compact, vertically stacked */
+.columns.columns31 > div > div:first-child {
+  min-width: 0;
+  max-width: 340px;
+  flex: 1 1 340px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+/* Right column (librarian) - compact, sits close to left */
+.columns.columns31 > div > div:last-child {
+  min-width: 0;
+  max-width: 220px;
+  flex: 1 1 220px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+/* Headings: bold, black, close to top */
+.columns.columns31 h2 {
+  font-size: var(--heading-font-size-xl);
+  font-weight: 700;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 0.4em;
+  letter-spacing: 0;
+}
+
+/* List row: date and WSU community hours, spaced, left-aligned */
+.columns.columns31 > div > div:first-child ul {
+  display: flex;
+  gap: 1.1em;
+  list-style: none;
+  margin: 0 0 0.5em 0;
+  padding: 0;
+  font-size: 1em;
+  align-items: center;
+}
+
+.columns.columns31 > div > div:first-child ul li:first-child {
+  font-weight: 600;
+  color: #131313;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+.columns.columns31 > div > div:first-child ul li:last-child {
+  font-weight: 400;
+  color: var(--wsu-pink);
+}
+
+/* Hours tables */
+.columns.columns31 > div > div:first-child table {
+  width: 100%;
+  background: var(--wsu-bg-table);
+  border-radius: 7px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 0 1em 0;
+  font-size: 1em;
+  box-sizing: border-box;
+  padding: 0.6em 0.5em 0.7em 0.7em;
+}
+
+/* Table header */
+.columns.columns31 > div > div:first-child thead th {
+  text-align: left;
+  font-weight: 700;
+  color: #222;
+  background: none;
+  border: none;
+  font-size: 1em;
+  padding: 0.5em 0.3em 0.3em 0;
+}
+
+/* Table body */
+.columns.columns31 > div > div:first-child tbody tr td {
+  border: none;
+  vertical-align: middle;
+  color: #3a3a3a;
+  font-weight: 400;
+  padding: 0.3em 0.5em 0.3em 0;
+  font-size: 1em;
+}
+
+/* Table left column links (location links) */
+.columns.columns31 > div > div:first-child td:first-child {
+  color: var(--wsu-pink);
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 400;
+  min-width: 65px;
+  padding-right: 4px;
+}
+
+.columns.columns31 > div > div:first-child td:first-child a {
+  color: var(--wsu-pink);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+/* Table right column (hours) */
+.columns.columns31 > div > div:first-child td:last-child {
+  text-align: right;
+  color: #3a3a3a;
+  font-weight: 400;
+  white-space: nowrap;
+  min-width: 60px;
+  padding-left: 4px;
+}
+
+/* Table header row (first row of tbody) */
+.columns.columns31 > div > div:first-child table tbody tr:first-child td {
+  font-weight: 600;
+  color: #222;
+}
+
+/* Action/Navigation Links (footer links) */
+.columns.columns31 > div > div:first-child .button-container {
+  margin: 0.3em 0;
+}
+
+.columns.columns31 > div > div:first-child .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--wsu-pink);
+  font-weight: 500;
+  font-size: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 0.1em 0;
+  text-decoration: underline;
+  line-height: 1.4;
+  text-align: left;
+  display: inline;
+  min-width: 0;
+  max-width: 100%;
+  transition: color 0.13s;
+  cursor: pointer;
+}
+
+.columns.columns31 > div > div:first-child .button-container a.button:hover,
+.columns.columns31 > div > div:first-child .button-container a.button:focus {
+  color: #7d1425;
+  text-decoration: underline;
+}
+
+/* Responsive column width adjustment for stacking */
+@media (max-width: 600px) {
+  .columns.columns31 > div > div {
+    max-width: 100%;
+    padding: 0;
+  }
 }

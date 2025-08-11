@@ -1,9 +1,11 @@
 name: Hourly EDS Permission Update
 
 on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+
   schedule:
     # Runs at the beginning of every hour (e.g., 00:00, 01:00, 02:00, etc.)
-    - cron: '*/5 * * * *' 
+    - cron: '*/5 * * * *' # will run on the default branch
 
 jobs:
   run-hourly-task:
@@ -12,10 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Perform hourly task
-        run: |
-          echo "This job runs every hour!"
-          # Add your specific commands or scripts here
-          # For example:
-          # python your_script.py
-          # ./your_executable
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      
+      - name: Run JavaScript file
+        env:
+          FROMCRON: ${{ secrets.FROMCRON }}
+          AUTHTOKEN: ${{ secrets.AUTHTOKEN }}
+          CLIENTID: ${{ secrets.CLIENTID }}
+          CLIENTSECRET: ${{ secrets.CLIENTSECRET }}
+          GITORGID: ${{ secrets.GITORGID }}
+          IMSORGID: ${{ secrets.IMSORGID }}
+          PROGRAMID: ${{ secrets.PROGRAMID }}
+        run: node tools/importer/eds-permission-cron.js
