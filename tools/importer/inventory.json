@@ -1258,31 +1258,10 @@
           "section": "section-1"
         },
         {
-          "url": "https://library.westernsydney.edu.au/researchers/conducting-research/types_of_research",
-          "urlHash": "7694e1c630375aeb2a7e080fbd2536c237f0db94",
-          "uuid": "7694e1c6-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
-          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
-          "uuid": "edd6c98d-03-f13ac1f7f80cd6392a771ab902a4d10652dad8ed",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[1]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
-          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
-          "uuid": "edd6c98d-04-42b0a7aa8967c65bf13ba9c7a974734586104f75",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
-          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
-          "uuid": "edd6c98d-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
+          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
+          "uuid": "0680e3aa-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]",
           "section": "section-1"
         }
       ]
@@ -1542,6 +1521,116 @@
           "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
           "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/conducting-research/types_of_research",
+          "urlHash": "7694e1c630375aeb2a7e080fbd2536c237f0db94",
+          "uuid": "7694e1c6-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
+          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
+          "uuid": "edd6c98d-03-f13ac1f7f80cd6392a771ab902a4d10652dad8ed",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[1]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
+          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
+          "uuid": "edd6c98d-04-42b0a7aa8967c65bf13ba9c7a974734586104f75",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
+          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
+          "uuid": "edd6c98d-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students/referencing-citation/citation_tools",
+          "urlHash": "34c1dd46b23c808f2eebdd2ecce8cf1ea8332b06",
+          "uuid": "34c1dd46-03-42b0a7aa8967c65bf13ba9c7a974734586104f75",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students/referencing-citation/citation_tools",
+          "urlHash": "34c1dd46b23c808f2eebdd2ecce8cf1ea8332b06",
+          "uuid": "34c1dd46-04-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
+          "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
+          "uuid": "245b75b3-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/bankstown_city",
+          "urlHash": "370c3ef970ae1450e3e4a5fb559fe5e22c83d46a",
+          "uuid": "370c3ef9-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/campbelltown",
+          "urlHash": "9b8a2c7b0679afa98c3505c663c1bcb3b2c2d14b",
+          "uuid": "9b8a2c7b-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/penrith",
+          "urlHash": "b31ab19829578e9bec53e9e08419fddff862f404",
+          "uuid": "b31ab198-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_city",
+          "urlHash": "baf84ed0f187ee14abd8924619f8c096836e1961",
+          "uuid": "baf84ed0-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/liverpool",
+          "urlHash": "f37ca4e199eebaef3e48239df281d2040945e46f",
+          "uuid": "f37ca4e1-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
+          "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
+          "uuid": "fc0098b3-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
+          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
+          "uuid": "4e9c189c-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/nirimba",
+          "urlHash": "89ce437d3c7f4dee8e3f166824eaadd791f054ee",
+          "uuid": "89ce437d-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/collections/open_athens",
+          "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
+          "uuid": "f2d2538c-07-ba004c2d31d22bc985a11426674c1046d91e140f",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]",
+          "section": "section-1"
         }
       ]
     },
@@ -1594,30 +1683,6 @@
         }
       ]
     },
-
-    {
-      "name": "Accordion",
-      "cluster": 12,
-      "source": "Accordion",
-      "target": "Accordion (accordion12)",
-      "key": "accordion12",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/students/referencing-citation/citation_tools",
-          "urlHash": "34c1dd46b23c808f2eebdd2ecce8cf1ea8332b06",
-          "uuid": "34c1dd46-03-42b0a7aa8967c65bf13ba9c7a974734586104f75",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/students/referencing-citation/citation_tools",
-          "urlHash": "34c1dd46b23c808f2eebdd2ecce8cf1ea8332b06",
-          "uuid": "34c1dd46-04-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
-          "section": "section-1"
-        }
-      ]
-    },
     {
       "name": "Cards",
       "cluster": 13,
@@ -1660,65 +1725,6 @@
           "urlHash": "d04995a5f6015c46f1a2703815469ed3fdbb95ed",
           "uuid": "d04995a5-02-d59d7eb439cf982369622d08082f404049853f25",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        }
-      ]
-    },
-
-    {
-      "name": "Accordion",
-      "cluster": 15,
-      "source": "Accordion",
-      "target": "Accordion (accordion15)",
-      "key": "accordion15",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
-          "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
-          "uuid": "245b75b3-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/bankstown_city",
-          "urlHash": "370c3ef970ae1450e3e4a5fb559fe5e22c83d46a",
-          "uuid": "370c3ef9-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/campbelltown",
-          "urlHash": "9b8a2c7b0679afa98c3505c663c1bcb3b2c2d14b",
-          "uuid": "9b8a2c7b-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/penrith",
-          "urlHash": "b31ab19829578e9bec53e9e08419fddff862f404",
-          "uuid": "b31ab198-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_city",
-          "urlHash": "baf84ed0f187ee14abd8924619f8c096836e1961",
-          "uuid": "baf84ed0-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/liverpool",
-          "urlHash": "f37ca4e199eebaef3e48239df281d2040945e46f",
-          "uuid": "f37ca4e1-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
-          "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
-          "uuid": "fc0098b3-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
-          "section": "section-1"
         }
       ]
     },
@@ -2663,42 +2669,6 @@
           "urlHash": "ab8db0fac5b5b1caf755a68bda4dccf1fbb6eb28",
           "uuid": "ab8db0fa-03-3505b2456c3c81f29a20e60cee3b23f4b2e7528a",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[2]"
-        }
-      ]
-    },
-
-    {
-      "name": "Accordion",
-      "cluster": 23,
-      "source": "Accordion",
-      "target": "Accordion (accordion23)",
-      "key": "accordion23",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
-          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
-          "uuid": "0680e3aa-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
-          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
-          "uuid": "4e9c189c-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/nirimba",
-          "urlHash": "89ce437d3c7f4dee8e3f166824eaadd791f054ee",
-          "uuid": "89ce437d-02-d59d7eb439cf982369622d08082f404049853f25",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/collections/open_athens",
-          "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
-          "uuid": "f2d2538c-07-ba004c2d31d22bc985a11426674c1046d91e140f",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]",
-          "section": "section-1"
         }
       ]
     },
