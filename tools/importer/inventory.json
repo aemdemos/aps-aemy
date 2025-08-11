@@ -1535,6 +1535,13 @@
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
           "uuid": "80d91d0a-08-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
+          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
+          "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
+          "section": "section-1"
         }
       ]
     },
@@ -2838,23 +2845,6 @@
           "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
           "uuid": "28f66b9c-08-f1ef5a3e176c931a1a8c9ef766423853db6110ed",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[5]"
-        }
-      ]
-    },
-
-    {
-      "name": "Accordion",
-      "cluster": 36,
-      "source": "Accordion",
-      "target": "Accordion (accordion36)",
-      "key": "accordion36",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
-          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
-          "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
-          "section": "section-1"
         }
       ]
     },
