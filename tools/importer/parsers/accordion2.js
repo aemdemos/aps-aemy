@@ -1,41 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Header row matches exactly
+  // Accordion block table: 2 columns, first row is block name, each row is [title, content]
   const headerRow = ['Accordion (accordion2)'];
+  const rows = [headerRow];
 
-  // 2. Get the accordion title: it's the h2 within .card-header
-  let titleCell = '';
-  const cardHeader = element.querySelector('.card-header');
-  if (cardHeader) {
-    const h2 = cardHeader.querySelector('h2');
-    if (h2) {
-      titleCell = h2;
-    } else {
-      // fallback if h2 is missing, use the whole cardHeader
-      titleCell = cardHeader;
+  // There may be multiple accordion items, but in this HTML, it's a single .card
+  // Title: in .card-header > h2/h3/h4/h5/h6 or .card-header
+  let titleElem = element.querySelector('.card-header h2, .card-header h3, .card-header h4, .card-header h5, .card-header h6');
+  if (!titleElem) {
+    titleElem = element.querySelector('.card-header');
+  }
+  // Use the existing element (not clone/innerHTML)
+
+  // Content: in .collapse > .card-body
+  let contentElem = element.querySelector('.collapse > .card-body');
+  if (!contentElem) {
+    contentElem = element.querySelector('.collapse');
+    // fallback: if still not found
+    if (!contentElem) {
+      contentElem = element.querySelector('.card-body') || document.createElement('div');
     }
   }
 
-  // 3. Get the accordion content: everything in .collapse > .card-body
-  let contentCell = '';
-  const collapse = element.querySelector('.collapse');
-  if (collapse) {
-    // If there's a .card-body, use it; otherwise .collapse itself
-    const cardBody = collapse.querySelector('.card-body');
-    if (cardBody) {
-      contentCell = cardBody;
-    } else {
-      contentCell = collapse;
-    }
-  }
+  // The card-body contains all the accordion content; reference directly.
+  rows.push([titleElem, contentElem]);
 
-  // 4. Assemble rows for createTable
-  const cells = [
-    headerRow,
-    [titleCell, contentCell],
-  ];
-
-  // 5. Create the accordion block table and replace the element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Build table and replace
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

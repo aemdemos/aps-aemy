@@ -1,88 +1,71 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare the rows array for the table
-  const rows = [];
-  // Header row as required
-  rows.push(['Carousel']);
+  // Create header row as in the example
+  const cells = [['Carousel']];
 
-  // Find the slides container
-  const track = element.querySelector('.slick-track');
-  if (!track) {
-    const block = WebImporter.DOMUtils.createTable(rows, document);
-    element.replaceWith(block);
-    return;
-  }
+  // Get the slick-track containing the slides
+  const slickTrack = element.querySelector('.slick-track');
+  if (!slickTrack) return;
 
-  // Only non-cloned slides
-  const slides = Array.from(track.children).filter(
-    (slide) => slide.classList.contains('slick-slide') && !slide.classList.contains('slick-cloned')
+  // Only non-cloned slides with an image (true slides)
+  const slides = Array.from(slickTrack.children).filter(slide =>
+    slide.classList.contains('slick-slide') &&
+    !slide.classList.contains('slick-cloned') &&
+    slide.querySelector('img')
   );
 
-  // For each slide, extract image and associated text
-  slides.forEach((slide) => {
-    // Image cell
+  slides.forEach(slide => {
+    // 1st cell: the image element, referenced directly
     const img = slide.querySelector('img');
-    const imageCell = img || '';
 
-    // Text cell: title and any extra content from modal (footer, etc)
-    let textCell = '';
-    if (img && img.src) {
-      // Find corresponding modal
-      const modals = document.querySelectorAll('div[id^="sliderImgModal-"]');
-      let foundModal = null;
-      for (const modal of modals) {
-        const modalImg = modal.querySelector('.modal-body img');
-        if (modalImg && modalImg.src === img.src) {
-          foundModal = modal;
-          break;
-        }
-      }
-      const textContents = [];
-      if (foundModal) {
-        // Title from modal
-        const modalTitle = foundModal.querySelector('.modal-title');
-        if (modalTitle && modalTitle.textContent.trim()) {
-          const h2 = document.createElement('h2');
-          h2.textContent = modalTitle.textContent.trim();
-          textContents.push(h2);
-        }
-        // Modal footer and body text (description/additional)
-        // Collect any non-empty paragraphs from modal-footer
-        const modalFooters = foundModal.querySelectorAll('.modal-footer p');
-        modalFooters.forEach((p) => {
-          if (p.textContent && p.textContent.trim()) {
-            const para = document.createElement('p');
-            para.textContent = p.textContent.trim();
-            textContents.push(para);
+    // 2nd cell: try to get modal title and any additional modal content as text
+    let textCellContent = [];
+    const anchor = slide.querySelector('a[data-target]');
+    if (anchor) {
+      const modalId = anchor.getAttribute('data-target');
+      if (modalId && modalId.startsWith('#')) {
+        const modal = document.querySelector(modalId);
+        if (modal) {
+          // Title as heading
+          const modalTitle = modal.querySelector('.modal-title');
+          if (modalTitle && modalTitle.textContent.trim()) {
+            const heading = document.createElement('h2');
+            heading.textContent = modalTitle.textContent.trim();
+            textCellContent.push(heading);
           }
-        });
-        // Also include any additional paragraphs in the modal-body (not image)
-        const modalBody = foundModal.querySelector('.modal-body');
-        if (modalBody) {
-          Array.from(modalBody.children).forEach((child) => {
-            if (child.tagName === 'P' && child.textContent.trim()) {
-              const para = document.createElement('p');
-              para.textContent = child.textContent.trim();
-              textContents.push(para);
+          // Look for any <p> (or other block) with visible text in modal body or footer
+          // Add all meaningful content
+          ['.modal-body', '.modal-footer'].forEach(sel => {
+            const contentBlock = modal.querySelector(sel);
+            if (contentBlock) {
+              Array.from(contentBlock.childNodes).forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                  const para = document.createElement('p');
+                  para.textContent = node.textContent.trim();
+                  textCellContent.push(para);
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                  // Only include elements with text
+                  if (node.textContent && node.textContent.trim()) {
+                    textCellContent.push(node);
+                  }
+                }
+              });
             }
           });
         }
-      } else if (img.alt && img.alt.trim()) {
-        // Fall back to image alt as heading
-        const h2 = document.createElement('h2');
-        h2.textContent = img.alt.trim();
-        textContents.push(h2);
-      }
-      if (textContents.length > 1) {
-        textCell = textContents;
-      } else if (textContents.length === 1) {
-        textCell = textContents[0];
       }
     }
-    rows.push([imageCell, textCell]);
+    // Fallback: use image alt as heading if no modal or no text
+    if (textCellContent.length === 0 && img && img.alt && img.alt.trim()) {
+      const heading = document.createElement('h2');
+      heading.textContent = img.alt.trim();
+      textCellContent.push(heading);
+    }
+    // If there's still no text (no alt), keep cell empty string
+    cells.push([img, textCellContent.length > 0 ? textCellContent : '']);
   });
 
-  // Create and replace the block
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  // Create table and replace element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

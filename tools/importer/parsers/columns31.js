@@ -1,47 +1,71 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to replace any non-img element with a src with a link (for iframes, etc)
-  function replaceNonImgSrcElements(root) {
-    const srcEls = Array.from(root.querySelectorAll('[src]')).filter(el => el.tagName.toLowerCase() !== 'img');
-    srcEls.forEach(el => {
-      const href = el.getAttribute('src');
-      if (href) {
-        const a = document.createElement('a');
-        a.href = href;
-        a.textContent = href;
-        el.parentNode && el.parentNode.replaceChild(a, el);
+  // Find both columns: left and right
+  const firstCol = element.querySelector('.code_snippet_first');
+  const secondCol = element.querySelector('.code_snippet_second');
+
+  // Helper to wrap elements in a div
+  function wrapElements(elements) {
+    const div = document.createElement('div');
+    elements.forEach(e => div.append(e));
+    return div;
+  }
+
+  // Handle the left column: "Today's Hours"
+  let leftParts = [];
+  if (firstCol) {
+    // Heading (with icon)
+    const heading = firstCol.querySelector('h2.snippet');
+    if (heading) leftParts.push(heading);
+
+    // Tabs area (contains both hours tables)
+    const pcTab = firstCol.querySelector('.pc-tab');
+    if (pcTab) {
+      // Get the tabs content
+      const section = pcTab.querySelector('section');
+      if (section) {
+        // tab1 (Today's Hours)
+        const tab1 = section.querySelector('.tab1');
+        if (tab1) leftParts.push(tab1);
+        // tab2 (WSU Community Hours)
+        const tab2 = section.querySelector('.tab2');
+        if (tab2) leftParts.push(tab2);
       }
-    });
+    }
   }
+  const leftCell = wrapElements(leftParts);
 
-  // Helper to get content for a column: keep all nodes (including text!)
-  function extractColumnContent(col) {
-    replaceNonImgSrcElements(col);
-    // Grabs all nodes (including text and elements), skips empty text
-    const nodes = Array.from(col.childNodes).filter(node => {
-      if (node.nodeType === Node.TEXT_NODE) return node.textContent.trim() !== '';
-      return true;
-    });
-    // If only one node (element or text), just return it, else return array
-    if (nodes.length === 1) return nodes[0];
-    return nodes;
+  // Handle the right column: "Online Librarian"
+  let rightParts = [];
+  if (secondCol) {
+    // Heading (with icon)
+    const heading = secondCol.querySelector('h2.snippet');
+    if (heading) rightParts.push(heading);
+    // Chat widget area
+    const chatRegion = secondCol.querySelector('[role="region"][aria-label="Chat Widget"]');
+    if (chatRegion) {
+      // If there's an iframe, replace with a link (not the iframe element itself)
+      const iframe = chatRegion.querySelector('iframe');
+      if (iframe && iframe.src) {
+        const chatLink = document.createElement('a');
+        chatLink.href = iframe.src;
+        chatLink.textContent = 'Chat Widget';
+        chatLink.target = '_blank';
+        rightParts.push(chatLink);
+      }
+    }
   }
+  const rightCell = wrapElements(rightParts);
 
-  // Find the two top-level columns
-  // Look for direct children divs (not descendants)
-  const columns = Array.from(element.children).filter(el => el.tagName.toLowerCase() === 'div');
-
+  // Table header must exactly match: Columns (columns31)
   const headerRow = ['Columns (columns31)'];
-  let cells;
-  if (columns.length === 2) {
-    const col1 = extractColumnContent(columns[0]);
-    const col2 = extractColumnContent(columns[1]);
-    cells = [headerRow, [col1, col2]];
-  } else {
-    // fallback: treat the element as one column (all content)
-    cells = [headerRow, [extractColumnContent(element)]];
-  }
+  // Second row: two columns
+  const contentRow = [leftCell, rightCell];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Create the block table
+  const cells = [headerRow, contentRow];
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element with the block table
+  element.replaceWith(block);
 }

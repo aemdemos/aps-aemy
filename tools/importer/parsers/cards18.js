@@ -1,34 +1,28 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The header row must have exactly one column: ['Cards (cards18)']
+  // Header row matches example exactly
   const headerRow = ['Cards (cards18)'];
-
-  // Each card div is a direct child
-  const cards = Array.from(element.querySelectorAll(':scope > div'));
-
-  const rows = cards.map(card => {
-    // First cell: the icon
+  // Each card is a direct child of element
+  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
+  const rows = [headerRow];
+  cardDivs.forEach(card => {
+    // Icon extraction
     const icon = card.querySelector('i');
-    // Second cell: all other content except the icon
-    const textNodes = [];
-    card.childNodes.forEach(node => {
-      if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'i') return;
-      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '') return;
-      textNodes.push(node);
-    });
-    let textCell;
-    if (textNodes.length === 1) {
-      textCell = textNodes[0];
-    } else {
-      textCell = textNodes;
+    // Number extraction
+    const number = card.querySelector('span');
+    // Label extraction
+    const label = card.querySelector('p');
+    // First cell: icon and number vertically stacked
+    const iconContainer = document.createElement('div');
+    if (icon) iconContainer.appendChild(icon);
+    if (number) {
+      iconContainer.appendChild(document.createElement('br'));
+      iconContainer.appendChild(number);
     }
-    return [icon, textCell];
+    // Second cell: label element (retains formatting)
+    const labelContent = label || '';
+    rows.push([iconContainer, labelContent]);
   });
-
-  // Compose table: header row is one column, all following rows are two columns
-  // So table data is: [[header], [icon, text], [icon, text], ...]
-  const tableCells = [headerRow, ...rows];
-
-  const table = WebImporter.DOMUtils.createTable(tableCells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

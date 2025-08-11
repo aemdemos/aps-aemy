@@ -1,45 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header row matches exactly the block name
-  const cells = [
-    ['Accordion (accordion6)']
-  ];
-  // Get all accordion item cards
-  const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach((card) => {
-    // Title in first column: h2 inside the .card-header
-    let titleElem = card.querySelector(':scope > .card-header h2');
-    // Content in second column: get all nodes inside .card-body
-    let contentCellNodes = [];
-    const cardBody = card.querySelector('.card-body');
-    if (cardBody) {
-      // Usually, the .card-body has a single child div or sequence of divs/ps
-      let addNodes = [];
-      // If cardBody has only one child and it's a DIV, flatten its children
-      if (
-        cardBody.children.length === 1 &&
-        cardBody.firstElementChild.tagName === 'DIV'
-      ) {
-        addNodes = Array.from(cardBody.firstElementChild.childNodes);
-      } else {
-        // Otherwise, use its direct children
-        addNodes = Array.from(cardBody.childNodes);
-      }
-      // Filter empty text nodes
-      addNodes.forEach(node => {
-        if (
-          node.nodeType === Node.ELEMENT_NODE ||
-          (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '')
-        ) {
-          contentCellNodes.push(node);
-        }
-      });
+  // Header row matches the example exactly
+  const headerRow = ['Accordion (accordion6)'];
+  const cells = [headerRow];
+
+  // Get all accordion items (direct children with class 'card')
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+  cards.forEach(card => {
+    // Title cell: Use existing h2 inside .card-header if present; else use the .card-header's text as fallback
+    let titleEl = card.querySelector('.card-header h2');
+    if (!titleEl) {
+      const header = card.querySelector('.card-header');
+      titleEl = document.createElement('div');
+      titleEl.textContent = header ? header.textContent.trim() : '';
     }
-    cells.push([
-      titleElem,
-      contentCellNodes
-    ]);
+
+    // Content cell: Use existing .card-body content as-is, referencing real elements (not clones)
+    const body = card.querySelector('.card-body');
+    let contentCell;
+    if (body) {
+      // Gather all top-level children of .card-body
+      const children = Array.from(body.children);
+      if (children.length === 1) {
+        contentCell = children[0];
+      } else if (children.length > 1) {
+        // Wrap multiple children in a fragment for a single cell
+        const frag = document.createDocumentFragment();
+        children.forEach(child => frag.appendChild(child));
+        contentCell = frag;
+      } else {
+        // No children, use body itself
+        contentCell = body;
+      }
+    } else {
+      contentCell = document.createElement('div'); // Empty fallback
+    }
+
+    cells.push([titleEl, contentCell]);
   });
+
+  // Create the block table and replace the original element
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

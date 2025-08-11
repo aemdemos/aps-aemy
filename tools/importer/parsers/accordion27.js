@@ -1,37 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Prepare header row exactly as required
+  // Header must match example exactly
   const headerRow = ['Accordion (accordion27)'];
 
-  // Get all accordion cards (each one is an item)
-  const cards = Array.from(element.querySelectorAll(':scope > .card'));
+  // Select all direct card children
+  const cards = element.querySelectorAll(':scope > .card');
+  const rows = [headerRow];
 
-  // Each row: [title cell, content cell]
-  const rows = cards.map(card => {
-    // Title cell: Use heading if present, else all card-header content
-    const header = card.querySelector('.card-header');
-    let titleContent = null;
+  cards.forEach(card => {
+    // Title: from card-header (should be the <h2> inside it), fallback to header
+    let titleCell = null;
+    const header = card.querySelector(':scope > .card-header');
     if (header) {
-      const h2 = header.querySelector('h2, h3, h4, h5, h6');
-      titleContent = h2 ? h2 : header;
+      const h2 = header.querySelector('h2, .h2');
+      titleCell = h2 || header;
     }
-
-    // Content cell: Use .card-body if present, else the .collapse div
+    // Content: from .collapse > .card-body, fallback to .collapse, fallback to card
     let contentCell = null;
-    const collapse = card.querySelector('.collapse');
+    const collapse = card.querySelector(':scope > .collapse');
     if (collapse) {
-      const body = collapse.querySelector('.card-body');
-      contentCell = body ? body : collapse;
+      const body = collapse.querySelector(':scope > .card-body');
+      contentCell = body || collapse;
     } else {
-      // If there's no .collapse, try to use the remaining content
       contentCell = card;
     }
-
-    return [titleContent, contentCell];
+    rows.push([titleCell, contentCell]);
   });
-
-  // Build table
-  const tableRows = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+  
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

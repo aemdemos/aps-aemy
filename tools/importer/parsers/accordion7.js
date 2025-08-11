@@ -1,72 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as specified by block name
-  const headerRow = ['Accordion (accordion7)'];
-  const rows = [headerRow];
-  // All direct children .card (accordion items)
-  const cards = element.querySelectorAll(':scope > .card');
-  cards.forEach((card) => {
-    // TITLE cell: Find .card-header h2 (or fallback to .card-header text if needed)
-    let titleCell = '';
-    const header = card.querySelector('.card-header');
-    if (header) {
-      const h2 = header.querySelector('h2');
-      if (h2) {
-        titleCell = h2;
-      } else {
-        // fallback: text content of header
-        titleCell = document.createElement('span');
-        titleCell.textContent = header.textContent.trim();
-      }
-    }
+  // Helper to get direct child .card elements
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
 
-    // CONTENT cell: find .collapse .card-body
+  const rows = [
+    ['Accordion (accordion7)'],
+  ];
+
+  cards.forEach(card => {
+    // Title: Use .card-header > h2 if available, else whole .card-header
+    let titleEl = card.querySelector('.card-header h2') || card.querySelector('.card-header');
+    // Reference the element directly
+    let titleCell = titleEl;
+
+    // Content: .card-body
+    const body = card.querySelector('.card-body');
     let contentCell = '';
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      const body = collapse.querySelector('.card-body');
-      if (body) {
-        // Collect all direct children of .card-body, flattening wrapper divs if present
-        const children = [];
-        // If card-body contains only one div, and *that* div contains multiple direct children, flatten one level
-        if (body.childElementCount === 1 && body.firstElementChild.tagName === 'DIV') {
-          const wrapper = body.firstElementChild;
-          // If wrapper contains all divs, flatten further
-          if ([...wrapper.children].every(e => e.tagName === 'DIV')) {
-            for (const child of wrapper.children) {
-              // If div contains only one child (e.g., <div><p>...</p></div>) unwrap it
-              if (child.childElementCount === 1) {
-                children.push(child.firstElementChild);
-              } else {
-                children.push(child);
-              }
-            }
+    if (body) {
+      // Sometimes .card-body holds a div, sometimes multiple wrappers
+      // We'll flatten all meaningful children (including nested wrappers)
+      let contentNodes = [];
+      function collectContent(node) {
+        // Recursively collect all element children of node
+        for (const child of node.children) {
+          // If child is a div with just a div, flatten
+          if (child.tagName === 'DIV' && child.children.length === 1 && child.children[0].tagName === 'DIV') {
+            collectContent(child);
           } else {
-            // wrapper itself is meaningful
-            children.push(wrapper);
-          }
-        } else {
-          // Otherwise, just use all children
-          for (const child of body.children) {
-            // If divs that only wrap a p, unwrap
-            if (child.tagName === 'DIV' && child.childElementCount === 1 && child.firstElementChild.tagName === 'P') {
-              children.push(child.firstElementChild);
-            } else {
-              children.push(child);
-            }
+            contentNodes.push(child);
           }
         }
-        // If nothing found, fallback to body itself
-        contentCell = children.length > 0 ? children : [body];
-      } else {
-        contentCell = [''];
       }
-    } else {
-      contentCell = [''];
+      collectContent(body);
+      // Remove empty wrappers
+      contentNodes = contentNodes.filter(n => {
+        if (n.tagName === 'DIV' && n.children.length === 0 && !n.textContent.trim()) return false;
+        return true;
+      });
+      // If there's only one element, pass as element, else as array
+      if (contentNodes.length === 1) {
+        contentCell = contentNodes[0];
+      } else if (contentNodes.length > 1) {
+        contentCell = contentNodes;
+      } else {
+        // fallback to .card-body's text if empty
+        contentCell = body.textContent.trim();
+      }
     }
     rows.push([titleCell, contentCell]);
   });
 
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

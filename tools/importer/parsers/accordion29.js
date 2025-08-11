@@ -1,49 +1,50 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build table rows
-  const rows = [
-    ['Accordion (accordion29)']
-  ];
+  // Helper to get immediate child .card divs (each accordion item)
+  const cards = Array.from(element.querySelectorAll(':scope > .card'));
 
-  // Get all accordion items (cards)
-  const cards = element.querySelectorAll(':scope > .card');
+  // Table header exactly as required
+  const headerRow = ['Accordion (accordion29)'];
+  const rows = [headerRow];
+
   cards.forEach(card => {
-    // Title cell: .card-header -> try to get heading, else full .card-header
-    let titleCell;
-    const header = card.querySelector('.card-header');
-    if (header) {
-      const heading = header.querySelector('h1,h2,h3,h4,h5,h6');
-      if (heading) {
-        // Use the heading element directly
-        titleCell = heading;
+    // Get the title (always inside .card-header, as an h2)
+    const headerDiv = card.querySelector('.card-header');
+    let titleEl = null;
+    if (headerDiv) {
+      // Use the existing h2 element for semantic meaning
+      const h2 = headerDiv.querySelector('h2');
+      if (h2) {
+        titleEl = h2; // Direct reference, do not clone
       } else {
-        // If heading missing, use header as is
-        titleCell = header;
+        // Fallback to a span if no h2 present
+        titleEl = document.createElement('span');
+        titleEl.textContent = headerDiv.textContent.trim();
       }
-    } else {
-      // fallback: empty cell
-      titleCell = document.createElement('div');
     }
 
-    // Content cell: .collapse > .card-body, else .collapse, else empty
-    let contentCell;
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      const cardBody = collapse.querySelector('.card-body');
+    // Get the body content (inside .collapse > .card-body)
+    let contentEl = null;
+    const collapseDiv = card.querySelector('.collapse');
+    if (collapseDiv) {
+      const cardBody = collapseDiv.querySelector('.card-body');
       if (cardBody) {
-        contentCell = cardBody;
+        contentEl = cardBody; // Reference the original element
       } else {
-        contentCell = collapse;
+        // If .card-body missing but .collapse exists, use .collapse itself
+        contentEl = collapseDiv;
       }
-    } else {
-      // fallback: empty div
-      contentCell = document.createElement('div');
     }
 
-    rows.push([titleCell, contentCell]);
+    // Only add a row if both title and content are found
+    if (titleEl && contentEl) {
+      rows.push([titleEl, contentEl]);
+    }
   });
 
-  // Create and replace table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  // Create the table
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+
+  // Replace the original element with the new block table
+  element.replaceWith(block);
 }

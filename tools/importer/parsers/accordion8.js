@@ -1,84 +1,60 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion (accordion8) block header
-  const headerRow = ['Accordion (accordion8)'];
-  const cells = [headerRow];
+  // Accordion block header
+  const cells = [['Accordion (accordion8)']];
 
-  // Get all direct child .card elements (accordion items)
+  // Each card is an accordion item
   const cards = element.querySelectorAll(':scope > .card');
-
   cards.forEach(card => {
-    // Title cell: find the element that represents the title
-    // Usually in .card-header > h2 (but fallback to .card-header if no h2)
-    let titleEl = null;
-    const cardHeader = card.querySelector('.card-header');
-    if (cardHeader) {
-      const h2 = cardHeader.querySelector('h2');
-      titleEl = h2 || cardHeader;
+    // Accordion title cell (try to keep heading element if present)
+    let titleCell = '';
+    const header = card.querySelector('.card-header');
+    if (header) {
+      // Use the first heading (h2-h6) if present, else the header div
+      const heading = header.querySelector('h2, h3, h4, h5, h6');
+      if (heading) {
+        titleCell = heading;
+      } else {
+        titleCell = header;
+      }
     }
 
-    // Content cell: get the body content
-    let contentCell = [];
-    const cardBody = card.querySelector('.card-body');
-    if (cardBody) {
-      // We want to reference real child elements, not clones
-      // But we may need to replace iframes with links as per requirements
-      // For this, process each child node:
-      const processedNodes = [];
-      cardBody.childNodes.forEach(node => {
-        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'P') {
-          // Replace any iframe inside the <p> with a link if present
-          const iframe = node.querySelector('iframe');
-          if (iframe) {
-            // Only if it's not an image (which it isn't)
+    // Accordion content cell
+    let contentCell = '';
+    const collapse = card.querySelector('.collapse');
+    if (collapse) {
+      // Use the .card-body if present, else the whole collapse content
+      const body = collapse.querySelector('.card-body');
+      if (body) {
+        // Replace any iframe (that is not inside img) with a link with href=src
+        const iframes = body.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+          // Check if iframe is inside a link, preserve wrapping link if present
+          const linkParent = iframe.parentElement && iframe.parentElement.tagName === 'A' ? iframe.parentElement : null;
+          if (!linkParent) {
+            // Only replace iframes not inside an <a>
             const link = document.createElement('a');
             link.href = iframe.src;
-            link.textContent = iframe.src;
-            // Create a new <p> containing the link (preserves paragraph spacing)
-            const p = document.createElement('p');
-            p.appendChild(link);
-            processedNodes.push(p);
-            // Also add other content in the <p> (if any)
-            // If the <p> has other child nodes before/after iframe
-            Array.from(node.childNodes).forEach(n => {
-              if (n !== iframe && (n.textContent && n.textContent.trim() !== '')) {
-                processedNodes.push(n);
-              }
-            });
-          } else {
-            processedNodes.push(node);
+            link.textContent = iframe.title || iframe.src;
+            iframe.replaceWith(link);
           }
-        } else {
-          processedNodes.push(node);
-        }
-      });
-      // Remove empty text nodes
-      contentCell = processedNodes.filter(n => {
-        return (
-          n.nodeType !== Node.TEXT_NODE || (n.textContent && n.textContent.trim() !== '')
-        );
-      });
+        });
+        // Also, if an iframe is INSIDE an <a>, remove iframe and keep only the <a> (with its href and label)
+        body.querySelectorAll('a').forEach(a => {
+          // If the only child is an iframe, remove it (keep the link label if empty)
+          if (a.children.length === 1 && a.firstElementChild.tagName === 'IFRAME') {
+            a.innerHTML = a.href;
+          }
+        });
+        contentCell = body;
+      } else {
+        contentCell = collapse;
+      }
     }
 
-    // If nothing found, put a blank placeholder
-    if (!titleEl) {
-      titleEl = document.createElement('span');
-      titleEl.textContent = '';
-    }
-    if (!contentCell || contentCell.length === 0) {
-      const p = document.createElement('p');
-      p.textContent = '';
-      contentCell = [p];
-    }
-
-    // If only one node, don't wrap in array
-    cells.push([
-      titleEl,
-      contentCell.length === 1 ? contentCell[0] : contentCell
-    ]);
+    cells.push([titleCell, contentCell]);
   });
 
-  // Create the table and replace the element
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
