@@ -20,4 +20,6 @@ jobs:
           node-version: '24'
       
       - name: Run JavaScript file
+        env:
+          FROMCRON: ${{ FROMCRON }}
         run: node tools/importer/eds-permission-cron.js
