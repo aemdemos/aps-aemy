@@ -301,12 +301,6 @@
         {
           "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
           "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
-          "uuid": "ac1c0cc8-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
-          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
           "uuid": "ac1c0cc8-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
         }
@@ -1823,6 +1817,18 @@
           "urlHash": "4101a49b71e4cdaa95240523efb4b46a3e1ef415",
           "uuid": "4101a49b-03-d0eeb9798678b82a313b3213f9977c130423fec7",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]"
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "cluster": 44,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
+          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
+          "uuid": "ac1c0cc8-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
         }
       ]
     }
