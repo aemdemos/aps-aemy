@@ -60,6 +60,28 @@
       "key": "accordion2",
       "instances": [
         {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
+          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
+          "uuid": "edd6c98d-03-f13ac1f7f80cd6392a771ab902a4d10652dad8ed",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[1]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/nirimba",
+          "urlHash": "89ce437d3c7f4dee8e3f166824eaadd791f054ee",
+          "uuid": "89ce437d-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+        }
+      ]
+    },
+    {
+      "name": "Accordion",
+      "cluster": 3,
+      "source": "Accordion",
+      "target": "Accordion (accordion3)",
+      "key": "accordion3",
+      "instances": [
+        {
           "url": "https://library.westernsydney.edu.au/researchers/conducting-research/types_of_research",
           "urlHash": "7694e1c630375aeb2a7e080fbd2536c237f0db94",
           "uuid": "7694e1c6-04-42b0a7aa8967c65bf13ba9c7a974734586104f75",
@@ -73,14 +95,7 @@
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
           "section": "section-1"
         },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
-          "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
-          "uuid": "edd6c98d-03-f13ac1f7f80cd6392a771ab902a4d10652dad8ed",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[1]",
-          "section": "section-1"
-        },
-        {
+		    {
           "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
           "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
           "uuid": "edd6c98d-04-42b0a7aa8967c65bf13ba9c7a974734586104f75",
@@ -93,16 +108,7 @@
           "uuid": "edd6c98d-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
           "section": "section-1"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 3,
-      "source": "Accordion",
-      "target": "Accordion (accordion3)",
-      "key": "accordion3",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/researchers/develop_publishing_plan",
           "urlHash": "36af50ba8bde50a65ffa7875cf331da1460d189c",
@@ -420,6 +426,26 @@
           "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
           "uuid": "69cd9e2e-04-19c68f7880474fc3790018d2a886d3dba0e0cce9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
+          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
+          "uuid": "0680e3aa-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
+          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
+          "uuid": "4e9c189c-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+		    {
+          "url": "https://library.westernsydney.edu.au/collections/open_athens",
+          "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
+          "uuid": "f2d2538c-07-ba004c2d31d22bc985a11426674c1046d91e140f",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]",
+          "section": "section-1"
         }
       ]
     },
@@ -1425,41 +1451,6 @@
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
           "uuid": "80d91d0a-02-9ff3a882911870978770f009c5b4018965f24728",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[1]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 23,
-      "source": "Accordion",
-      "target": "Accordion (accordion23)",
-      "key": "accordion23",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
-          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
-          "uuid": "0680e3aa-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]",
-          "section": "section-1"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
-          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
-          "uuid": "4e9c189c-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/nirimba",
-          "urlHash": "89ce437d3c7f4dee8e3f166824eaadd791f054ee",
-          "uuid": "89ce437d-02-d59d7eb439cf982369622d08082f404049853f25",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/collections/open_athens",
-          "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
-          "uuid": "f2d2538c-07-ba004c2d31d22bc985a11426674c1046d91e140f",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]",
-          "section": "section-1"
         }
       ]
     },
