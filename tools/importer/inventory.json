@@ -240,34 +240,7 @@
           "urlHash": "60fade9a7d480b917ba552ee20e95e6a9a729ac8",
           "uuid": "60fade9a-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "unknown",
-      "cluster": 5,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
-          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
-          "uuid": "28f66b9c-05-42b0a7aa8967c65bf13ba9c7a974734586104f75",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]"
         },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
-          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
-          "uuid": "28f66b9c-06-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 8,
-      "source": "Accordion",
-      "target": "Accordion (accordion8)",
-      "key": "accordion8",
-      "instances": [
         {
           "url": "https://library.westernsydney.edu.au/researchers/data-management/publishing_data",
           "urlHash": "1de4a415a9cb9b196dbd40270bd904165d50a82e",
@@ -279,16 +252,7 @@
           "urlHash": "79741f9b79e43d126a8d5726ba2c8c37759985c4",
           "uuid": "79741f9b-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 11,
-      "source": "Accordion",
-      "target": "Accordion (accordion11)",
-      "key": "accordion11",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/about_us/membership",
           "urlHash": "79741f9b79e43d126a8d5726ba2c8c37759985c4",
@@ -302,16 +266,7 @@
           "uuid": "955ff18f-06-e926359b29ba0df6c4b0eea2799556f7a79cd75c",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]",
           "section": "section-1"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 12,
-      "source": "Accordion",
-      "target": "Accordion (accordion12)",
-      "key": "accordion12",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/students/referencing-citation/citation_tools",
           "urlHash": "34c1dd46b23c808f2eebdd2ecce8cf1ea8332b06",
@@ -325,61 +280,7 @@
           "uuid": "34c1dd46-04-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
           "section": "section-1"
-        }
-      ]
-    },
-    {
-      "name": "Cards",
-      "cluster": 13,
-      "source": "Cards",
-      "target": "Cards (cards13)",
-      "key": "cards13",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus",
-          "urlHash": "14b7df1cb4671e756ec9ac32538f044343275416",
-          "uuid": "14b7df1c-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
         },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations",
-          "urlHash": "43422d5791493ac57dab6bacd47dfbf09439e7b2",
-          "uuid": "43422d57-02-d59d7eb439cf982369622d08082f404049853f25",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers",
-          "urlHash": "4e6f41ffaf6ebf513a84b1e9a26cd26a0bf945ab",
-          "uuid": "4e6f41ff-02-d59d7eb439cf982369622d08082f404049853f25",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/students",
-          "urlHash": "7aa7f6a2a258cda45126d66ed40a0b2f9e61dd1e",
-          "uuid": "7aa7f6a2-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us",
-          "urlHash": "b41d6ec214173801a5699ec8e9d0cd51c5eac412",
-          "uuid": "b41d6ec2-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/collections",
-          "urlHash": "d04995a5f6015c46f1a2703815469ed3fdbb95ed",
-          "uuid": "d04995a5-02-d59d7eb439cf982369622d08082f404049853f25",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 14,
-      "source": "Accordion",
-      "target": "Accordion (accordion14)",
-      "key": "accordion14",
-      "instances": [
         {
           "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
           "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
@@ -391,16 +292,7 @@
           "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
           "uuid": "5f8a1424-11-20fb16395e767601ad77d45add7148b13c3cb695",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[12]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 15,
-      "source": "Accordion",
-      "target": "Accordion (accordion15)",
-      "key": "accordion15",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
           "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
@@ -456,6 +348,111 @@
           "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
           "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
+          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
+          "uuid": "0680e3aa-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
+          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
+          "uuid": "4e9c189c-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
+          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
+          "uuid": "527c1bed-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
+          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
+          "uuid": "5f8a1424-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
+          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
+          "uuid": "5f8a1424-08-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
+          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
+          "uuid": "5f8a1424-09-00cb8676b21e02ad8157c72aea04e45f2a3cd61d",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[9]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
+          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
+          "uuid": "5f8a1424-10-afb67dd6fe552774b12d952236b1bd53abe35e06",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[10]"
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "cluster": 5,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
+          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
+          "uuid": "28f66b9c-05-42b0a7aa8967c65bf13ba9c7a974734586104f75",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
+          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
+          "uuid": "28f66b9c-06-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]"
+        }
+      ]
+    },
+    {
+      "name": "Cards",
+      "cluster": 13,
+      "source": "Cards",
+      "target": "Cards (cards13)",
+      "key": "cards13",
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus",
+          "urlHash": "14b7df1cb4671e756ec9ac32538f044343275416",
+          "uuid": "14b7df1c-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations",
+          "urlHash": "43422d5791493ac57dab6bacd47dfbf09439e7b2",
+          "uuid": "43422d57-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers",
+          "urlHash": "4e6f41ffaf6ebf513a84b1e9a26cd26a0bf945ab",
+          "uuid": "4e6f41ff-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students",
+          "urlHash": "7aa7f6a2a258cda45126d66ed40a0b2f9e61dd1e",
+          "uuid": "7aa7f6a2-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us",
+          "urlHash": "b41d6ec214173801a5699ec8e9d0cd51c5eac412",
+          "uuid": "b41d6ec2-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/collections",
+          "urlHash": "d04995a5f6015c46f1a2703815469ed3fdbb95ed",
+          "uuid": "d04995a5-02-d59d7eb439cf982369622d08082f404049853f25",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
         }
       ]
     },
@@ -724,57 +721,6 @@
       ]
     },
     {
-      "name": "Accordion",
-      "cluster": 17,
-      "source": "Accordion",
-      "target": "Accordion (accordion17)",
-      "key": "accordion17",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
-          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
-          "uuid": "0680e3aa-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/research_toolkit",
-          "urlHash": "4e9c189cae698927c91399528cbb51cabaaea697",
-          "uuid": "4e9c189c-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
-          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
-          "uuid": "527c1bed-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
-          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
-          "uuid": "5f8a1424-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
-          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
-          "uuid": "5f8a1424-08-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
-          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
-          "uuid": "5f8a1424-09-00cb8676b21e02ad8157c72aea04e45f2a3cd61d",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[9]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events/thought_leadership_event_archive",
-          "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
-          "uuid": "5f8a1424-10-afb67dd6fe552774b12d952236b1bd53abe35e06",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[10]"
-        }
-      ]
-    },
-    {
       "name": "Cards",
       "cluster": 18,
       "source": "Cards",
@@ -812,6 +758,12 @@
           "url": "https://library.westernsydney.edu.au/students/referencing-citation",
           "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
           "uuid": "69cd9e2e-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/systematic_reviews",
+          "urlHash": "29d08a4aa935764578fb54627dac5a05c0df77ed",
+          "uuid": "29d08a4a-09-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
         }
       ]
@@ -1469,21 +1421,6 @@
     },
     {
       "name": "Accordion",
-      "cluster": 22,
-      "source": "Accordion",
-      "target": "Accordion (accordion22)",
-      "key": "accordion22",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/systematic_reviews",
-          "urlHash": "29d08a4aa935764578fb54627dac5a05c0df77ed",
-          "uuid": "29d08a4a-09-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
       "cluster": 23,
       "source": "Accordion",
       "target": "Accordion (accordion23)",
@@ -1533,21 +1470,6 @@
       ]
     },
     {
-      "name": "Accordion",
-      "cluster": 27,
-      "source": "Accordion",
-      "target": "Accordion (accordion27)",
-      "key": "accordion27",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
-          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
-          "uuid": "69cd9e2e-04-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        }
-      ]
-    },
-    {
       "name": "Embed (video)",
       "cluster": 28,
       "source": "Embed",
@@ -1592,6 +1514,18 @@
           "urlHash": "79741f9b79e43d126a8d5726ba2c8c37759985c4",
           "uuid": "79741f9b-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport/open_access_article_processing",
+          "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
+          "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
+          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
+          "uuid": "69cd9e2e-04-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
         }
       ]
     },
@@ -1634,21 +1568,6 @@
           "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
           "uuid": "28f66b9c-08-f1ef5a3e176c931a1a8c9ef766423853db6110ed",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[5]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 35,
-      "source": "Accordion",
-      "target": "Accordion (accordion35)",
-      "key": "accordion35",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport/open_access_article_processing",
-          "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
-          "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
         }
       ]
     },
