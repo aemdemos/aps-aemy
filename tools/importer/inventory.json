@@ -390,6 +390,36 @@
           "urlHash": "5f8a1424f11cf5d8a8387310b90f0673716a3f25",
           "uuid": "5f8a1424-10-afb67dd6fe552774b12d952236b1bd53abe35e06",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[10]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
+          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
+          "uuid": "69cd9e2e-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/systematic_reviews",
+          "urlHash": "29d08a4aa935764578fb54627dac5a05c0df77ed",
+          "uuid": "29d08a4a-09-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/membership",
+          "urlHash": "79741f9b79e43d126a8d5726ba2c8c37759985c4",
+          "uuid": "79741f9b-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport/open_access_article_processing",
+          "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
+          "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
+          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
+          "uuid": "69cd9e2e-04-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
         }
       ]
     },
@@ -744,27 +774,6 @@
           "urlHash": "527c1bed1df531014557f4323991722876c73a39",
           "uuid": "527c1bed-07-2782c1c0c745f2b068565a31a37d709a9c76f947",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]/div[1]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 19,
-      "source": "Accordion",
-      "target": "Accordion (accordion19)",
-      "key": "accordion19",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
-          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
-          "uuid": "69cd9e2e-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/systematic_reviews",
-          "urlHash": "29d08a4aa935764578fb54627dac5a05c0df77ed",
-          "uuid": "29d08a4a-09-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
         }
       ]
     },
@@ -1499,33 +1508,6 @@
           "urlHash": "98e84597f17b9a34ff3b1d22a7e0b7c772b0213c",
           "uuid": "98e84597-20-97404765fee1a098f37cc197729fc08617c276fa",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/h4[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 29,
-      "source": "Accordion",
-      "target": "Accordion (accordion29)",
-      "key": "accordion29",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/membership",
-          "urlHash": "79741f9b79e43d126a8d5726ba2c8c37759985c4",
-          "uuid": "79741f9b-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport/open_access_article_processing",
-          "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
-          "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/students/referencing-citation",
-          "urlHash": "69cd9e2eea2e73f759dc0ed74f1bbd62a26e526f",
-          "uuid": "69cd9e2e-04-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
         }
       ]
     },
