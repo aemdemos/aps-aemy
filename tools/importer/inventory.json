@@ -1805,7 +1805,8 @@
           "uuid": "527c1bed-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
         }
-      ]
+      ],
+      "target": "Embed"
     }
   ],
   "outliers": [
