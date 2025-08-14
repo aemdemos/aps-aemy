@@ -156,16 +156,7 @@
           "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
           "uuid": "f2d2538c-06-e926359b29ba0df6c4b0eea2799556f7a79cd75c",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 4,
-      "source": "Accordion",
-      "target": "Accordion (accordion4)",
-      "key": "accordion4",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/researchers/request_doi_or_isbn",
           "urlHash": "2660a38ef162caf4d074717ace8d81331774409f",
@@ -195,34 +186,7 @@
           "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
           "uuid": "80d91d0a-08-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "unknown",
-      "cluster": 5,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
-          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
-          "uuid": "28f66b9c-05-42b0a7aa8967c65bf13ba9c7a974734586104f75",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]"
         },
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
-          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
-          "uuid": "28f66b9c-06-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 6,
-      "source": "Accordion",
-      "target": "Accordion (accordion6)",
-      "key": "accordion6",
-      "instances": [
         {
           "url": "https://library.westernsydney.edu.au/students/disability_services",
           "urlHash": "02076c4fba6ce041f3d4b775236c91a281c58eb2",
@@ -264,16 +228,7 @@
           "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
           "uuid": "ac1c0cc8-06-e926359b29ba0df6c4b0eea2799556f7a79cd75c",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 7,
-      "source": "Accordion",
-      "target": "Accordion (accordion7)",
-      "key": "accordion7",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/students/disability_services",
           "urlHash": "02076c4fba6ce041f3d4b775236c91a281c58eb2",
@@ -285,6 +240,24 @@
           "urlHash": "60fade9a7d480b917ba552ee20e95e6a9a729ac8",
           "uuid": "60fade9a-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "cluster": 5,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
+          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
+          "uuid": "28f66b9c-05-42b0a7aa8967c65bf13ba9c7a974734586104f75",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/thought_leadership_events",
+          "urlHash": "28f66b9c9a515f9576ee606cbc6e3a6fa119dcf8",
+          "uuid": "28f66b9c-06-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]"
         }
       ]
     },
@@ -475,6 +448,13 @@
           "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
           "uuid": "fc0098b3-03-e5385a781db6f71a288a633d01d02cf28f1be91c",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[2]",
+          "section": "section-1"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
+          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
+          "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
           "section": "section-1"
         }
       ]
@@ -1669,22 +1649,6 @@
           "urlHash": "922b948f7e41ec42d6ea7c49a56e5646282649fa",
           "uuid": "922b948f-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Accordion",
-      "cluster": 36,
-      "source": "Accordion",
-      "target": "Accordion (accordion36)",
-      "key": "accordion36",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
-          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
-          "uuid": "dc15ab3a-04-6e40ce36323a6d228e4db01f183eed61442354ca",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[2]",
-          "section": "section-1"
         }
       ]
     },
