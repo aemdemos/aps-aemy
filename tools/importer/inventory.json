@@ -806,6 +806,18 @@
           "urlHash": "cc31c102260469a3cac7cbeac1d4c50a63b79049",
           "uuid": "cc31c102-03-f13ac1f7f80cd6392a771ab902a4d10652dad8ed",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[1]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
+          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
+          "uuid": "ac1c0cc8-07-d07da0c79caa47ab53299064ed114bacc99c5b10",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]/div[1]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
+          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
+          "uuid": "527c1bed-07-2782c1c0c745f2b068565a31a37d709a9c76f947",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]/div[1]"
         }
       ]
     },
@@ -1466,6 +1478,12 @@
           "urlHash": "ab8db0fac5b5b1caf755a68bda4dccf1fbb6eb28",
           "uuid": "ab8db0fa-03-3505b2456c3c81f29a20e60cee3b23f4b2e7528a",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
+          "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
+          "uuid": "80d91d0a-02-9ff3a882911870978770f009c5b4018965f24728",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[1]"
         }
       ]
     },
@@ -1561,6 +1579,24 @@
           "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
           "uuid": "f2d2538c-08-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
+          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
+          "uuid": "527c1bed-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
+          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
+          "uuid": "0680e3aa-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/data_storage",
+          "urlHash": "98e84597f17b9a34ff3b1d22a7e0b7c772b0213c",
+          "uuid": "98e84597-20-97404765fee1a098f37cc197729fc08617c276fa",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/h4[3]"
         }
       ]
     },
@@ -1597,27 +1633,6 @@
           "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
           "uuid": "b61d3d49-02-3fddefa31b4ff9551cbc5e111ce59a482943f3ba",
           "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[3]"
-        }
-      ]
-    },
-    {
-      "name": "Cards",
-      "cluster": 32,
-      "source": "Cards",
-      "target": "Cards (cards32)",
-      "key": "cards32",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
-          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
-          "uuid": "ac1c0cc8-07-d07da0c79caa47ab53299064ed114bacc99c5b10",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[7]/div[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
-          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
-          "uuid": "527c1bed-07-2782c1c0c745f2b068565a31a37d709a9c76f947",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[6]/div[1]"
         }
       ]
     },
@@ -1686,59 +1701,13 @@
           "uuid": "3eb45cc1-00-e9726e977075141437c908ebee8ed79c65915f84",
           "xpath": "/html[1]/body[1]/div[1]/a[1]",
           "section": "section-3"
-        }
-      ]
-    },
-    {
-      "name": "Hero",
-      "cluster": 39,
-      "source": "Hero",
-      "target": "Hero (hero39)",
-      "key": "hero39",
-      "instances": [
+        },
         {
           "url": "https://library.westernsydney.edu.au/",
           "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
           "uuid": "b61d3d49-00-e9726e977075141437c908ebee8ed79c65915f84",
           "xpath": "/html[1]/body[1]/div[1]/a[1]",
           "section": "section-3"
-        }
-      ]
-    },
-    {
-      "name": "Embed (video)",
-      "cluster": 40,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/collections/special_collections/rhoda_barr_collection",
-          "urlHash": "527c1bed1df531014557f4323991722876c73a39",
-          "uuid": "527c1bed-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
-        }
-      ],
-      "target": "Embed"
-    },
-    {
-      "name": "Embed (video)",
-      "cluster": 41,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/data-management/copyright_and_intellectual_property",
-          "urlHash": "0680e3aa570a7add119176bb68e4a534636fb11d",
-          "uuid": "0680e3aa-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
-        }
-      ]
-    },
-    {
-      "name": "Embed (video)",
-      "cluster": 42,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/data-management/data_storage",
-          "urlHash": "98e84597f17b9a34ff3b1d22a7e0b7c772b0213c",
-          "uuid": "98e84597-20-97404765fee1a098f37cc197729fc08617c276fa",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/h4[3]"
         }
       ]
     },
@@ -1775,18 +1744,6 @@
           "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
           "uuid": "ac1c0cc8-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
-        }
-      ]
-    },
-    {
-      "name": "Columns",
-      "cluster": 46,
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/submit-publication",
-          "urlHash": "80d91d0af6cf55d86186a489d3a5241b1bd1dca1",
-          "uuid": "80d91d0a-02-9ff3a882911870978770f009c5b4018965f24728",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[1]"
         }
       ]
     },
