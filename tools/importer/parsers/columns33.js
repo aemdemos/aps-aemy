@@ -1,68 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract left and right columns
-  const leftCol = element.querySelector('.media-body');
-  const rightCol = element.querySelector('.media-right');
+  // Ensure we robustly extract the two column elements
+  let mediaBody = element.querySelector('.media-body');
+  let mediaRight = element.querySelector('.media-right');
 
-  // 1. LEFT COLUMN CONTENT
-  // a. Title (h3 > a)
-  const h3 = leftCol.querySelector('.media-heading');
-  // Use the heading from h3, referencing the original element
-  // b. Description paragraphs
-  const descDiv = leftCol.querySelector('.s-lc-c-evt-des');
-  // All paragraphs in description
-  const descParas = Array.from(descDiv ? descDiv.children : []);
-  // c. Details (<dl>)
-  const detailsDl = leftCol.querySelector('dl');
-  let detailsList = null;
-  if (detailsDl) {
-    // For each dt/dd pair, create a <li><strong>dt</strong> dd/link</li>
-    const list = document.createElement('ul');
-    const nodes = Array.from(detailsDl.children);
-    for (let i = 0; i < nodes.length - 1; i += 2) {
-      const dt = nodes[i];
-      const dd = nodes[i+1];
-      if (dt.tagName.toLowerCase() === 'dt' && dd.tagName.toLowerCase() === 'dd') {
-        const li = document.createElement('li');
-        const strong = document.createElement('strong');
-        strong.textContent = dt.textContent.trim();
-        li.appendChild(strong);
-        li.append(' ');
-        if (dd.querySelector('a')) {
-          li.appendChild(dd.querySelector('a'));
-        } else {
-          li.append(dd.textContent.trim());
-        }
-        list.appendChild(li);
-      }
-    }
-    detailsList = list;
+  // Edge case handling: if one is missing, create an empty div so columns align
+  if (!mediaBody) {
+    mediaBody = document.createElement('div');
+  }
+  if (!mediaRight) {
+    mediaRight = document.createElement('div');
   }
 
-  // Assemble all left column content as a single cell (array of elements)
-  const leftContent = [];
-  if (h3) leftContent.push(h3);
-  descParas.forEach(p => leftContent.push(p));
-  if (detailsList) leftContent.push(detailsList);
-
-  // 2. RIGHT COLUMN CONTENT
-  // Reference the original image element
-  let rightContent = [];
-  if (rightCol) {
-    const img = rightCol.querySelector('img');
-    if (img) rightContent.push(img);
-  }
-
-  // 3. Table header row
+  // The header must match the block name exactly
   const headerRow = ['Columns (columns33)'];
 
-  // 4. Assemble table rows
+  // The second row: each cell is a column. Reference the extracted elements directly.
+  const contentRow = [mediaBody, mediaRight];
+
+  // Compose the table
   const cells = [
     headerRow,
-    [leftContent, rightContent]
+    contentRow,
   ];
 
-  // 5. Create block table and replace original element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Create and replace the block table
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

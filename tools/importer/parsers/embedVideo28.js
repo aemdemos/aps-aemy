@@ -1,40 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header exactly as in the example
-  const headerRow = ['Embed'];
-
-  // Collect all direct child nodes (elements and text)
-  const children = Array.from(element.childNodes);
-  const cellContent = [];
-
-  children.forEach(child => {
-    if (child.nodeType === Node.ELEMENT_NODE) {
-      // For iframes, insert a link as required
-      if (child.tagName === 'IFRAME' && child.src) {
-        const linkEl = document.createElement('a');
-        linkEl.href = child.src;
-        linkEl.textContent = child.src;
-        cellContent.push(linkEl);
+  // Compose the content for the block cell
+  const content = [];
+  element.childNodes.forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName === 'IFRAME' && node.src) {
+        // Replace iframe (non-img) with a link
+        const link = document.createElement('a');
+        link.href = node.src;
+        link.textContent = node.src;
+        content.push(link);
       } else {
-        // For any other element, include as-is to retain content
-        cellContent.push(child);
+        content.push(node);
       }
-    } else if (child.nodeType === Node.TEXT_NODE) {
-      // Ensure all text content is retained
-      const txt = child.textContent.trim();
-      if (txt) cellContent.push(txt);
+    } else if (node.nodeType === Node.TEXT_NODE) {
+      // Add any text content present directly under the element
+      const txt = node.textContent.trim();
+      if (txt) {
+        content.push(txt);
+      }
     }
   });
 
-  // If no children, fallback to overall textContent (edge case)
-  if (cellContent.length === 0 && element.textContent.trim()) {
-    cellContent.push(element.textContent.trim());
-  }
-
-  // Guarantee only one cell for the content row
+  // Construct the cells array as per the markdown example
   const cells = [
-    headerRow,
-    [cellContent.length === 1 ? cellContent[0] : cellContent]
+    ['Embed'], // EXACT header from example
+    [content] // All source content, preserving semantic meaning
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);

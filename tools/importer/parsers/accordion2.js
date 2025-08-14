@@ -1,31 +1,51 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accordion block table: 2 columns, first row is block name, each row is [title, content]
+  // 1. Header row for block table
   const headerRow = ['Accordion (accordion2)'];
-  const rows = [headerRow];
 
-  // There may be multiple accordion items, but in this HTML, it's a single .card
-  // Title: in .card-header > h2/h3/h4/h5/h6 or .card-header
-  let titleElem = element.querySelector('.card-header h2, .card-header h3, .card-header h4, .card-header h5, .card-header h6');
-  if (!titleElem) {
-    titleElem = element.querySelector('.card-header');
-  }
-  // Use the existing element (not clone/innerHTML)
-
-  // Content: in .collapse > .card-body
-  let contentElem = element.querySelector('.collapse > .card-body');
-  if (!contentElem) {
-    contentElem = element.querySelector('.collapse');
-    // fallback: if still not found
-    if (!contentElem) {
-      contentElem = element.querySelector('.card-body') || document.createElement('div');
+  // 2. Extract accordion title from .card-header
+  let titleCell;
+  const cardHeader = element.querySelector('.card-header');
+  if (cardHeader) {
+    // Use the existing heading (h2, h3 etc) if present, else use the cardHeader itself
+    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading) {
+      titleCell = heading;
+    } else {
+      // fallback, use cardHeader directly
+      titleCell = cardHeader;
     }
+  } else {
+    // fallback: blank cell
+    titleCell = document.createElement('span');
+    titleCell.textContent = '';
   }
 
-  // The card-body contains all the accordion content; reference directly.
-  rows.push([titleElem, contentElem]);
+  // 3. Extract accordion content from .card-body inside the .collapse content
+  let contentCell;
+  const collapseDiv = element.querySelector('.collapse');
+  if (collapseDiv) {
+    const cardBody = collapseDiv.querySelector('.card-body');
+    if (cardBody) {
+      contentCell = cardBody;
+    } else {
+      // fallback, use the collapseDiv
+      contentCell = collapseDiv;
+    }
+  } else {
+    // fallback: use whole element
+    contentCell = element;
+  }
 
-  // Build table and replace
+  // 4. Build rows: header, [title, content]
+  const rows = [
+    headerRow,
+    [titleCell, contentCell],
+  ];
+
+  // 5. Create block table
   const table = WebImporter.DOMUtils.createTable(rows, document);
+
+  // 6. Replace element
   element.replaceWith(table);
 }
