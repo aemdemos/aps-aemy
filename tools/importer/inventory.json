@@ -292,21 +292,6 @@
       ]
     },
     {
-      "name": "Columns",
-      "cluster": 9,
-      "source": "Columns",
-      "target": "Columns (columns9)",
-      "key": "columns9",
-      "instances": [
-        {
-          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
-          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
-          "uuid": "ac1c0cc8-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
-          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
-        }
-      ]
-    },
-    {
       "name": "Accordion",
       "cluster": 11,
       "source": "Accordion",
@@ -1829,6 +1814,18 @@
           "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
           "uuid": "ac1c0cc8-04-ea74c947c21cb371847451b049d95e1ea7d387d3",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "cluster": 45,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/western_open_books",
+          "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
+          "uuid": "ac1c0cc8-09-7033bfb33b73fe20a1ae20894f33a458c49d99e9",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[8]"
         }
       ]
     }
