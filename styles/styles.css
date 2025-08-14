@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -33,69 +34,69 @@
 
 /* fallback fonts */
 @font-face {
-  font-family: "Gotham Narrow A Fallback";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Arial");
-  ascent-override: 98.53%;
-  descent-override: 24.63%;
-  line-gap-override: 0.00%;
-  size-adjust: 97.44%;
+  font-family:"Gotham Narrow A Fallback";
+  font-style:normal;
+  font-weight:400;
+  src:local("Arial");
+  ascent-override:98.53%;
+  descent-override:24.63%;
+  line-gap-override:0.00%;
+  size-adjust:97.44%;
 }
 
 @font-face {
-  font-family: "Gotham Narrow Fallback";
-  font-style: normal;
-  font-weight: 300;
-  src: local("Arial");
-  ascent-override: 83.01%;
-  descent-override: 20.75%;
-  line-gap-override: 20.75%;
-  size-adjust: 96.38%;
+  font-family:"Gotham Narrow Fallback";
+  font-style:normal;
+  font-weight:300;
+  src:local("Arial");
+  ascent-override:83.01%;
+  descent-override:20.75%;
+  line-gap-override:20.75%;
+  size-adjust:96.38%;
 }
 
 @font-face {
-  font-family: "Gotham Narrow Fallback";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Arial");
-  ascent-override: 79.71%;
-  descent-override: 19.93%;
-  line-gap-override: 19.93%;
-  size-adjust: 100.36%;
+  font-family:"Gotham Narrow Fallback";
+  font-style:normal;
+  font-weight:250;
+  src:local("Arial");
+  ascent-override:86.38%;
+  descent-override:21.59%;
+  line-gap-override:21.59%;
+  size-adjust:92.61%;
 }
 
 @font-face {
-  font-family: "Gotham Narrow Fallback";
-  font-style: normal;
-  font-weight: 250;
-  src: local("Arial");
-  ascent-override: 86.38%;
-  descent-override: 21.59%;
-  line-gap-override: 21.59%;
-  size-adjust: 92.61%;
+  font-family:"Gotham Narrow Fallback";
+  font-style:normal;
+  font-weight:400;
+  src:local("Arial");
+  ascent-override:79.71%;
+  descent-override:19.93%;
+  line-gap-override:19.93%;
+  size-adjust:100.36%;
 }
 
 @font-face {
-  font-family: "ForkAwesome Fallback";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Arial");
-  ascent-override: 86.72%;
-  descent-override: 22.88%;
-  line-gap-override: 8.98%;
-  size-adjust: 100.00%;
+  font-family:"ForkAwesome Fallback";
+  font-style:normal;
+  font-weight:400;
+  src:local("Arial");
+  ascent-override:86.72%;
+  descent-override:22.88%;
+  line-gap-override:8.98%;
+  size-adjust:100.00%;
 }
 
 @font-face {
-  font-family: "Gotham Narrow Fallback";
-  font-style: normal;
-  font-weight: 500;
-  src: local("Arial");
-  ascent-override: 77.68%;
-  descent-override: 19.42%;
-  line-gap-override: 19.42%;
-  size-adjust: 102.98%;
+  font-family:"Gotham Narrow Fallback";
+  font-style:normal;
+  font-weight:500;
+  src:local("Arial");
+  ascent-override:77.68%;
+  descent-override:19.42%;
+  line-gap-override:19.42%;
+  size-adjust:102.98%;
 }
 
 @media (width>=900px) {
@@ -128,25 +129,17 @@ body.appear {
 }
 
 header {
-  /* height: var(--nav-height); */
 }
 
-header .header,
-footer .footer {
+header .header, footer .footer {
   visibility: hidden;
 }
 
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
+header .header[data-block-status="loaded"], footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
@@ -179,18 +172,12 @@ h6 {
   font-size: var(--heading-font-size-xs);
 }
 
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
+p, dl, ol, ul, pre, blockquote {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
 }
 
-code,
-pre {
+code, pre {
   font-size: var(--body-font-size-s);
 }
 
@@ -206,10 +193,7 @@ main>div {
   margin: 40px 16px;
 }
 
-input,
-textarea,
-select,
-button {
+input, textarea, select, button {
   font: inherit;
 }
 
@@ -226,8 +210,7 @@ a:hover {
 }
 
 /* buttons */
-a.button:any-link,
-button {
+a.button:any-link, button {
   box-sizing: border-box;
   display: inline-block;
   max-width: 100%;
@@ -249,22 +232,17 @@ button {
   white-space: nowrap;
 }
 
-a.button:hover,
-a.button:focus,
-button:hover,
-button:focus {
+a.button:hover, a.button:focus, button:hover, button:focus {
   background-color: var(--link-hover-color);
   cursor: pointer;
 }
 
-button:disabled,
-button:disabled:hover {
+button:disabled, button:disabled:hover {
   background-color: var(--light-color);
   cursor: unset;
 }
 
-a.button.secondary,
-button.secondary {
+a.button.secondary, button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
   color: var(--text-color);
@@ -309,8 +287,7 @@ main>.section:first-of-type {
 }
 
 /* section metadata */
-main .section.light,
-main .section.highlight {
+main .section.light, main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
