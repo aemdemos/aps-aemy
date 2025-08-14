@@ -1,69 +1,58 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper: extract image url from anchor with background-image style and create <img>
-  function createImgFromAnchor(aEl, titleAlt) {
-    const style = aEl.getAttribute('style') || '';
-    const match = style.match(/url\(['"]?([^'")]+)['"]?\)/);
-    const url = match ? match[1].trim() : '';
-    const img = document.createElement('img');
-    img.src = url;
-    img.alt = titleAlt || '';
-    return img;
-  }
-
-  // Find the card list
-  const ul = element.querySelector('ul');
-  if (!ul) return;
-
-  // Table header EXACTLY as required
+  // Table header must match the example exactly
   const cells = [['Cards (cards13)']];
 
-  // Process each card item
-  Array.from(ul.children).forEach(li => {
-    if (!li.classList.contains('cards__item')) return;
-    const wrapper = li.querySelector('.item-wrapper');
-    if (!wrapper) return;
-
-    // Get image anchor and title (for alt text)
-    const imageAnchor = wrapper.querySelector('.item-image');
-    const contentDiv = wrapper.querySelector('.item-content');
-    let title = '';
-    let titleEl = null;
-    if (contentDiv) {
-      const h = contentDiv.querySelector('h3');
-      if (h) {
-        title = h.textContent.trim();
-        titleEl = h;
+  // Find the cards list
+  const ul = element.querySelector('ul.cards__list');
+  if (ul) {
+    const lis = ul.querySelectorAll(':scope > li.cards__item');
+    lis.forEach((li) => {
+      // Image cell: extract from .item-image background-image
+      const imageLink = li.querySelector('.item-image');
+      let imageEl = '';
+      if (imageLink && imageLink.style && imageLink.style.backgroundImage) {
+        const bg = imageLink.style.backgroundImage;
+        const urlMatch = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
+        if (urlMatch && urlMatch[1]) {
+          const img = document.createElement('img');
+          img.src = urlMatch[1].trim();
+          img.alt = imageLink.getAttribute('alt') || '';
+          imageEl = img;
+        }
       }
-    }
-    // First column: image
-    let imgEl = null;
-    if (imageAnchor) {
-      imgEl = createImgFromAnchor(imageAnchor, title);
-    }
 
-    // Second column: text content
-    const contentEls = [];
-    if (titleEl) contentEls.push(titleEl);
-    // Only push description if non-empty
-    if (contentDiv) {
-      const desc = contentDiv.querySelector('p');
-      if (desc && desc.textContent.trim()) {
-        contentEls.push(desc);
+      // Text cell: build content
+      const content = li.querySelector('.item-content');
+      const textParts = [];
+      if (content) {
+        const title = content.querySelector('.item-content__title');
+        if (title && title.textContent.trim()) {
+          const strong = document.createElement('strong');
+          strong.textContent = title.textContent.trim();
+          textParts.push(strong);
+        }
+        // The description is optional
+        const desc = content.querySelector('.item-content__desc');
+        if (desc && desc.textContent.trim()) {
+          const p = document.createElement('p');
+          p.textContent = desc.textContent.trim();
+          textParts.push(p);
+        }
+        // The CTA link
+        const cta = content.querySelector('.item-content__link');
+        if (cta) {
+          textParts.push(cta);
+        }
       }
-      // Only push CTA link if it exists
-      const link = contentDiv.querySelector('a');
-      if (link) {
-        contentEls.push(link);
-      }
-    }
+      // Always include two columns per row
+      cells.push([
+        imageEl || '',
+        textParts.length ? textParts : '',
+      ]);
+    });
+  }
 
-    cells.push([
-      imgEl,
-      contentEls.length === 1 ? contentEls[0] : contentEls
-    ]);
-  });
-  // Create the table block
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

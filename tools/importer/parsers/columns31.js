@@ -1,71 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find both columns: left and right
-  const firstCol = element.querySelector('.code_snippet_first');
-  const secondCol = element.querySelector('.code_snippet_second');
+    // Get all immediate child divs (these are the columns)
+    const colWrappers = Array.from(element.children).filter(e => e.tagName === 'DIV');
+    if (colWrappers.length !== 2) return;
 
-  // Helper to wrap elements in a div
-  function wrapElements(elements) {
-    const div = document.createElement('div');
-    elements.forEach(e => div.append(e));
-    return div;
-  }
-
-  // Handle the left column: "Today's Hours"
-  let leftParts = [];
-  if (firstCol) {
-    // Heading (with icon)
-    const heading = firstCol.querySelector('h2.snippet');
-    if (heading) leftParts.push(heading);
-
-    // Tabs area (contains both hours tables)
-    const pcTab = firstCol.querySelector('.pc-tab');
-    if (pcTab) {
-      // Get the tabs content
-      const section = pcTab.querySelector('section');
-      if (section) {
-        // tab1 (Today's Hours)
-        const tab1 = section.querySelector('.tab1');
-        if (tab1) leftParts.push(tab1);
-        // tab2 (WSU Community Hours)
-        const tab2 = section.querySelector('.tab2');
-        if (tab2) leftParts.push(tab2);
-      }
+    // Helper: Recursively replace iframes (not images) with links, in-place, referencing existing elements
+    function replaceIframesWithLinks(node) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            // If it's an iframe (not image), replace with link
+            if (node.tagName === 'IFRAME') {
+                const src = node.getAttribute('src');
+                if (src) {
+                    const a = document.createElement('a');
+                    a.href = src;
+                    a.textContent = src;
+                    return a;
+                }
+                // If somehow no src, remove
+                return document.createTextNode('');
+            }
+            // Otherwise, recursively process its children
+            const children = Array.from(node.childNodes).map(replaceIframesWithLinks);
+            // Remove all childNodes and append processed
+            while (node.firstChild) node.removeChild(node.firstChild);
+            children.forEach(child => node.appendChild(child));
+            return node;
+        }
+        // Text nodes remain as-is
+        return node;
     }
-  }
-  const leftCell = wrapElements(leftParts);
 
-  // Handle the right column: "Online Librarian"
-  let rightParts = [];
-  if (secondCol) {
-    // Heading (with icon)
-    const heading = secondCol.querySelector('h2.snippet');
-    if (heading) rightParts.push(heading);
-    // Chat widget area
-    const chatRegion = secondCol.querySelector('[role="region"][aria-label="Chat Widget"]');
-    if (chatRegion) {
-      // If there's an iframe, replace with a link (not the iframe element itself)
-      const iframe = chatRegion.querySelector('iframe');
-      if (iframe && iframe.src) {
-        const chatLink = document.createElement('a');
-        chatLink.href = iframe.src;
-        chatLink.textContent = 'Chat Widget';
-        chatLink.target = '_blank';
-        rightParts.push(chatLink);
-      }
-    }
-  }
-  const rightCell = wrapElements(rightParts);
+    // For each column, replace iframes with links in-place (referencing original elements, not clones)
+    replaceIframesWithLinks(colWrappers[0]);
+    replaceIframesWithLinks(colWrappers[1]);
 
-  // Table header must exactly match: Columns (columns31)
-  const headerRow = ['Columns (columns31)'];
-  // Second row: two columns
-  const contentRow = [leftCell, rightCell];
-
-  // Create the block table
-  const cells = [headerRow, contentRow];
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original element with the block table
-  element.replaceWith(block);
+    // Compose the table
+    const cells = [
+        ['Columns (columns31)'],
+        [colWrappers[0], colWrappers[1]]
+    ];
+    const block = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(block);
 }
