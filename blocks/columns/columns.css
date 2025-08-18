@@ -276,193 +276,6 @@
 }
 
 
-.columns.columns31 {
-  --wsu-pink: #b31b34;
-  --wsu-bg-table: #ededed;
-
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.columns.columns31,
-.columns.columns31 > div {
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: auto;
-  min-height: 0;
-}
-
-.columns.columns31 > div {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 8px;
-  max-width: 700px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0;
-}
-
-@media (width <= 900px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 16px;
-    max-width: 100%;
-    margin: 0 8px;
-  }
-}
-
-.columns.columns31 > div > div:first-child {
-  min-width: 0;
-  max-width: 340px;
-  flex: 1 1 340px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8em;
-}
-
-.columns.columns31 > div > div:last-child {
-  min-width: 0;
-  max-width: 220px;
-  flex: 1 1 220px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8em;
-}
-
-.columns.columns31 h2 {
-  font-size: var(--heading-font-size-xl);
-  font-weight: 700;
-  color: #000;
-  margin-top: 0;
-  margin-bottom: 0.4em;
-  letter-spacing: 0;
-}
-
-.columns.columns31 > div > div:first-child ul {
-  display: flex;
-  gap: 1.1em;
-  list-style: none;
-  margin: 0 0 0.5em;
-  padding: 0;
-  font-size: 1em;
-  align-items: center;
-}
-
-.columns.columns31 > div > div:first-child ul li:first-child {
-  font-weight: 600;
-  color: #131313;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-}
-
-.columns.columns31 > div > div:first-child ul li:last-child {
-  font-weight: 400;
-  color: var(--wsu-pink);
-}
-
-.columns.columns31 > div > div:first-child table {
-  width: 100%;
-  background: var(--wsu-bg-table);
-  border-radius: 7px;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0 0 1em;
-  font-size: 1em;
-  box-sizing: border-box;
-  padding: 0.6em 0.5em 0.7em 0.7em;
-}
-
-.columns.columns31 > div > div:first-child thead th {
-  text-align: left;
-  font-weight: 700;
-  color: #222;
-  background: none;
-  border: none;
-  font-size: 1em;
-  padding: 0.5em 0.3em 0.3em 0;
-}
-
-.columns.columns31 > div > div:first-child tbody tr td {
-  border: none;
-  vertical-align: middle;
-  color: #3a3a3a;
-  font-weight: 400;
-  padding: 0.3em 0.5em 0.3em 0;
-  font-size: 1em;
-}
-
-.columns.columns31 > div > div:first-child td:first-child {
-  color: var(--wsu-pink);
-  text-align: left;
-  white-space: nowrap;
-  font-weight: 400;
-  min-width: 65px;
-  padding-right: 4px;
-}
-
-.columns.columns31 > div > div:first-child td:first-child a {
-  color: var(--wsu-pink);
-  text-decoration: underline;
-  font-weight: 400;
-}
-
-.columns.columns31 > div > div:first-child td:last-child {
-  text-align: right;
-  color: #3a3a3a;
-  font-weight: 400;
-  white-space: nowrap;
-  min-width: 60px;
-  padding-left: 4px;
-}
-
-.columns.columns31 > div > div:first-child table tbody tr:first-child td {
-  font-weight: 600;
-  color: #222;
-}
-
-.columns.columns31 > div > div:first-child .button-container {
-  margin: 0.3em 0;
-}
-
-.columns.columns31 > div > div:first-child .button-container a.button {
-  background: none;
-  border: none;
-  color: var(--wsu-pink);
-  font-weight: 500;
-  font-size: 1em;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  margin: 0 0 0.1em;
-  text-decoration: underline;
-  line-height: 1.4;
-  text-align: left;
-  display: inline;
-  min-width: 0;
-  max-width: 100%;
-  transition: color 0.13s;
-  cursor: pointer;
-}
-
-.columns.columns31 > div > div:first-child .button-container a.button:hover,
-.columns.columns31 > div > div:first-child .button-container a.button:focus {
-  color: #7d1425;
-  text-decoration: underline;
-}
-
-@media (width <= 600px) {
-  .columns.columns31 > div > div {
-    max-width: 100%;
-    padding: 0;
-  }
-}
-
-
 .columns.columns21 {
   max-width: 760px;
   margin: 0 auto;
@@ -527,7 +340,6 @@
   white-space: normal;
 }
 
-/* Remove unwanted default button styling that may override */
 .columns.columns21 .button-container .button,
 .columns.columns21 .button-container .button:visited {
   background: none;
@@ -535,7 +347,6 @@
   color: #fff;
 }
 
-/* Responsive: stack columns vertically at <=600px */
 @media (width <= 600px) {
   .columns.columns21 > div {
     flex-direction: column;
@@ -549,5 +360,224 @@
 
   .columns.columns21 > div > div:last-child {
     border-bottom: none;
+  }
+}
+
+
+.columns.columns31 {
+  --wsu-pink: #af1f24;
+  --wsu-table-bg: #f2f2f2;
+  --wsu-table-header: #222;
+  --wsu-table-text: #333;
+}
+
+/* Main columns layout: better balance and spacing */
+.columns.columns31 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 980px;
+  margin: 0 auto;
+  width: 100%;
+  gap: 54px;
+  padding: 0;
+}
+
+/* Responsive: stack columns vertically on smaller screens */
+@media (width <= 900px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 28px;
+    max-width: 100%;
+    margin: 0 8px;
+  }
+}
+
+/* Left column: slightly narrower for better balance */
+.columns.columns31 > div > div:first-child {
+  min-width: 0;
+  max-width: 370px;
+  flex: 1 1 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.17em;
+}
+
+/* Right column: wider for improved visual balance */
+.columns.columns31 > div > div:last-child {
+  min-width: 0;
+  max-width: 370px;
+  flex: 1 1 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.33em;
+  padding-left: 0;
+}
+
+/* Headings: minimal margin bottom, keep alignment */
+.columns.columns31 h2 {
+  font-size: var(--heading-font-size-xl);
+  font-weight: 700;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 0.24em;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+/* List under heading: compact spacing */
+.columns.columns31 > div > div:first-child ul {
+  display: flex;
+  gap: 0.20em;
+  align-items: center;
+  list-style: none;
+  margin: 0 0 0.13em;
+  padding: 0;
+  font-size: 1rem;
+}
+
+/* First list item: date pill */
+.columns.columns31 > div > div:first-child ul li:first-child {
+  background: var(--wsu-table-bg);
+  font-weight: 600;
+  color: #131313;
+  padding: 2px 10px;
+  border-radius: 3px;
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Second list item: pink link */
+.columns.columns31 > div > div:first-child ul li:last-child {
+  color: var(--wsu-pink);
+  font-weight: 400;
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Table styling: more breathing room below each table */
+.columns.columns31 > div > div:first-child table {
+  width: 100%;
+  background: var(--wsu-table-bg);
+  border-radius: 7px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 0 1.1em;
+  font-size: 0.96em;
+  box-sizing: border-box;
+  padding: 0.13em 0.11em 0.13em 0.14em;
+}
+
+/* Table header: lighter weight, tight padding */
+.columns.columns31 > div > div:first-child thead th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--wsu-table-header);
+  background: none;
+  border: none;
+  font-size: 1em;
+  padding: 0.13em 0.08em 0.11em 0;
+}
+
+/* Table body: compact vertical padding */
+.columns.columns31 > div > div:first-child tbody tr td {
+  border: none;
+  vertical-align: middle;
+  color: var(--wsu-table-text);
+  font-weight: 400;
+  padding: 0.07em 0.09em 0.07em 0.08em;
+  font-size: 0.96em;
+}
+
+.columns.columns31 > div > div:first-child td:first-child {
+  color: var(--wsu-pink);
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 400;
+  min-width: 72px;
+  padding-right: 2px;
+}
+
+.columns.columns31 > div > div:first-child td:first-child a {
+  color: var(--wsu-pink);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+.columns.columns31 > div > div:first-child td:last-child {
+  text-align: right;
+  color: var(--wsu-table-text);
+  font-weight: 400;
+  white-space: nowrap;
+  min-width: 72px;
+  padding-left: 2px;
+}
+
+/* Highlight first table row */
+.columns.columns31 > div > div:first-child table tbody tr:first-child td {
+  font-weight: 600;
+  color: #222;
+}
+
+/* Button links: underline, pink, left-aligned, tight line-height, lighter font, more margin for separation */
+.columns.columns31 > div > div:first-child .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--wsu-pink);
+  font-weight: 400;
+  font-size: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 0.22em;
+  text-decoration: underline;
+  line-height: 1.14;
+  text-align: left;
+  display: inline;
+  min-width: 0;
+  max-width: 100%;
+  transition: color 0.16s;
+  cursor: pointer;
+}
+
+/* Pink link underline, hover color */
+.columns.columns31 > div > div:first-child a:not(.button) {
+  color: var(--wsu-pink);
+  text-decoration: underline;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.columns.columns31 > div > div:first-child a:not(.button):hover,
+.columns.columns31 > div > div:first-child a:not(.button):focus {
+  color: #7d1425;
+  text-decoration: underline;
+}
+
+/* Better margin between link clusters */
+.columns.columns31 > div > div:first-child .button-container {
+  margin-bottom: 0.64em;
+}
+
+/* Add bottom margin to sections for breathing room */
+.columns.columns31 > div > div:first-child > *:not(:last-child) {
+  margin-bottom: 0.22em;
+}
+
+/* Responsive tweaks for small screens */
+@media (width <= 650px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 18px;
+    max-width: 100%;
+  }
+
+  .columns.columns31 > div > div:first-child,
+  .columns.columns31 > div > div:last-child {
+    max-width: 100%;
+    padding-left: 0;
   }
 }
