@@ -1,5 +1,4 @@
-/* --- BASE CAROUSEL STYLES --- */
-
+/* stylelint-disable no-descending-specificity */
 .carousel .carousel-slides-container {
   position: relative;
 }
@@ -112,7 +111,7 @@
   transform: translateY(-50%);
   left: 12px;
   right: 12px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   z-index: 1;
@@ -153,8 +152,6 @@
     --slide-content-width: auto;
   }
 }
-
-/* --- BEGIN GENERATED CSS --- */
 
 .carousel.carousel10 {
   padding-top: 0;
@@ -319,4 +316,9 @@
   .carousel.carousel10 .carousel-slide:nth-child(n+4) {
     display: flex;
   }
+}
+
+
+.carousel .carousel-slide-content {
+  display: none;
 }
