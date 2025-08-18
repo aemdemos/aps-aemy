@@ -1,41 +1,59 @@
+/* stylelint-disable no-descending-specificity */
 .embed {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  background: 
-    linear-gradient(to right, #d7b0b0 6px, transparent 6px),
-    #fff;
+  align-items: center;
+  background: #fff;
   background-repeat: no-repeat;
   background-size: 6px 100%;
-  border: 1px solid #e3e3e3;
+  border: none;
   border-radius: 0;
-  min-height: 120px;
+  min-height: 600px;
   box-sizing: border-box;
   position: relative;
-  margin: 0;
-  max-width: 100%;
+  margin: 0 auto;
+  max-width: 960px;
   padding: 0;
+  box-shadow: none;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  height: 0;
+  padding-top: 80px;
+  justify-content: center;
+  padding-bottom: 80px;
 }
+
 .embed > * {
-  position: relative;
-  z-index: 1;
-  visibility: hidden;
+  position: absolute;
+  z-index: auto;
+  visibility: visible;
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  top: 0; left: 0;
+  border: none;
+  background: transparent;
+  box-sizing: border-box;
+  display: block;
 }
+
 .embed > div {
-  display: flex;
+  display: block;
   justify-content: center;
   flex: 1 1 0;
   flex-direction: column;
-  padding-left: 16px;
   min-width: 0;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
-  position: relative;
-  z-index: 1;
+  position: static;
+  z-index: auto;
+  padding-left: 16px;
 }
 
 .embed > div > div {
@@ -95,7 +113,7 @@
 }
 
 .embed::before {
-  display: block;
+  display: none;
   position: absolute;
   left: 0;
   top: 0;
@@ -106,6 +124,7 @@
   z-index: 0;
   content: "";
 }
+
 .embed:empty {
   min-height: 120px;
   border: 1px solid #e3e3e3;
@@ -121,99 +140,57 @@
   }
 }
 
-
-.embed {
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 0;
-  display: block;
-  min-height: 0;
-  box-shadow: none;
-}
-.embed::before {
-  display: none;
-}
-.embed > * {
-  visibility: visible;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  position: static;
-  z-index: auto;
-}
 .embed > div[style*="padding-bottom"] {
   display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
+  width: 90vw;
+  max-width: 1100px;
+  margin: 0 auto;
   box-sizing: border-box;
   position: relative;
   height: 0;
   padding-bottom: 56.25%;
   background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
 }
+
 .embed > div[style*="padding-bottom"] > iframe {
   display: block;
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  border: 0;
+  border: none;
   margin: 0;
   padding: 0;
-  background: #000;
-}
-.embed > div {
-  display: block;
-  padding: 0;
-  min-width: 0;
-  height: auto;
-  box-sizing: border-box;
-  position: static;
-  z-index: auto;
-}
-
-
-.embed {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
   background: #fff;
-  border: none;
   border-radius: 0;
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  /* Fallback for browsers without aspect-ratio support */
-  height: 0;
-  padding-top: 56.25%;
-}
-
-.embed > * {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
   box-sizing: border-box;
-  display: block;
 }
 
-/* Responsive adjustment for smaller screens */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .embed {
     max-width: 100vw;
     padding-top: 56.25%;
+  }
+}
+
+/* Aspect ratio container: make sure video is wide and centered */
+
+/* Make sure the iframe fills its container and displays */
+
+/* Responsive: scale video to viewport and adjust min-height for mobile */
+@media (width <= 1000px) {
+  .embed > div[style*="padding-bottom"] {
+    max-width: 100vw;
+    width: 100vw;
+  }
+
+  .embed {
+    min-height: 300px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }
