@@ -1,6 +1,4 @@
-/* Disable the no-descending-specificity rule globally */
 /* stylelint-disable no-descending-specificity */
-
 .accordion details {
   border: 1px solid #dadada;
 }
@@ -70,7 +68,6 @@
   box-sizing: border-box;
 }
 
-/* Remove box effect and vertical gaps between rows */
 .accordion.accordion8 details {
   border: none;
   margin: 0;
@@ -79,12 +76,10 @@
   display: block;
 }
 
-/* Remove any vertical gap between accordion items */
 .accordion.accordion8 details + details {
   margin-top: 0;
 }
 
-/* Flex row for summary: left-align, marker on right, only a divider line not a box */
 .accordion.accordion8 summary.accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -101,17 +96,15 @@
   list-style: revert;
 }
 
-/* Remove bottom border from last summary */
 .accordion.accordion8 details:last-of-type summary.accordion-item-label {
   border-bottom: none;
 }
 
-/* Heading style: smaller, not bold, matches original */
 .accordion.accordion8 summary.accordion-item-label h2 {
   margin: 0;
   padding: 0;
   font-size: 14px;
-  font-weight: 400; /* less bold, matches original */
+  font-weight: 400;
   color: #222;
   line-height: 1.2;
   flex: 1 1 auto;
@@ -123,7 +116,6 @@
   font-family: var(--body-font-family);
 }
 
-/* Let the default marker be visible and spaced out */
 .accordion.accordion8 summary.accordion-item-label::-webkit-details-marker {
   margin-left: 16px;
 }
@@ -132,18 +124,15 @@
   margin-left: 16px;
 }
 
-/* Remove outline on focus for aesthetics */
 .accordion.accordion8 summary.accordion-item-label:focus {
   outline: none;
 }
 
-/* Prevent background color change on open/hover */
 .accordion.accordion8 details[open] summary.accordion-item-label,
 .accordion.accordion8 details summary.accordion-item-label:hover {
   background: #fff;
 }
 
-/* Accordion body content padding */
 .accordion.accordion8 .accordion-item-body {
   padding: 0 24px;
   background: #fff;
@@ -151,12 +140,137 @@
   border: none;
 }
 
-/* Responsive: reduce padding for small screens */
 @media (width <= 600px) {
   .accordion.accordion8 summary.accordion-item-label,
   .accordion.accordion8 .accordion-item-body {
     padding-left: 12px;
     padding-right: 12px;
     font-size: 13px;
+  }
+}
+
+
+.accordion.accordion2 {
+  background: #f7f7f8;
+  padding: 48px 32px 40px;
+  box-sizing: border-box;
+  border-radius: 0;
+  width: 100%;
+  border: none;
+}
+
+/* Remove any border or background from details and summary */
+.accordion.accordion2 details {
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flex layout for summary row: aligns heading and icon side by side, centered vertically */
+.accordion.accordion2 .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border-bottom: none;
+  min-height: unset;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Heading: medium-bold, less thick, accurate sizing, more margin below for separation */
+.accordion.accordion2 .accordion-item-label h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  margin: 0 0 24px;
+  padding: 0;
+  line-height: 1.28;
+  font-family: var(--heading-font-family);
+  background: transparent;
+  white-space: normal;
+  flex: 1 1 auto;
+  text-align: left;
+  overflow: visible;
+  letter-spacing: 0;
+}
+
+/* Icon on right (horizontal minus/bar) as a flex child, force horizontal and vertically centered */
+.accordion.accordion2 details > summary.accordion-item-label::after,
+.accordion.accordion2 details[open] > summary.accordion-item-label::after {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: #BE0032;
+  border-radius: 1px;
+  margin-left: 16px;
+  margin-right: 0;
+  align-self: center;
+
+  /* Remove any transform or rotation, enforce horizontal line */
+  transform: none;
+  vertical-align: middle;
+  position: static;
+}
+
+/* Remove any default chevron or marker */
+.accordion.accordion2 details > summary::-webkit-details-marker,
+.accordion.accordion2 details > summary::marker {
+  display: none;
+}
+
+/* Accordion item body/content */
+.accordion.accordion2 .accordion-item-body {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* List styling */
+.accordion.accordion2 .accordion-item-body ul {
+  margin: 0;
+  padding-left: 22px;
+  list-style: disc;
+}
+
+.accordion.accordion2 .accordion-item-body ul li {
+  color: #222;
+  font-size: 15px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Red bullets */
+.accordion.accordion2 .accordion-item-body ul li::marker {
+  color: #BE0032;
+}
+
+/* Links: red and underlined only in this block */
+.accordion.accordion2 .accordion-item-body a {
+  color: #BE0032;
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+/* Paragraph spacing inside list items */
+.accordion.accordion2 .accordion-item-body p {
+  margin: 0 0 5px;
+  padding: 0;
+}
+
+/* Responsive: reduce padding for small screens */
+@media (width <= 600px) {
+  .accordion.accordion2 {
+    padding: 24px 8px 20px;
+  }
+
+  .accordion.accordion2 .accordion-item-label h2 {
+    font-size: 15px;
+    margin-bottom: 14px;
   }
 }
