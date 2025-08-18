@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .columns.columns3 {
   --wsu-pink: #b11e47;
   --wsu-gray: #f3f3f3;
@@ -25,6 +26,7 @@
 .columns > div > .columns-img-col img {
   display: block;
 }
+
 .columns.columns3 > div {
   display: flex;
   flex-direction: row;
@@ -36,6 +38,7 @@
   gap: 28px;
   padding: 0;
 }
+
 @media (width <= 900px), (width <= 850px) {
   .columns.columns3 > div {
     flex-direction: column;
@@ -44,6 +47,7 @@
     margin: 0 8px;
     padding: 0;
   }
+
   .columns.columns3 > div > div {
     max-width: 100%;
     flex-basis: 100%;
@@ -56,11 +60,13 @@
     flex-direction: unset;
     gap: 24px;
   }
+
   .columns > div > div {
     flex: 1;
     order: unset;
   }
 }
+
 .columns.columns3 > div > div {
   min-width: 0;
   flex: 0 1 360px;
@@ -86,6 +92,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .columns.columns3 h2 {
   font-weight: 700;
   color: var(--text-color);
@@ -96,6 +103,7 @@
   margin-bottom: 0.25em;
   font-size: var(--heading-font-size-xl);
 }
+
 .columns.columns3 > div > div > * {
   margin-bottom: 0.28em;
 }
@@ -111,6 +119,7 @@
 .columns.columns3 > div > div:first-child > *:nth-child(2) {
   margin-top: 0.04em;
 }
+
 .columns.columns3 > div > div:first-child > ul {
   display: flex;
   gap: 0.6em;
@@ -138,6 +147,7 @@
   margin: 0;
   font-size: 1em;
 }
+
 .columns.columns3 > div > div:first-child table {
   width: 100%;
   background: var(--wsu-gray);
@@ -202,6 +212,7 @@
   font-weight: 600;
   color: #222;
 }
+
 .columns.columns3 > div > div:first-child .button-container {
   margin: 0.18em 0 0.02em;
 }
@@ -264,19 +275,15 @@
   color: #fff;
 }
 
-.columns.columns3 > div > div:last-child {
-  align-items: flex-start;
-}
-
 
 .columns.columns31 {
   --wsu-pink: #b31b34;
   --wsu-bg-table: #ededed;
+
   margin-top: 0;
   padding-top: 0;
 }
 
-/* Ensure the block sits at the natural flow of the document (top-aligned) */
 .columns.columns31,
 .columns.columns31 > div {
   align-items: flex-start;
@@ -285,7 +292,6 @@
   min-height: 0;
 }
 
-/* Main two-column flex layout; even tighter gap for side-by-side grouping */
 .columns.columns31 > div {
   display: flex;
   flex-direction: row;
@@ -298,8 +304,7 @@
   padding: 0;
 }
 
-/* Responsive: stack columns vertically on small screens */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .columns.columns31 > div {
     flex-direction: column;
     gap: 16px;
@@ -308,7 +313,6 @@
   }
 }
 
-/* Left column (hours) - compact, vertically stacked */
 .columns.columns31 > div > div:first-child {
   min-width: 0;
   max-width: 340px;
@@ -319,7 +323,6 @@
   gap: 0.8em;
 }
 
-/* Right column (librarian) - compact, sits close to left */
 .columns.columns31 > div > div:last-child {
   min-width: 0;
   max-width: 220px;
@@ -330,7 +333,6 @@
   gap: 0.8em;
 }
 
-/* Headings: bold, black, close to top */
 .columns.columns31 h2 {
   font-size: var(--heading-font-size-xl);
   font-weight: 700;
@@ -340,12 +342,11 @@
   letter-spacing: 0;
 }
 
-/* List row: date and WSU community hours, spaced, left-aligned */
 .columns.columns31 > div > div:first-child ul {
   display: flex;
   gap: 1.1em;
   list-style: none;
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em;
   padding: 0;
   font-size: 1em;
   align-items: center;
@@ -364,20 +365,18 @@
   color: var(--wsu-pink);
 }
 
-/* Hours tables */
 .columns.columns31 > div > div:first-child table {
   width: 100%;
   background: var(--wsu-bg-table);
   border-radius: 7px;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
   font-size: 1em;
   box-sizing: border-box;
   padding: 0.6em 0.5em 0.7em 0.7em;
 }
 
-/* Table header */
 .columns.columns31 > div > div:first-child thead th {
   text-align: left;
   font-weight: 700;
@@ -388,7 +387,6 @@
   padding: 0.5em 0.3em 0.3em 0;
 }
 
-/* Table body */
 .columns.columns31 > div > div:first-child tbody tr td {
   border: none;
   vertical-align: middle;
@@ -398,7 +396,6 @@
   font-size: 1em;
 }
 
-/* Table left column links (location links) */
 .columns.columns31 > div > div:first-child td:first-child {
   color: var(--wsu-pink);
   text-align: left;
@@ -414,7 +411,6 @@
   font-weight: 400;
 }
 
-/* Table right column (hours) */
 .columns.columns31 > div > div:first-child td:last-child {
   text-align: right;
   color: #3a3a3a;
@@ -424,13 +420,11 @@
   padding-left: 4px;
 }
 
-/* Table header row (first row of tbody) */
 .columns.columns31 > div > div:first-child table tbody tr:first-child td {
   font-weight: 600;
   color: #222;
 }
 
-/* Action/Navigation Links (footer links) */
 .columns.columns31 > div > div:first-child .button-container {
   margin: 0.3em 0;
 }
@@ -444,7 +438,7 @@
   border-radius: 0;
   box-shadow: none;
   padding: 0;
-  margin: 0 0 0.1em 0;
+  margin: 0 0 0.1em;
   text-decoration: underline;
   line-height: 1.4;
   text-align: left;
@@ -461,10 +455,99 @@
   text-decoration: underline;
 }
 
-/* Responsive column width adjustment for stacking */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .columns.columns31 > div > div {
     max-width: 100%;
     padding: 0;
+  }
+}
+
+
+.columns.columns21 {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.columns.columns21 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+.columns.columns21 > div > div {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #903;
+  min-width: 0;
+  min-height: 42px;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding: 0;
+  border-right: 1px solid #fff;
+}
+
+.columns.columns21 > div > div:last-child {
+  border-right: none;
+}
+
+.columns.columns21 .button-container {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.columns.columns21 .button-container .button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: var(--body-font-family, sans-serif);
+  text-align: center;
+  padding: 13px 0;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  line-height: 1.2;
+  letter-spacing: 0;
+  cursor: pointer;
+  white-space: normal;
+}
+
+/* Remove unwanted default button styling that may override */
+.columns.columns21 .button-container .button,
+.columns.columns21 .button-container .button:visited {
+  background: none;
+  border: none;
+  color: #fff;
+}
+
+/* Responsive: stack columns vertically at <=600px */
+@media (width <= 600px) {
+  .columns.columns21 > div {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .columns.columns21 > div > div {
+    border-right: none;
+    border-bottom: 1px solid #fff;
+  }
+
+  .columns.columns21 > div > div:last-child {
+    border-bottom: none;
   }
 }
