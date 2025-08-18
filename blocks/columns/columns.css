@@ -276,208 +276,6 @@
 }
 
 
-.columns.columns31 {
-  --wsu-pink: #af1f24;
-  --wsu-table-bg: #f2f2f2;
-  --wsu-table-header: #222;
-  --wsu-table-text: #333;
-}
-
-.columns.columns31 > div {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  max-width: 980px;
-  margin: 0 auto;
-  width: 100%;
-  gap: 54px;
-  padding: 0;
-}
-
-@media (width <= 900px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 28px;
-    max-width: 100%;
-    margin: 0 8px;
-  }
-}
-
-.columns.columns31 > div > div:first-child {
-  min-width: 0;
-  max-width: 370px;
-  flex: 1 1 370px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.17em;
-}
-
-.columns.columns31 > div > div:last-child {
-  min-width: 0;
-  max-width: 370px;
-  flex: 1 1 370px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.33em;
-  padding-left: 0;
-}
-
-.columns.columns31 h2 {
-  font-size: var(--heading-font-size-xl);
-  font-weight: 700;
-  color: #000;
-  margin-top: 0;
-  margin-bottom: 0.24em;
-  letter-spacing: 0;
-  line-height: 1.15;
-}
-
-.columns.columns31 > div > div:first-child ul {
-  display: flex;
-  gap: 0.20em;
-  align-items: center;
-  list-style: none;
-  margin: 0 0 0.13em;
-  padding: 0;
-  font-size: 1rem;
-}
-
-.columns.columns31 > div > div:first-child ul li:first-child {
-  background: var(--wsu-table-bg);
-  font-weight: 600;
-  color: #131313;
-  padding: 2px 10px;
-  border-radius: 3px;
-  margin: 0;
-  font-size: 1em;
-}
-
-.columns.columns31 > div > div:first-child ul li:last-child {
-  color: var(--wsu-pink);
-  font-weight: 400;
-  margin: 0;
-  font-size: 1em;
-}
-
-.columns.columns31 > div > div:first-child table {
-  width: 100%;
-  background: var(--wsu-table-bg);
-  border-radius: 7px;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0 0 1.1em;
-  font-size: 0.96em;
-  box-sizing: border-box;
-  padding: 0.13em 0.11em 0.13em 0.14em;
-}
-
-.columns.columns31 > div > div:first-child thead th {
-  text-align: left;
-  font-weight: 600;
-  color: var(--wsu-table-header);
-  background: none;
-  border: none;
-  font-size: 1em;
-  padding: 0.13em 0.08em 0.11em 0;
-}
-
-.columns.columns31 > div > div:first-child tbody tr td {
-  border: none;
-  vertical-align: middle;
-  color: var(--wsu-table-text);
-  font-weight: 400;
-  padding: 0.07em 0.09em 0.07em 0.08em;
-  font-size: 0.96em;
-}
-
-.columns.columns31 > div > div:first-child td:first-child {
-  color: var(--wsu-pink);
-  text-align: left;
-  white-space: nowrap;
-  font-weight: 400;
-  min-width: 72px;
-  padding-right: 2px;
-}
-
-.columns.columns31 > div > div:first-child td:first-child a {
-  color: var(--wsu-pink);
-  text-decoration: underline;
-  font-weight: 400;
-}
-
-.columns.columns31 > div > div:first-child td:last-child {
-  text-align: right;
-  color: var(--wsu-table-text);
-  font-weight: 400;
-  white-space: nowrap;
-  min-width: 72px;
-  padding-left: 2px;
-}
-
-.columns.columns31 > div > div:first-child table tbody tr:first-child td {
-  font-weight: 600;
-  color: #222;
-}
-
-.columns.columns31 > div > div:first-child .button-container a.button {
-  background: none;
-  border: none;
-  color: var(--wsu-pink);
-  font-weight: 400;
-  font-size: 1em;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  margin: 0 0 0.22em;
-  text-decoration: underline;
-  line-height: 1.14;
-  text-align: left;
-  display: inline;
-  min-width: 0;
-  max-width: 100%;
-  transition: color 0.16s;
-  cursor: pointer;
-}
-
-.columns.columns31 > div > div:first-child a:not(.button) {
-  color: var(--wsu-pink);
-  text-decoration: underline;
-  font-weight: 400;
-  font-size: 1em;
-}
-
-.columns.columns31 > div > div:first-child a:not(.button):hover,
-.columns.columns31 > div > div:first-child a:not(.button):focus {
-  color: #7d1425;
-  text-decoration: underline;
-}
-
-.columns.columns31 > div > div:first-child .button-container {
-  margin-bottom: 0.64em;
-}
-
-.columns.columns31 > div > div:first-child > *:not(:last-child) {
-  margin-bottom: 0.22em;
-}
-
-@media (width <= 650px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 18px;
-    max-width: 100%;
-  }
-
-  .columns.columns31 > div > div:first-child,
-  .columns.columns31 > div > div:last-child {
-    max-width: 100%;
-    padding-left: 0;
-  }
-}
-
-
 .columns.columns33 {
   margin-top: 0;
   max-width: 1040px;
@@ -658,7 +456,6 @@
   padding: 0;
 }
 
-/* Flexbox row for columns (side by side) */
 .columns.columns21 > div {
   display: flex;
   flex-direction: row;
@@ -669,21 +466,19 @@
   gap: 0;
 }
 
-/* Responsive: stack columns vertically on small screens */
 @media (width <= 600px) {
   .columns.columns21 > div {
     flex-direction: column;
   }
 }
 
-/* Column cell styles */
 .columns.columns21 > div > div {
   flex: 1 1 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #903;
-  min-height: 42px; /* closer to original for vertical space */
+  min-height: 42px;
   border-radius: 0;
   box-sizing: border-box;
   padding: 0;
@@ -693,12 +488,10 @@
   margin: 0;
 }
 
-/* Remove right border for last cell */
 .columns.columns21 > div > div:last-child {
   border-right: none;
 }
 
-/* Responsive: switch to bottom border for vertical stack */
 @media (width <= 600px) {
   .columns.columns21 > div > div {
     border-right: none;
@@ -710,14 +503,12 @@
   }
 }
 
-/* Remove margin/padding from possible nested containers */
 .columns.columns21 .button-container,
 .columns.columns21 .button-container p {
   margin: 0;
   padding: 0;
 }
 
-/* Center and stretch the button inside each column */
 .columns.columns21 .button-container {
   width: 100%;
   display: flex;
@@ -726,16 +517,15 @@
   padding: 0;
 }
 
-/* Button style for inside columns */
 .columns.columns21 .button-container .button {
   background: none;
   border: none;
   color: #fff;
   font-size: 12px;
-  font-weight: 600; /* bolder for closer match */
+  font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  padding: 12px 0;    /* slightly increased for more breathing room */
+  padding: 12px 0;
   margin: 0;
   box-shadow: none;
   border-radius: 0;
@@ -743,15 +533,194 @@
   display: block;
   width: 100%;
   line-height: 1.2;
-  letter-spacing: 0; /* tighter, matches original */
+  letter-spacing: 0;
   cursor: pointer;
   white-space: nowrap;
 }
 
-/* Remove underline/color on visited for buttons in block */
 .columns.columns21 .button-container .button,
 .columns.columns21 .button-container .button:visited {
   background: none;
   border: none;
   color: #fff;
+}
+
+
+.columns.columns31 {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0;
+  background: none;
+}
+
+.columns.columns31 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (width <= 900px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+/* Both columns: equal width, no individual max-width */
+.columns.columns31 > div > div {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Headings: lighter, smaller, reduce top margin for alignment */
+.columns.columns31 h2 {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #232323;
+  margin: 0 0 0.18em;
+  line-height: 1.13;
+  letter-spacing: 0.01em;
+  padding: 0;
+}
+
+/* Date box and label: flush left, spaced, baseline-aligned */
+.columns.columns31 ul {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.columns.columns31 ul li:first-child {
+  background: #F7F7F7;
+  color: #333;
+  font-weight: 400;
+  font-size: 1rem;
+  border-radius: 4px;
+  padding: 8px 18px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 9%);
+  margin-left: 0;
+  margin-right: 40px;
+  display: inline-block;
+}
+
+.columns.columns31 ul li:not(:first-child) {
+  color: #b11e47;
+  font-weight: 400;
+  font-size: 1rem;
+  align-self: baseline;
+  line-height: 1.1;
+}
+
+/* Table styling: compact, visually separated */
+.columns.columns31 table {
+  background: #ededed;
+  border-radius: 5px;
+  border-collapse: separate;
+  border-spacing: 0;
+  max-width: 370px;
+  width: 100%;
+  font-size: 0.93rem;
+  margin-bottom: 16px;
+  margin-top: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.columns.columns31 th,
+.columns.columns31 thead th {
+  font-weight: 600;
+  color: #222;
+  font-size: 1em;
+  background: none;
+  text-align: left;
+  padding: 7px 8px 4px 7px;
+  line-height: 1.12;
+  border: none;
+}
+
+.columns.columns31 td {
+  font-weight: 400;
+  color: #343434;
+  padding: 4px 7px;
+  border: none;
+  vertical-align: middle;
+  font-size: 0.93em;
+}
+
+.columns.columns31 td:first-child {
+  text-align: left;
+  white-space: nowrap;
+  padding-right: 6px;
+}
+
+.columns.columns31 td:last-child {
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 6px;
+}
+
+.columns.columns31 td a {
+  color: #b11e47;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* Remove extra links/buttons below tables */
+.columns.columns31 .button-container,
+.columns.columns31 .extra-links,
+.columns.columns31 a.button {
+  display: none;
+}
+
+/* Modal overlay, if used */
+.columns.columns31 .modal-overlay {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 24px 36px;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 22%);
+  font-size: 1.05rem;
+  z-index: 9999;
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Responsive tweaks */
+@media (width <= 650px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .columns.columns31 > div > div {
+    max-width: 100%;
+    min-width: 0;
+    padding: 0;
+  }
+}
+
+/* Remove vertical margin between direct children for density */
+.columns.columns31 > div > div > * {
+  margin-top: 0;
+  margin-bottom: 0.35em;
+}
+
+.columns.columns31 > div > div > *:last-child {
+  margin-bottom: 0;
 }
