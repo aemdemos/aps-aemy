@@ -159,7 +159,6 @@
   border: none;
 }
 
-/* Remove any border or background from details and summary */
 .accordion.accordion2 details {
   border: none;
   background: transparent;
@@ -167,7 +166,6 @@
   padding: 0;
 }
 
-/* Flex layout for summary row: aligns heading and icon side by side, centered vertically */
 .accordion.accordion2 .accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -182,7 +180,6 @@
   position: relative;
 }
 
-/* Heading: medium-bold, less thick, accurate sizing, more margin below for separation */
 .accordion.accordion2 .accordion-item-label h2 {
   font-size: 16px;
   font-weight: 500;
@@ -199,7 +196,6 @@
   letter-spacing: 0;
 }
 
-/* Icon on right (horizontal minus/bar) as a flex child, force horizontal and vertically centered */
 .accordion.accordion2 details > summary.accordion-item-label::after,
 .accordion.accordion2 details[open] > summary.accordion-item-label::after {
   display: inline-block;
@@ -210,20 +206,16 @@
   margin-left: 16px;
   margin-right: 0;
   align-self: center;
-
-  /* Remove any transform or rotation, enforce horizontal line */
   transform: none;
   vertical-align: middle;
   position: static;
 }
 
-/* Remove any default chevron or marker */
 .accordion.accordion2 details > summary::-webkit-details-marker,
 .accordion.accordion2 details > summary::marker {
   display: none;
 }
 
-/* Accordion item body/content */
 .accordion.accordion2 .accordion-item-body {
   background: transparent;
   padding: 0;
@@ -231,7 +223,6 @@
   box-sizing: border-box;
 }
 
-/* List styling */
 .accordion.accordion2 .accordion-item-body ul {
   margin: 0;
   padding-left: 22px;
@@ -245,25 +236,21 @@
   line-height: 1.6;
 }
 
-/* Red bullets */
 .accordion.accordion2 .accordion-item-body ul li::marker {
   color: #BE0032;
 }
 
-/* Links: red and underlined only in this block */
 .accordion.accordion2 .accordion-item-body a {
   color: #BE0032;
   text-decoration: underline;
   font-weight: 400;
 }
 
-/* Paragraph spacing inside list items */
 .accordion.accordion2 .accordion-item-body p {
   margin: 0 0 5px;
   padding: 0;
 }
 
-/* Responsive: reduce padding for small screens */
 @media (width <= 600px) {
   .accordion.accordion2 {
     padding: 24px 8px 20px;
@@ -272,5 +259,93 @@
   .accordion.accordion2 .accordion-item-label h2 {
     font-size: 15px;
     margin-bottom: 14px;
+  }
+}
+
+
+.accordion.accordion3 {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.accordion.accordion3 details {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+/* Summary row styled as flex row */
+.accordion.accordion3 .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+  height: 24px;
+  padding: 0 10px;
+  background: #f8f8f8;
+  border: none;
+  border-bottom: 1px solid #ececec;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  font-family: var(--body-font-family);
+
+  /* Plus SVG as background, positioned for more breathing space */
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='4' y='1' width='2' height='8' fill='black'/%3E%3Crect x='1' y='4' width='8' height='2' fill='black'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 10px 10px;
+  padding-right: 18px;
+}
+
+/* Remove default marker/triangle in summary for all browsers */
+.accordion.accordion3 .accordion-item-label::-webkit-details-marker,
+.accordion.accordion3 .accordion-item-label::marker {
+  display: none;
+}
+
+/* Remove after pseudo (chevron, etc) if present */
+.accordion.accordion3 .accordion-item-label::after {
+  display: none;
+}
+
+/* Style the label text */
+.accordion.accordion3 .accordion-item-label p {
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--body-font-family);
+}
+
+/* Accordion body content spacing */
+.accordion.accordion3 .accordion-item-body {
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (width <= 600px) {
+  .accordion.accordion3 .accordion-item-label {
+    padding-left: 5px;
+    padding-right: 10px;
+    min-height: 28px;
+    height: 28px;
+    background-position: right 3px center;
+  }
+
+  .accordion.accordion3 .accordion-item-body {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
