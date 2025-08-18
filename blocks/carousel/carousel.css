@@ -25,12 +25,16 @@
   flex: 0 0 100%;
   scroll-snap-align: start;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: stretch;
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: min(50vw, calc(100dvh - var(--header-height)));
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  gap: 0;
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
@@ -55,12 +59,17 @@
 
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
-  margin: 68px;
-  padding: 16px;
-  color: white;
-  background-color: rgb(19 19 19 / 75%);
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
   position: relative;
   width: var(--slide-content-width, auto);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .carousel .carousel-slide-indicators {
@@ -334,18 +343,11 @@
   color: #222;
 }
 
-
-/* Hide the caption/title overlay from the left book cover area */
-
-/* Hide h2 and all other content inside .carousel-slide-content when it's a child of the left image half */
 .carousel .carousel-slide-image + .carousel-slide-content h2,
 .carousel .carousel-slide-image + .carousel-slide-content *:not(.carousel-slide-content) {
   display: none;
 }
 
-/* Also, if any .carousel-slide-content appears after .carousel-slide-image in the DOM, only show on right column (quote/attribution) */
-
-/* Restore left column as pure image with padding, no overlay, no caption */
 .carousel .carousel-slide-image {
   flex: 0 0 50%;
   display: flex;
@@ -357,7 +359,6 @@
   box-sizing: border-box;
 }
 
-/* Ensure the image is never covered by overlay text */
 .carousel .carousel-slide-image picture,
 .carousel .carousel-slide-image img {
   max-width: 100%;
@@ -372,7 +373,6 @@
   z-index: 1;
 }
 
-/* Quote styling (right side) */
 .carousel .carousel-slide-content h2 {
   font-family: Georgia, serif;
   font-size: 2.6em;
@@ -384,7 +384,6 @@
   color: #222;
 }
 
-/* Attribution styling, smaller and lighter */
 .carousel .carousel-slide-content .attribution,
 .carousel .carousel-slide-content p:last-child {
   font-size: 1.05em;
@@ -397,12 +396,10 @@
   letter-spacing: 0.03em;
 }
 
-/* Hide extra paragraph elements if present */
 .carousel .carousel-slide-content p:not(:last-child) {
   display: none;
 }
 
-/* Responsive adjustments for smaller screens */
 @media (width <= 900px) {
   .carousel .carousel-slides {
     flex-direction: column;
@@ -429,4 +426,85 @@
   .carousel .carousel-slide-indicators {
     bottom: 10px;
   }
+}
+
+
+/* Remove all interior gutters and padding for a true split-screen look */
+.carousel {
+  padding: 0;
+}
+
+.carousel .carousel-slides-container,
+.carousel .carousel-slides {
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+/* Force slide to use full viewport height, no extra space */
+
+/* Book cover: tall, narrow, flush left, no margin/padding */
+.carousel .carousel-slide .carousel-slide-image {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+  min-height: 600px;
+  max-height: none;
+  aspect-ratio: 2/3;
+  min-width: 230px;
+  max-width: 340px;
+  width: 30vw;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* Book cover image: maximize area, no extra margin or border */
+.carousel .carousel-slide .carousel-slide-image picture,
+.carousel .carousel-slide .carousel-slide-image img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Quote area: flush with book cover, no margin or padding */
+
+/* Remove gap between left and right columns */
+
+/* Remove right/left padding on outer carousel container, if any */
+.carousel-wrapper {
+  padding: 0;
+}
+
+/* Responsive: reasonable fallback for small screens */
+@media (width <= 900px) {
+  .carousel .carousel-slide,
+  .carousel .carousel-slide .carousel-slide-image {
+    min-height: 340px;
+    height: auto;
+    width: 100vw;
+    min-width: unset;
+    max-width: unset;
+    aspect-ratio: unset;
+  }
+
+  .carousel .carousel-slide {
+    flex-direction: column;
+  }
+}
+
+/* Still hide navigation dots/controls */
+.carousel .carousel-navigation-dots,
+.carousel .carousel-slide-indicators {
+  display: none;
 }
