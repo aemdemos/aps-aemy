@@ -366,7 +366,6 @@
   box-sizing: border-box;
 }
 
-/* Grid: fixed-width columns, maximize filled space, tight grouping */
 .cards.cards1 > ul {
   display: grid;
   grid-template-columns: repeat(3, 320px);
@@ -379,7 +378,6 @@
   box-sizing: border-box;
 }
 
-/* Responsive: 2 columns on medium, 1 on small */
 @media (width <= 1100px) {
   .cards.cards1 > ul {
     grid-template-columns: repeat(2, 320px);
@@ -396,7 +394,6 @@
   }
 }
 
-/* Card styling */
 .cards.cards1 > ul > li {
   background: #fff;
   border: none;
@@ -414,7 +411,6 @@
   justify-self: center;
 }
 
-/* Square image */
 .cards.cards1 .cards-card-image {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -434,7 +430,6 @@
   border-radius: 0;
 }
 
-/* Card body: minimal bottom padding for closest possible link; all left-aligned */
 .cards.cards1 .cards-card-body {
   flex: 1 1 auto;
   display: flex;
@@ -448,7 +443,6 @@
   text-align: left;
 }
 
-/* Title: bold, left, consistent spacing */
 .cards.cards1 .cards-card-body h3 {
   font-size: 18px;
   font-weight: 700;
@@ -460,7 +454,6 @@
   padding-left: 0;
 }
 
-/* Description: flush left, smaller, lighter */
 .cards.cards1 .cards-card-body p:not(.button-container) {
   font-size: 14px;
   color: #666;
@@ -471,7 +464,6 @@
   padding-left: 0;
 }
 
-/* Button container at very bottom, flush left */
 .cards.cards1 .cards-card-body .button-container {
   margin-top: auto;
   margin-bottom: 0;
@@ -481,7 +473,6 @@
   width: 100%;
 }
 
-/* Visit Page button: inline, no underline, arrow right, bold */
 .cards.cards1 .cards-card-body .button {
   background: none;
   border: none;
@@ -509,9 +500,136 @@
   background-size: 1em 1em;
 }
 
-/* Button hover/focus: darken, underline */
 .cards.cards1 .cards-card-body .button:hover,
 .cards.cards1 .cards-card-body .button:focus {
   color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+
+.cards.cards13 {
+  background: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  box-sizing: border-box;
+}
+
+/* Grid layout for the card collection */
+.cards.cards13 > ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (width <= 900px) {
+  .cards.cards13 > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
+
+@media (width <= 600px) {
+  .cards.cards13 > ul {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* Individual card styling */
+.cards.cards13 > ul > li {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* Image container and aspect ratio */
+.cards.cards13 .cards-card-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  line-height: 0;
+  display: block;
+  margin: 0;
+  background: #fff;
+}
+
+.cards.cards13 .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Card body spacing and stacking */
+.cards.cards13 .cards-card-body {
+  width: 100%;
+  margin-top: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 0;
+  background: #fff;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* Title/link vertical stacking and spacing */
+.cards.cards13 .cards-card-body p {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* Title styling */
+.cards.cards13 .cards-card-body strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0;
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+}
+
+/* Link styling */
+.cards.cards13 .cards-card-body a {
+  font-size: 14px;
+  color: #666;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0;
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Make sure last child in card body has no bottom margin */
+.cards.cards13 .cards-card-body > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Make sure link underline appears only on hover/focus for clarity */
+.cards.cards13 .cards-card-body a:hover,
+.cards.cards13 .cards-card-body a:focus {
+  color: #222;
   text-decoration: underline;
 }
