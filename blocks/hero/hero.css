@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -66,12 +67,10 @@
   padding: 0;
 }
 
-/* Merged duplicate: .hero.hero9 > div:first-child */
 .hero.hero9 > div:first-child {
   display: none;
 }
 
-/* Merged duplicate: .hero.hero9 > div:last-child */
 .hero.hero9 > div:last-child {
   background: rgb(0 0 0 / 70%);
   border-radius: 10px;
@@ -88,8 +87,6 @@
   position: relative;
   min-height: 260px;
   box-sizing: border-box;
-
-  /* Moved margin-right to separate property after margin shorthand for CSS compliance */
   margin: 0;
   margin-right: 32px;
 }
@@ -129,7 +126,6 @@
   text-decoration: underline;
 }
 
-/* Overlay box for headline (first visible div in right column) */
 .hero.hero9 > div:last-child > div:first-child {
   position: absolute;
   top: 10px;
@@ -177,13 +173,11 @@
   overflow-wrap: break-word;
 }
 
-/* Remove the previous headline style below the overlay if it exists */
 .hero.hero9 > div:last-child > div:nth-child(2) h2,
 .hero.hero9 > div:last-child > div:nth-child(2) h2 a {
   display: none;
 }
 
-/* Move standalone .hero.hero9 h* rules above more specific .hero.hero9 > div:last-child > div:first-child h2 */
 @media (width <= 900px) {
   .hero.hero9 {
     min-height: 120px;
@@ -245,4 +239,257 @@
   max-width: unset;
   padding: 0;
   margin: 0;
+}
+
+
+.hero.hero38 {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100vw;
+  min-height: 340px;
+  background-color: #92063B;
+  background-image: url('https://library.westernsydney.edu.au/__data/assets/image/0008/2087351/WB_AcademicIntegrityWeek_1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* Hide the inline image so only background is visible */
+.hero.hero38 > div:first-child picture,
+.hero.hero38 > div:first-child img {
+  display: none;
+}
+
+/* Left column: circle with headline inside */
+.hero.hero38 > div:first-child {
+  flex: 0 0 400px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  min-height: 340px;
+  z-index: 2;
+}
+
+.hero.hero38 > div:first-child > div {
+  width: 340px;
+  height: 340px;
+  background: #FF9078;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -90px; /* Shift circle further left */
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  padding-top: 18px; /* Move text higher in circle */
+}
+
+/* Headline inside the circle – larger and higher, more line height */
+.hero.hero38 > div:first-child > div > h2,
+.hero.hero38 > div:first-child > div > h1 {
+  width: 88%;
+  color: #fff;
+  font-family: var(--heading-font-family), sans-serif;
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 auto;
+  padding: 0;
+  letter-spacing: 0.01em;
+  z-index: 3;
+  display: block;
+  word-wrap: break-word; /* Changed from deprecated word-break: break-word */
+  margin-top: -8px; /* Move headline even higher */
+}
+
+.hero.hero38 > div:first-child > div > p,
+.hero.hero38 > div:first-child > div > span,
+.hero.hero38 > div:first-child > div > small {
+  font-size: 1.13rem;
+  font-weight: 500;
+  text-transform: none;
+  margin-top: 28px; /* More spacing from headline */
+  margin-bottom: 0;
+  line-height: 1.32;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  width: 90%;
+}
+
+/* Remove text from outside the circle in left column */
+.hero.hero38 > div:first-child > h2,
+.hero.hero38 > div:first-child > h1,
+.hero.hero38 > div:first-child > p,
+.hero.hero38 > div:first-child > span {
+  display: none;
+}
+
+/* Right column: dark panel */
+.hero.hero38 > div:nth-child(2) {
+  flex: 1 1 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  position: relative;
+  min-height: 120px;
+  z-index: 2;
+  padding-left: 24px;
+}
+
+.hero.hero38 > div:nth-child(2) > div {
+  background: rgb(26 24 26 / 85%);
+  color: #fff;
+  padding: 32px 42px 30px;
+  border-radius: 3px;
+  max-width: 410px;
+  margin-right: 55px;
+  margin-top: 38px;
+  box-sizing: border-box;
+  font-size: 1.03rem;
+  line-height: 1.42;
+  text-align: left;
+  z-index: 2;
+  box-shadow: none;
+  display: block;
+}
+
+/* Headline in right panel */
+.hero.hero38 > div:nth-child(2) > div > h2,
+.hero.hero38 > div:nth-child(2) > div > h1 {
+  color: #fff;
+  font-family: var(--heading-font-family), sans-serif;
+  font-weight: 700;
+  font-size: 1.23rem;
+  margin: 0 0 20px;
+  letter-spacing: 0.01em;
+  line-height: 1.18;
+  text-align: left;
+}
+
+/* Panel link/text: smaller, regular weight, more spacing */
+.hero.hero38 > div:nth-child(2) > div > p,
+.hero.hero38 > div:nth-child(2) > div > .button-container,
+.hero.hero38 > div:nth-child(2) > div > span,
+.hero.hero38 > div:nth-child(2) > div > small {
+  color: #fff;
+  font-size: 0.99rem;
+  margin: 18px 0 0;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1.38;
+  padding: 0;
+  text-transform: none;
+}
+
+/* Make button/link plain, not pill, regular weight */
+.hero.hero38 a,
+.hero.hero38 .button {
+  color: #fff;
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 400;
+  text-decoration: underline;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: inherit;
+  margin: 0;
+  line-height: inherit;
+  white-space: normal;
+  display: inline;
+}
+
+.hero.hero38 .button,
+.hero.hero38 p.button-container .button {
+  background: none;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 400;
+  text-decoration: underline;
+  margin: 0;
+  box-shadow: none;
+  line-height: inherit;
+  white-space: normal;
+  display: inline;
+}
+
+/* Responsive: stack vertically on mobile */
+@media (width <= 900px) {
+  .hero.hero38 {
+    flex-direction: column;
+    min-height: 450px;
+    padding: 0;
+  }
+
+  .hero.hero38 > div:first-child,
+  .hero.hero38 > div:nth-child(2) {
+    justify-content: center;
+    align-items: center;
+    min-height: auto;
+    margin: 0;
+    width: 100%;
+  }
+
+  .hero.hero38 > div:first-child > div {
+    margin: 12px auto;
+    width: 220px;
+    height: 220px;
+    min-width: 140px;
+    min-height: 140px;
+    margin-left: 0;
+    padding-top: 8px;
+  }
+
+  .hero.hero38 > div:first-child > div > h2,
+  .hero.hero38 > div:first-child > div > h1 {
+    font-size: 1.22rem;
+    width: 90%;
+    margin-bottom: 6px;
+    margin-top: -2px;
+  }
+
+  .hero.hero38 > div:first-child > div > p,
+  .hero.hero38 > div:first-child > div > span,
+  .hero.hero38 > div:first-child > div > small {
+    font-size: 0.98rem;
+    margin-top: 12px;
+  }
+
+  .hero.hero38 > div:nth-child(2) > div {
+    margin: 18px auto 12px;
+    padding: 16px 7vw 12px;
+    max-width: 98vw;
+    width: 95vw;
+  }
+
+  .hero.hero38 > div:nth-child(2) > div > h2,
+  .hero.hero38 > div:nth-child(2) > div > h1 {
+    font-size: 1.08rem;
+    margin-bottom: 10px;
+  }
+
+  .hero.hero38 > div:nth-child(2) > div > p,
+  .hero.hero38 > div:nth-child(2) > div > .button-container,
+  .hero.hero38 > div:nth-child(2) > div > span,
+  .hero.hero38 > div:nth-child(2) > div > small {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
 }
