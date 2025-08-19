@@ -658,10 +658,8 @@
   width: 100vw;
   max-width: 100vw;
   box-sizing: border-box;
-  background: none;
   font-family: var(--body-font-family);
-
-  /* Remove problematic centering transforms */
+  background: none;
 }
 
 .cards.cards18 > .cards,
@@ -669,16 +667,15 @@
   margin: 0;
   padding: 0;
   width: 100%;
+  box-sizing: border-box;
   background: none;
 }
 
-/* Use Grid for the row, 3 equal columns */
+/* Use grid for three columns, let height auto, keep cards square */
 .cards.cards18 ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
-  height: 270px;
-  min-height: 270px;
   margin: 0;
   padding: 0;
   gap: 0;
@@ -687,45 +684,55 @@
   background: none;
 }
 
-/* Card backgrounds */
-.cards.cards18 ul > li:nth-child(1) { background: #FF6B6B; }
-.cards.cards18 ul > li:nth-child(2) { background: #6C459D; }
-.cards.cards18 ul > li:nth-child(3) { background: #0576A5; }
-
-/* Center the card content with flex and stretch to full height */
 .cards.cards18 ul > li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* TRUE vertical centering */
+  height: auto;
+  aspect-ratio: 1 / 1;
   min-width: 0;
   min-height: 0;
   margin: 0;
   padding: 0;
-  position: relative;
-  height: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
-/* Both .cards-card-body act together as a central block, so push them into vertical center */
-.cards.cards18 ul > li > .cards-card-body {
+/* Background colors and vertical borders between cards */
+.cards.cards18 ul > li:nth-child(1) {
+  background: #FF686B;
+  border-right: 2px solid #fff;
+}
+
+.cards.cards18 ul > li:nth-child(2) {
+  background: #6C3899;
+  border-right: 2px solid #fff;
+}
+
+.cards.cards18 ul > li:nth-child(3) {
+  background: #0074A5;
+  border-right: none;
+}
+
+/* ICON styling */
+.cards.cards18 ul > li .cards-card-body:first-of-type {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: none;
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: none;
 }
 
-/* ICON: more vertical spacing above and below for better balance */
+/* Less space below icon, more balanced above/below */
 .cards.cards18 ul > li .cards-card-body:first-of-type p {
   width: 60px;
   height: 60px;
-  margin-top: 0;
-  margin-bottom: 44px;
+  margin: 16px 0 22px;
   display: block;
   background-repeat: no-repeat;
   background-size: contain;
@@ -736,7 +743,7 @@
   padding: 0;
 }
 
-/* Individual icons (SVG backgrounds) for each card */
+/* SVG ICONS: use background-image for each card's icon */
 .cards.cards18 ul > li:nth-child(1) .cards-card-body:first-of-type p {
   background-image: url('data:image/svg+xml;utf8,<svg width="48" height="48" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="13" width="34" height="20" rx="2"/><rect x="5" y="33" width="38" height="4" rx="1"/></svg>');
 }
@@ -749,7 +756,19 @@
   background-image: url('data:image/svg+xml;utf8,<svg width="48" height="48" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="28" height="20" rx="2"/><line x1="14" y1="16" x2="14" y2="32"/><line x1="18" y1="16" x2="18" y2="32"/><line x1="24" y1="16" x2="24" y2="32"/><line x1="30" y1="16" x2="30" y2="32"/><line x1="34" y1="16" x2="34" y2="32"/></svg>');
 }
 
-/* NUMBER + LABEL: stacked, center align, larger and more spaced */
+/* NUMBER and LABEL styling */
+.cards.cards18 ul > li .cards-card-body:last-of-type {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: none;
+}
+
 .cards.cards18 ul > li .cards-card-body:last-of-type p {
   display: flex;
   flex-direction: column;
@@ -761,31 +780,32 @@
   color: #fff;
   line-height: 1.13;
   letter-spacing: 0.01em;
-  font-size: 1.18rem;
-  font-weight: 400;
-  margin-bottom: 16px;
+  font-size: 1.32rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-/* Number: larger, bolder, more margin below */
+/* Number styling: slightly more margin below for better grouping */
 .cards.cards18 ul > li .cards-card-body:last-of-type p strong {
-  font-size: 3.1rem;
+  font-size: 3.4rem;
   font-weight: 900;
   color: #fff;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
   letter-spacing: 0.01em;
   text-align: center;
   line-height: 1.05;
 }
 
-/* Label: more margin below for balance */
+/* Label styling: just a bit of margin for balance */
 
-/* Prevent label from appearing bold even if wrapped in <strong> */
+/* Remove excess margin below label for tighter grouping */
 .cards.cards18 ul > li .cards-card-body:last-of-type p br + strong,
 .cards.cards18 ul > li .cards-card-body:last-of-type p br + span,
 .cards.cards18 ul > li .cards-card-body:last-of-type p br + * {
-  font-weight: 400;
-  font-size: 1.18rem;
+  font-size: 1.32rem;
+  font-weight: 700;
   color: #fff;
+  margin-bottom: 0;
 }
 
 /* Responsive: stack vertically on smaller screens */
@@ -793,17 +813,17 @@
   .cards.cards18 ul {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
-    height: auto;
-    min-height: 0;
   }
 
   .cards.cards18 ul > li {
-    min-height: 140px;
+    min-height: 160px;
     height: auto;
+    border-right: none;
+    border-bottom: 2px solid #fff;
+    aspect-ratio: auto;
   }
 
-  .cards.cards18 {
-    width: 100vw;
-    max-width: 100vw;
+  .cards.cards18 ul > li:last-child {
+    border-bottom: none;
   }
 }
