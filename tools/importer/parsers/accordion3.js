@@ -1,68 +1,63 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header row, exactly as in the example
+  // Create the accordion block header row, exactly as specified
   const headerRow = ['Accordion (accordion3)'];
 
-  // Gather all .card elements, if any
-  let cards = element.querySelectorAll(':scope > .card');
-  // If no .card direct children and element itself is a card, treat it as the only card
+  // Find all .card children directly under the element
+  let cards = Array.from(element.querySelectorAll(':scope > .card'));
+  // If this element itself is a .card and not an accordion container
   if (cards.length === 0 && element.classList.contains('card')) {
     cards = [element];
   }
 
-  const rows = [];
+  const rows = [headerRow];
+
   cards.forEach(card => {
-    // Title cell: Extract visible header text
-    let titleElem = card.querySelector('.card-header');
-    let titleContent = '';
-    if (titleElem) {
-      // Use heading text if present, else full header text
-      const heading = titleElem.querySelector('h1, h2, h3, h4, h5, h6');
+    // Title cell
+    let titleCell;
+    const cardHeader = card.querySelector(':scope > .card-header');
+    if (cardHeader) {
+      const heading = cardHeader.querySelector('h1,h2,h3,h4,h5,h6');
+      // Reference the heading element directly if it exists
       if (heading) {
-        titleContent = heading.textContent.trim();
+        titleCell = heading;
       } else {
-        titleContent = titleElem.textContent.trim();
+        // If no heading, reference the cardHeader element
+        titleCell = cardHeader;
       }
     } else {
-      // fallback: first heading in card
-      const heading = card.querySelector('h1, h2, h3, h4, h5, h6');
-      titleContent = heading ? heading.textContent.trim() : '';
+      // Fallback: reference the card itself
+      titleCell = card;
+    }
+    
+    // Content cell
+    let contentCell;
+    const collapse = card.querySelector(':scope > .collapse');
+    if (collapse) {
+      const cardBody = collapse.querySelector(':scope > .card-body');
+      // Reference the cardBody element directly if it exists, otherwise collapse
+      contentCell = cardBody ? cardBody : collapse;
+    } else {
+      // Fallback: reference the card itself
+      contentCell = card;
+    }
+    // Replace iframes in contentCell (not images) with links to their src
+    if (contentCell && contentCell.querySelectorAll) {
+      contentCell.querySelectorAll('iframe').forEach(iframe => {
+        if (iframe.src) {
+          const link = document.createElement('a');
+          link.href = iframe.src;
+          link.textContent = iframe.src;
+          iframe.parentNode.replaceChild(link, iframe);
+        }
+      });
     }
 
-    // Content cell: Find .collapse area (accordion content)
-    let contentElem = null;
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      // Use all .collapse children, preserve structure
-      const children = Array.from(collapse.childNodes).filter(node => {
-        // Exclude empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (children.length === 1) {
-        contentElem = children[0];
-      } else {
-        contentElem = document.createElement('div');
-        children.forEach(node => contentElem.appendChild(node));
-      }
-    } else {
-      // fallback: everything except .card-header
-      const contentNodes = Array.from(card.childNodes).filter(node => {
-        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('card-header')) return false;
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (contentNodes.length === 1) {
-        contentElem = contentNodes[0];
-      } else {
-        contentElem = document.createElement('div');
-        contentNodes.forEach(node => contentElem.appendChild(node));
-      }
-    }
-    // Push row with title and content
-    rows.push([titleContent, contentElem]);
+    // Add the row: always 2 columns, referencing existing elements
+    rows.push([titleCell, contentCell]);
   });
-  const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+
+  // Create the table and replace the original element
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

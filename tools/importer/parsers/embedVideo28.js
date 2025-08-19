@@ -1,33 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Compose the content for the block cell
-  const content = [];
+  // Header row must match the example exactly
+  const headerRow = ['Embed'];
+
+  // Prepare cell content array
+  const cellContents = [];
+
+  // Collect all text nodes and element nodes (including iframe) under the element
   element.childNodes.forEach((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'IFRAME' && node.src) {
-        // Replace iframe (non-img) with a link
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Keep non-empty text content
+      const text = node.textContent.trim();
+      if (text) {
+        cellContents.push(text);
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'IFRAME') {
+      // For iframes, per requirements, use their src as a link
+      const url = node.getAttribute('src');
+      if (url) {
         const link = document.createElement('a');
-        link.href = node.src;
-        link.textContent = node.src;
-        content.push(link);
-      } else {
-        content.push(node);
+        link.href = url;
+        link.textContent = url;
+        cellContents.push(link);
       }
-    } else if (node.nodeType === Node.TEXT_NODE) {
-      // Add any text content present directly under the element
-      const txt = node.textContent.trim();
-      if (txt) {
-        content.push(txt);
-      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Any other element: include it directly (retains existing references)
+      cellContents.push(node);
     }
   });
 
-  // Construct the cells array as per the markdown example
-  const cells = [
-    ['Embed'], // EXACT header from example
-    [content] // All source content, preserving semantic meaning
-  ];
+  // Ensure at least an empty string if no content was found
+  if (cellContents.length === 0) cellContents.push('');
 
+  // Compose final table structure: header and single cell
+  const cells = [
+    headerRow,
+    [cellContents.length === 1 ? cellContents[0] : cellContents],
+  ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

@@ -1,38 +1,29 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header exactly as specified
+  // Table header row as per requirement
   const headerRow = ['Cards (cards18)'];
-  // Get all direct card elements
-  const cards = Array.from(element.children);
-  const rows = cards.map(card => {
-    // Icon (should always exist)
+  const rows = [];
+  // Select all card divs (direct children)
+  const cards = element.querySelectorAll(':scope > div');
+  cards.forEach(card => {
+    // FIRST CELL: icon (reference the existing <i> element)
     const icon = card.querySelector('i');
-    // Number (should always exist)
-    const number = card.querySelector('span.cartfig');
-    // Title (should always exist)
-    const title = card.querySelector('p');
-
-    // First cell: icon element
-    // Second cell: number (heading) + title (description)
+    // SECOND CELL: number as strong, <br>, and label (p)
+    const num = card.querySelector('span.cartfig');
+    const p = card.querySelector('p');
+    // Compose text cell content
     const cellContent = [];
-    if (number) {
-      // Use <strong> for heading-like text
-      const heading = document.createElement('strong');
-      heading.textContent = number.textContent;
-      cellContent.push(heading);
-      cellContent.push(document.createElement('br'));
+    if (num) {
+      const strong = document.createElement('strong');
+      strong.textContent = num.textContent;
+      cellContent.push(strong);
     }
-    if (title) {
-      // Use span for description
-      const desc = document.createElement('span');
-      desc.textContent = title.textContent;
-      cellContent.push(desc);
-    }
-    // If number or title missing, skip their cellContent
-    return [icon, cellContent];
+    cellContent.push(document.createElement('br'));
+    if (p) cellContent.push(p);
+    rows.push([icon, cellContent]);
   });
-  // All rows: header + card rows
-  const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Compose full table and replace
+  const tableArr = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(tableArr, document);
   element.replaceWith(table);
 }
