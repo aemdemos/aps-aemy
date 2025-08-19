@@ -1,20 +1,22 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header matches example exactly
-  const headerRow = ['Cards (cards1)'];
-  const cells = [headerRow];
+  // Header row as in the example
+  const cells = [['Cards (cards1)']];
 
-  // Find the list of cards
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll('li.cards__item');
+  // Find all top-level card items
+  const ul = element.querySelector('ul.cards__list');
+  if (!ul) return;
+  const items = ul.querySelectorAll(':scope > li.cards__item');
 
   items.forEach((item) => {
-    // 1st cell: image from background-image
+    // --- Image cell: ---
+    // The 'a.item-image' contains a background-image. Extract URL, create <img>.
+    // alt should be carried over if present.
     const imageLink = item.querySelector('.item-image');
     let imgEl = null;
     if (imageLink) {
       const style = imageLink.getAttribute('style') || '';
+      // Extract the URL from the background-image
       const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
       if (match && match[1]) {
         imgEl = document.createElement('img');
@@ -23,33 +25,40 @@ export default function parse(element, { document }) {
       }
     }
 
-    // 2nd cell: text content (title, description, CTA)
+    // --- Text cell: ---
+    // Reference child elements directly.
     const content = item.querySelector('.item-content');
-    const textCell = [];
+    const partList = [];
     if (content) {
       const title = content.querySelector('.item-content__title');
       if (title) {
-        textCell.push(title); // direct reference, not cloning
+        // Use strong instead of h3 to match example's bold heading style
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent;
+        partList.push(strong);
       }
       const desc = content.querySelector('.item-content__desc');
       if (desc) {
-        textCell.push(desc); // direct reference
+        // Add line break if title exists and then description
+        if (partList.length) partList.push(document.createElement('br'));
+        partList.push(desc);
       }
       const link = content.querySelector('.item-content__link');
       if (link) {
-        textCell.push(link); // direct reference
+        // Add line break before CTA if desc/title exists
+        if (partList.length) partList.push(document.createElement('br'));
+        partList.push(link);
       }
     }
 
-    // Only add the row if there is image or text
-    if (imgEl || textCell.length) {
-      cells.push([
-        imgEl,
-        textCell
-      ]);
-    }
+    // Ensure table row for each card, image in cell 1, text block in cell 2
+    cells.push([
+      imgEl,
+      partList
+    ]);
   });
-  // Create and replace the table
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+
+  // Create and replace with block table
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

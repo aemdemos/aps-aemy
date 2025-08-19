@@ -1,51 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Header row for block table
-  const headerRow = ['Accordion (accordion2)'];
-
-  // 2. Extract accordion title from .card-header
-  let titleCell;
+  // Extract accordion title
+  let titleElem = null;
   const cardHeader = element.querySelector('.card-header');
   if (cardHeader) {
-    // Use the existing heading (h2, h3 etc) if present, else use the cardHeader itself
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else {
-      // fallback, use cardHeader directly
-      titleCell = cardHeader;
-    }
-  } else {
-    // fallback: blank cell
-    titleCell = document.createElement('span');
-    titleCell.textContent = '';
+    titleElem = cardHeader.querySelector('h1, h2, h3, h4, h5, h6') || cardHeader.firstElementChild || cardHeader;
   }
 
-  // 3. Extract accordion content from .card-body inside the .collapse content
-  let contentCell;
-  const collapseDiv = element.querySelector('.collapse');
-  if (collapseDiv) {
-    const cardBody = collapseDiv.querySelector('.card-body');
-    if (cardBody) {
-      contentCell = cardBody;
-    } else {
-      // fallback, use the collapseDiv
-      contentCell = collapseDiv;
-    }
-  } else {
-    // fallback: use whole element
-    contentCell = element;
+  // Extract accordion content
+  let contentElem = null;
+  const cardBody = element.querySelector('.card-body');
+  if (cardBody) {
+    contentElem = cardBody;
   }
 
-  // 4. Build rows: header, [title, content]
-  const rows = [
-    headerRow,
-    [titleCell, contentCell],
-  ];
+  // Build table rows
+  const cells = [];
 
-  // 5. Create block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Header row: one cell with colspan=2
+  const headerCell = document.createElement('th');
+  headerCell.textContent = 'Accordion (accordion2)';
+  headerCell.colSpan = 2;
+  const headerRow = [headerCell];
+  cells.push(headerRow);
 
-  // 6. Replace element
-  element.replaceWith(table);
+  // Accordion item row: [title, content]
+  if (titleElem && contentElem) {
+    cells.push([titleElem, contentElem]);
+  }
+
+  // Create and replace the block table
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

@@ -1,57 +1,61 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header must match the example exactly
-  const cells = [['Cards (cards13)']];
-
-  // Find the cards list
-  const ul = element.querySelector('ul.cards__list');
-  if (ul) {
-    const lis = ul.querySelectorAll(':scope > li.cards__item');
-    lis.forEach((li) => {
-      // Image cell: extract from .item-image background-image
-      const imageLink = li.querySelector('.item-image');
-      let imageEl = '';
-      if (imageLink && imageLink.style && imageLink.style.backgroundImage) {
-        const bg = imageLink.style.backgroundImage;
-        const urlMatch = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-        if (urlMatch && urlMatch[1]) {
-          const img = document.createElement('img');
-          img.src = urlMatch[1].trim();
-          img.alt = imageLink.getAttribute('alt') || '';
-          imageEl = img;
-        }
-      }
-
-      // Text cell: build content
-      const content = li.querySelector('.item-content');
-      const textParts = [];
-      if (content) {
-        const title = content.querySelector('.item-content__title');
-        if (title && title.textContent.trim()) {
-          const strong = document.createElement('strong');
-          strong.textContent = title.textContent.trim();
-          textParts.push(strong);
-        }
-        // The description is optional
-        const desc = content.querySelector('.item-content__desc');
-        if (desc && desc.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = desc.textContent.trim();
-          textParts.push(p);
-        }
-        // The CTA link
-        const cta = content.querySelector('.item-content__link');
-        if (cta) {
-          textParts.push(cta);
-        }
-      }
-      // Always include two columns per row
-      cells.push([
-        imageEl || '',
-        textParts.length ? textParts : '',
-      ]);
-    });
+  // Helper: extract background-image url from style string
+  function getBackgroundImageUrl(style) {
+    const match = style && style.match(/background-image:\s*url\(['"]?([^'"]+)["']?\s*\)/);
+    return match ? match[1].trim() : null;
   }
+
+  const headerRow = ['Cards (cards13)'];
+  const cells = [headerRow];
+
+  const list = element.querySelector('.cards__list');
+  if (!list) return;
+  const items = Array.from(list.children);
+  items.forEach(card => {
+    const wrapper = card.querySelector('.item-wrapper');
+    if (!wrapper) return;
+
+    // --- IMAGE CELL ---
+    let imgEl = null;
+    const imageLink = wrapper.querySelector('.item-image');
+    if (imageLink) {
+      const imgUrl = getBackgroundImageUrl(imageLink.getAttribute('style'));
+      if (imgUrl) {
+        imgEl = document.createElement('img');
+        imgEl.src = imgUrl;
+        imgEl.alt = imageLink.getAttribute('alt') || '';
+      }
+    }
+
+    // --- TEXT CELL ---
+    const content = wrapper.querySelector('.item-content');
+    const textCell = document.createElement('div'); // To preserve structure and allow block elements
+    if (content) {
+      // Title (h3 as strong)
+      const titleEl = content.querySelector('.item-content__title');
+      if (titleEl && titleEl.textContent.trim()) {
+        const strong = document.createElement('strong');
+        strong.textContent = titleEl.textContent.trim();
+        textCell.appendChild(strong);
+      }
+      // Description (p)
+      const descEl = content.querySelector('.item-content__desc');
+      if (descEl && descEl.textContent.trim()) {
+        const p = document.createElement('p');
+        p.textContent = descEl.textContent.trim();
+        textCell.appendChild(p);
+      }
+      // CTA link
+      const ctaEl = content.querySelector('.item-content__link');
+      if (ctaEl && ctaEl.textContent.trim()) {
+        textCell.appendChild(ctaEl);
+      }
+    }
+    // If textCell is empty, use ''
+    const textCellContent = textCell.childNodes.length ? textCell : '';
+    cells.push([imgEl, textCellContent]);
+  });
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);

@@ -1,30 +1,20 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Ensure we robustly extract the two column elements
-  let mediaBody = element.querySelector('.media-body');
-  let mediaRight = element.querySelector('.media-right');
+  // Find left and right content columns
+  const leftCol = element.querySelector('.media-body');
+  const rightCol = element.querySelector('.media-right');
 
-  // Edge case handling: if one is missing, create an empty div so columns align
-  if (!mediaBody) {
-    mediaBody = document.createElement('div');
-  }
-  if (!mediaRight) {
-    mediaRight = document.createElement('div');
-  }
+  // Defensive: fallback to empty divs if columns are missing
+  const leftContent = leftCol || document.createElement('div');
+  const rightContent = rightCol || document.createElement('div');
 
-  // The header must match the block name exactly
+  // Header is one column only, as per the example
   const headerRow = ['Columns (columns33)'];
+  // Content row is two columns (left and right)
+  const contentRow = [leftContent, rightContent];
 
-  // The second row: each cell is a column. Reference the extracted elements directly.
-  const contentRow = [mediaBody, mediaRight];
-
-  // Compose the table
-  const cells = [
-    headerRow,
-    contentRow,
-  ];
-
-  // Create and replace the block table
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  // Compose the cells: first row = header (1 col), second row = content (2 cols)
+  const cells = [headerRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }
