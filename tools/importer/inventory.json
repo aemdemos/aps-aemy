@@ -1624,6 +1624,9 @@
     {
       "name": "Carousel",
       "cluster": 49,
+      "source": "Carousel",
+      "target": "Carousel",
+      "key": "carousel49",
       "instances": [
         {
           "url": "https://library.westernsydney.edu.au/",
