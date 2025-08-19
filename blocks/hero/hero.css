@@ -245,65 +245,66 @@
 .hero.hero38 {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100vw;
   min-height: 340px;
-  background-color: #92063B;
+  background-color: #990f32;
   background-image: url('https://library.westernsydney.edu.au/__data/assets/image/0008/2087351/WB_AcademicIntegrityWeek_1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
   box-sizing: border-box;
   padding: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Hide the inline image so only background is visible */
+/* Hide the photo image on the left */
 .hero.hero38 > div:first-child picture,
 .hero.hero38 > div:first-child img {
   display: none;
 }
 
-/* Left column: circle with headline inside */
 .hero.hero38 > div:first-child {
-  flex: 0 0 400px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
   position: relative;
-  min-height: 340px;
   z-index: 2;
 }
 
+/* Adjust circle: bigger and more to the top/left */
 .hero.hero38 > div:first-child > div {
-  width: 340px;
-  height: 340px;
-  background: #FF9078;
+  width: 320px;
+  height: 320px;
+  background: linear-gradient(180deg, #ffb094 0%, #f26a5a 100%);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin-left: -90px; /* Shift circle further left */
-  margin-top: 0;
-  margin-bottom: 0;
+  justify-content: center;
+  margin-left: -160px;
+  margin-top: -70px;
   box-shadow: none;
-  z-index: 2;
+  z-index: 3;
   position: relative;
   overflow: visible;
-  padding-top: 18px; /* Move text higher in circle */
+  padding: 0;
 }
 
-/* Headline inside the circle – larger and higher, more line height */
 .hero.hero38 > div:first-child > div > h2,
 .hero.hero38 > div:first-child > div > h1 {
-  width: 88%;
   color: #fff;
   font-family: var(--heading-font-family), sans-serif;
-  font-size: 2.75rem;
+  font-size: 2.15rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.1;
   text-align: center;
   text-transform: uppercase;
   margin: 0 auto;
@@ -311,8 +312,9 @@
   letter-spacing: 0.01em;
   z-index: 3;
   display: block;
-  word-wrap: break-word; /* Changed from deprecated word-break: break-word */
-  margin-top: -8px; /* Move headline even higher */
+  word-wrap: break-word;
+  width: 90%;
+  margin-top: 16px;
 }
 
 .hero.hero38 > div:first-child > div > p,
@@ -320,17 +322,15 @@
 .hero.hero38 > div:first-child > div > small {
   font-size: 1.13rem;
   font-weight: 500;
-  text-transform: none;
-  margin-top: 28px; /* More spacing from headline */
+  margin-top: 22px;
   margin-bottom: 0;
   line-height: 1.32;
   padding: 0;
   color: #fff;
   text-align: center;
-  width: 90%;
+  width: 88%;
 }
 
-/* Remove text from outside the circle in left column */
 .hero.hero38 > div:first-child > h2,
 .hero.hero38 > div:first-child > h1,
 .hero.hero38 > div:first-child > p,
@@ -338,28 +338,29 @@
   display: none;
 }
 
-/* Right column: dark panel */
+/* Right content setup */
 .hero.hero38 > div:nth-child(2) {
   flex: 1 1 0;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  position: relative;
   min-height: 120px;
-  z-index: 2;
   padding-left: 24px;
+  position: relative;
+  z-index: 2;
 }
 
+/* Overlay card: nudge right/up to match original */
 .hero.hero38 > div:nth-child(2) > div {
-  background: rgb(26 24 26 / 85%);
+  background: rgb(0 0 0 / 70%);
   color: #fff;
-  padding: 32px 42px 30px;
+  padding: 22px 28px 14px;
   border-radius: 3px;
-  max-width: 410px;
-  margin-right: 55px;
-  margin-top: 38px;
+  max-width: 370px;
+  margin-right: 20px;
+  margin-top: 8px;
   box-sizing: border-box;
-  font-size: 1.03rem;
+  font-size: 1.01rem;
   line-height: 1.42;
   text-align: left;
   z-index: 2;
@@ -367,27 +368,25 @@
   display: block;
 }
 
-/* Headline in right panel */
 .hero.hero38 > div:nth-child(2) > div > h2,
 .hero.hero38 > div:nth-child(2) > div > h1 {
   color: #fff;
   font-family: var(--heading-font-family), sans-serif;
   font-weight: 700;
-  font-size: 1.23rem;
-  margin: 0 0 20px;
+  font-size: 1.10rem;
+  margin: 0 0 10px;
   letter-spacing: 0.01em;
   line-height: 1.18;
   text-align: left;
 }
 
-/* Panel link/text: smaller, regular weight, more spacing */
 .hero.hero38 > div:nth-child(2) > div > p,
 .hero.hero38 > div:nth-child(2) > div > .button-container,
 .hero.hero38 > div:nth-child(2) > div > span,
 .hero.hero38 > div:nth-child(2) > div > small {
   color: #fff;
-  font-size: 0.99rem;
-  margin: 18px 0 0;
+  font-size: 0.97rem;
+  margin-top: 7px;
   text-align: left;
   font-weight: 400;
   line-height: 1.38;
@@ -395,28 +394,10 @@
   text-transform: none;
 }
 
-/* Make button/link plain, not pill, regular weight */
-.hero.hero38 a,
-.hero.hero38 .button {
-  color: #fff;
-  background: none;
-  border: none;
-  padding: 0;
-  font-weight: 400;
-  text-decoration: underline;
-  border-radius: 0;
-  box-shadow: none;
-  font-size: inherit;
-  margin: 0;
-  line-height: inherit;
-  white-space: normal;
-  display: inline;
-}
-
 .hero.hero38 .button,
 .hero.hero38 p.button-container .button {
-  background: none;
   color: #fff;
+  background: none;
   border: none;
   border-radius: 0;
   padding: 0;
@@ -430,12 +411,11 @@
   display: inline;
 }
 
-/* Responsive: stack vertically on mobile */
+/* Responsive adjustments for smaller screens */
 @media (width <= 900px) {
   .hero.hero38 {
     flex-direction: column;
-    min-height: 450px;
-    padding: 0;
+    min-height: 440px;
   }
 
   .hero.hero38 > div:first-child,
@@ -448,48 +428,49 @@
   }
 
   .hero.hero38 > div:first-child > div {
-    margin: 12px auto;
-    width: 220px;
-    height: 220px;
-    min-width: 140px;
-    min-height: 140px;
+    margin: 12px auto 0;
+    width: 160px;
+    height: 160px;
+    min-width: 100px;
+    min-height: 100px;
     margin-left: 0;
-    padding-top: 8px;
+    margin-top: 0;
+    padding: 0;
   }
 
   .hero.hero38 > div:first-child > div > h2,
   .hero.hero38 > div:first-child > div > h1 {
-    font-size: 1.22rem;
-    width: 90%;
+    font-size: 1rem;
+    width: 94%;
     margin-bottom: 6px;
-    margin-top: -2px;
+    margin-top: 2px;
   }
 
   .hero.hero38 > div:first-child > div > p,
   .hero.hero38 > div:first-child > div > span,
   .hero.hero38 > div:first-child > div > small {
-    font-size: 0.98rem;
-    margin-top: 12px;
+    font-size: 0.93rem;
+    margin-top: 8px;
   }
 
   .hero.hero38 > div:nth-child(2) > div {
     margin: 18px auto 12px;
-    padding: 16px 7vw 12px;
-    max-width: 98vw;
-    width: 95vw;
+    padding: 14px 7vw 10px;
+    max-width: 97vw;
+    width: 94vw;
   }
 
   .hero.hero38 > div:nth-child(2) > div > h2,
   .hero.hero38 > div:nth-child(2) > div > h1 {
-    font-size: 1.08rem;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    margin-bottom: 8px;
   }
 
   .hero.hero38 > div:nth-child(2) > div > p,
   .hero.hero38 > div:nth-child(2) > div > .button-container,
   .hero.hero38 > div:nth-child(2) > div > span,
   .hero.hero38 > div:nth-child(2) > div > small {
-    font-size: 0.95rem;
-    margin-top: 10px;
+    font-size: 0.92rem;
+    margin-top: 8px;
   }
 }
