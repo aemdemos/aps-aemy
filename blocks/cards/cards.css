@@ -357,177 +357,6 @@
 }
 
 
-.cards.cards1 {
-  max-width: 1296px;
-  width: 100%;
-  margin: 0 auto;
-  background: var(--background-color);
-  box-sizing: border-box;
-  position: relative;
-  padding: 0 0 32px;
-}
-
-.cards.cards1 > ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 48px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cards.cards1 > ul > li {
-  flex: 0 0 400px;
-  max-width: 400px;
-  min-width: 0;
-  background: var(--background-color);
-  box-sizing: border-box;
-  border-radius: 0;
-  box-shadow: none;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-
-.cards.cards1 .cards-card-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: var(--light-color);
-  overflow: hidden;
-  display: block;
-  margin: 0;
-  line-height: 0;
-}
-
-.cards.cards1 .cards-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  margin: 0;
-  position: static;
-}
-
-@supports not (aspect-ratio: 1/1) {
-  .cards.cards1 .cards-card-image {
-    width: 100%;
-    height: 400px;
-  }
-
-  .cards.cards1 .cards-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.cards.cards1 .cards-card-body {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 24px 20px 0;
-  background: var(--background-color);
-  box-sizing: border-box;
-  text-align: left;
-  min-height: 0;
-}
-
-.cards.cards1 .cards-card-body h3 {
-  font-size: var(--heading-font-size-l);
-  font-weight: 700;
-  color: #231f20;
-  margin: 0 0 10px;
-  font-family: var(--heading-font-family), Arial, sans-serif;
-  line-height: 1.22;
-  text-align: left;
-}
-
-.cards.cards1 .cards-card-body p:not(.button-container) {
-  font-size: var(--body-font-size-m);
-  color: #6e6e6e;
-  margin: 0 0 9px;
-  line-height: 1.5;
-  font-weight: 400;
-  text-align: left;
-}
-
-.cards.cards1 .cards-card-body .button-container {
-  margin-top: 16px;
-  margin-bottom: 0;
-  padding: 0;
-  align-self: flex-start;
-  text-align: left;
-  width: 100%;
-}
-
-.cards.cards1 .cards-card-body .button {
-  background: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  color: #231f20;
-  font-size: var(--body-font-size-m);
-  font-weight: 500;
-  text-align: left;
-  display: inline-flex;
-  align-items: center;
-  line-height: 1.3;
-  min-width: 0;
-  max-width: 100%;
-  white-space: normal;
-  text-decoration: none;
-  position: relative;
-  padding-right: 1.4em;
-  background-image: url("data:image/svg+xml;utf8,<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23231f20' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: 1em 1em;
-  transition: color 0.15s;
-  margin: 0;
-}
-
-.cards.cards1 .cards-card-body .button:hover,
-.cards.cards1 .cards-card-body .button:focus {
-  color: var(--link-hover-color);
-  text-decoration: underline;
-}
-
-@media (width <= 1390px) {
-  .cards.cards1 {
-    max-width: 98vw;
-  }
-
-  .cards.cards1 > ul {
-    gap: 24px;
-  }
-
-  .cards.cards1 > ul > li {
-    max-width: 360px;
-    flex-basis: 360px;
-  }
-}
-
-@media (width <= 1120px) {
-  .cards.cards1 > ul {
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .cards.cards1 > ul > li {
-    max-width: 90vw;
-    flex-basis: 100%;
-    width: 100%;
-  }
-}
-
-
 .cards.cards13 {
   box-sizing: border-box;
   max-width: 980px;
@@ -663,7 +492,6 @@
   display: block;
 }
 
-/* Remove excess space above the block, if inherited from parents */
 .cards.cards18,
 .cards.cards18 > .cards,
 .cards.cards18 > .cards > ul {
@@ -725,7 +553,6 @@
   box-sizing: border-box;
 }
 
-/* Icon placement */
 .cards.cards18 ul > li .cards-card-body:first-of-type {
   min-height: 48px;
   display: flex;
@@ -762,7 +589,6 @@
   background-image: url('data:image/svg+xml;utf8,<svg width="48" height="48" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="28" height="20" rx="2"/><line x1="14" y1="16" x2="14" y2="32"/><line x1="18" y1="16" x2="18" y2="32"/><line x1="24" y1="16" x2="24" y2="32"/><line x1="30" y1="16" x2="30" y2="32"/><line x1="34" y1="16" x2="34" y2="32"/></svg>');
 }
 
-/* Number and label styling */
 .cards.cards18 ul > li .cards-card-body:last-of-type p {
   display: flex;
   flex-direction: column;
@@ -789,7 +615,6 @@
   text-align: center;
 }
 
-/* Vertical "Online Databases" tab: just the colored tab, no label (text can't be injected) */
 .cards.cards18 ul > li:nth-child(3)::after {
   position: absolute;
   right: -18px;
@@ -805,7 +630,6 @@
   display: block;
 }
 
-/* Responsive: stack vertically on small screens */
 @media (width <= 900px) {
   .cards.cards18 {
     height: auto;
@@ -829,5 +653,170 @@
     width: 120px;
     height: 32px;
     border-radius: 8px 8px 0 0;
+  }
+}
+
+
+.cards.cards1 {
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px 32px;
+  background: var(--background-color);
+  box-sizing: border-box;
+}
+
+/* Flex row for cards, perfectly centered, closer gap */
+.cards.cards1 > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Slightly wider cards, for better text rhythm and visual grouping */
+.cards.cards1 > ul > li {
+  flex: 0 0 392px;
+  max-width: 392px;
+  min-width: 0;
+  width: 100%;
+  background: var(--background-color);
+  box-sizing: border-box;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+/* Image section: always square, no extra margin */
+.cards.cards1 .cards-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--light-color);
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  line-height: 0;
+}
+
+.cards.cards1 .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  border-radius: 0;
+  position: static;
+}
+
+/* Card body: balanced, crisp padding */
+.cards.cards1 .cards-card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px 18px 20px;
+  background: var(--background-color);
+  box-sizing: border-box;
+  text-align: left;
+  min-height: 0;
+}
+
+/* Title: distinct, black, well-separated */
+.cards.cards1 .cards-card-body h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #231f20;
+  margin: 0 0 12px;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  line-height: 1.22;
+  text-align: left;
+}
+
+/* Description: lighter gray, clear margin below */
+.cards.cards1 .cards-card-body p:not(.button-container) {
+  font-size: 16px;
+  color: #6e6e6e;
+  margin: 0 0 13px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-align: left;
+}
+
+/* Button area: moderate gap above, never anchored to bottom */
+.cards.cards1 .cards-card-body .button-container {
+  margin-top: 16px;
+  margin-bottom: 0;
+  padding: 0;
+  align-self: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+/* "Visit Page" button: bold, dark, never underlined by default */
+.cards.cards1 .cards-card-body .button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #231f20;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.3;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  text-decoration: none;
+  position: relative;
+  padding-right: 1.4em;
+  background-image: url("data:image/svg+xml;utf8,<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23231f20' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 1em 1em;
+  transition: color 0.15s;
+  margin: 0;
+}
+
+/* Responsive: stack vertically and adjust gap, padding */
+@media (width <= 1200px) {
+  .cards.cards1 {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .cards.cards1 > ul {
+    gap: 16px;
+  }
+
+  .cards.cards1 > ul > li {
+    flex-basis: 320px;
+    max-width: 320px;
+  }
+}
+
+@media (width <= 850px) {
+  .cards.cards1 > ul {
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .cards.cards1 > ul > li {
+    max-width: 98vw;
+    width: 100%;
   }
 }
