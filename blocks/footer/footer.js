@@ -126,16 +126,4 @@ export default function decorate(block) {
       </div>
     </div>
   `;
-
-  // Initialize footer functionality
-  initializeFooter(block);
-}
-
-/**
- * Initialize footer functionality
- * @param {Element} footerBlock The footer block element
- */
-function initializeFooter(footerBlock) {
-  // Add any necessary event listeners or functionality for the footer
-  // Currently, the footer doesn't require any JavaScript functionality
 }
