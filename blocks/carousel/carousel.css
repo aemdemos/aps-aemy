@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -35,6 +35,7 @@
   margin: 0;
   padding: 0;
   gap: 0;
+  column-gap: 130px;
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
@@ -331,16 +332,19 @@
 .carousel .carousel-slide-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex: 1 1 50%;
   height: 100%;
-  max-width: 50vw;
+  max-width: 45vw;
   min-width: 0;
-  padding: 32px 64px 32px 24px;
-  background: #fff;
+  padding: 0;
+  background: none;
   box-sizing: border-box;
   color: #222;
+  margin-top: 13vh;
+  width: auto;
+  min-height: 0;
 }
 
 .carousel .carousel-slide-image + .carousel-slide-content h2,
@@ -375,13 +379,15 @@
 
 .carousel .carousel-slide-content h2 {
   font-family: Georgia, serif;
-  font-size: 2.6em;
+  font-size: 3em;
   font-weight: normal;
-  text-align: center;
-  margin: 0 0 0.75em;
-  line-height: 1.15;
+  text-align: left;
+  margin: 0 0 1.7em;
+  line-height: 1.18;
   letter-spacing: 0;
   color: #222;
+  max-width: 620px;
+  overflow-wrap: break-word;
 }
 
 .carousel .carousel-slide-content .attribution,
@@ -428,8 +434,6 @@
   }
 }
 
-
-/* Remove all interior gutters and padding for a true split-screen look */
 .carousel {
   padding: 0;
 }
@@ -441,28 +445,26 @@
   gap: 0;
 }
 
-/* Force slide to use full viewport height, no extra space */
-
-/* Book cover: tall, narrow, flush left, no margin/padding */
 .carousel .carousel-slide .carousel-slide-image {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  height: 100vh;
-  min-height: 600px;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 0;
   max-height: none;
   aspect-ratio: 2/3;
-  min-width: 230px;
-  max-width: 340px;
-  width: 30vw;
+  min-width: 320px;
+  max-width: 440px;
+  width: 425px;
   margin: 0;
   padding: 0;
   border-radius: 0;
   background: none;
   box-shadow: none;
+  align-self: stretch;
+  flex-direction: column;
 }
 
-/* Book cover image: maximize area, no extra margin or border */
 .carousel .carousel-slide .carousel-slide-image picture,
 .carousel .carousel-slide .carousel-slide-image img {
   width: 100%;
@@ -470,23 +472,18 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: top left;
   background: none;
   margin: 0;
   padding: 0;
   border-radius: 0;
+  display: block;
 }
 
-/* Quote area: flush with book cover, no margin or padding */
-
-/* Remove gap between left and right columns */
-
-/* Remove right/left padding on outer carousel container, if any */
 .carousel-wrapper {
   padding: 0;
 }
 
-/* Responsive: reasonable fallback for small screens */
 @media (width <= 900px) {
   .carousel .carousel-slide,
   .carousel .carousel-slide .carousel-slide-image {
@@ -503,8 +500,73 @@
   }
 }
 
-/* Still hide navigation dots/controls */
 .carousel .carousel-navigation-dots,
 .carousel .carousel-slide-indicators {
   display: none;
+}
+
+
+/* Book image: fill vertical space, flush top/bottom/left */
+
+/* Image flush inside container */
+
+/* Quote container: lower position, not top-aligned */
+
+/* Quote: larger, elegant */
+
+/* Attribution: smaller, lighter, spaced out */
+.carousel .carousel-slide-content p,
+.carousel .carousel-slide-content .attribution {
+  font-family: 'Gotham Narrow', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.93em;
+  font-weight: 400;
+  color: #888;
+  text-align: left;
+  margin: 0;
+  opacity: 0.55;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1.8em;
+}
+
+/* Responsive: stack layout on small screens */
+@media (width <= 1000px) {
+  .carousel .carousel-slide {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    height: auto;
+    column-gap: 0;
+  }
+
+  .carousel .carousel-slide .carousel-slide-image {
+    width: 90vw;
+    min-width: unset;
+    max-width: 95vw;
+    margin: 0 0 24px;
+    height: auto;
+    min-height: 0;
+    max-height: 60vh;
+  }
+
+.carousel .carousel-slide-content {
+  max-width: 95vw;
+  align-items: center;
+  text-align: center;
+  margin-top: 0;
+  padding-top: 0;
+  overflow-wrap: break-word;
+}
+
+  .carousel .carousel-slide-content h2 {
+    text-align: center;
+    font-size: 2em;
+  }
+
+  .carousel .carousel-slide-content p,
+  .carousel .carousel-slide-content .attribution {
+    text-align: center;
+    font-size: 0.92em;
+    margin-top: -0.7em;
+  }
 }
