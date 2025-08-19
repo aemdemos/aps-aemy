@@ -1,4 +1,3 @@
-
 /**
  * Set up search form functionality
  * @param {Element} headerBlock The header block element
@@ -7,7 +6,7 @@ function setupSearchForm(headerBlock) {
   // Library search form
   const searchForm = headerBlock.querySelector('#uws-library-BJA-search-form');
   if (searchForm) {
-    searchForm.addEventListener('submit', function (e) {
+    searchForm.addEventListener('submit', function () {
       const searchInput = this.querySelector('[data-role="search-input"]');
       const searchString = this.querySelector('#uws-search-string');
 
@@ -19,7 +18,7 @@ function setupSearchForm(headerBlock) {
     // Search context switcher
     const searchContextRadios = searchForm.querySelectorAll('[data-type="search-context"]');
     searchContextRadios.forEach(radio => {
-      radio.addEventListener('change', function () {
+      radio.addEventListener('change', () => {
         const searchType = this.value;
         const form = this.closest('form');
 
@@ -44,7 +43,7 @@ function setupSearchForm(headerBlock) {
  * Initialize header functionality
  * @param {Element} headerBlock The header block element
  */
-function initializeHeader(headerBlock) {
+function (headerBlock) {
   // Toggle Sign In dropdown
   const signInBtn = headerBlock.querySelector('#sign_in_dd');
   if (signInBtn) {
@@ -136,7 +135,7 @@ function initializeHeader(headerBlock) {
 
   // Sub navigation toggle for mobile
   const subNavBtns = headerBlock.querySelectorAll('.sub-nav-btn');
-  subNavBtns.forEach(btn => {
+  subNavBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const parentLi = btn.closest('li');
@@ -645,10 +644,6 @@ export default function decorate(block) {
   if (searchInput) {
     searchInput.placeholder = 'Find books, journals, databases and more...';
   }
-
   // Initialize header functionality
   initializeHeader(block);
 }
-
-
-
