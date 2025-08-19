@@ -1,20 +1,10 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Header row for block table
+  // Header row for block table
   const headerRow = ['Events'];
 
- // 2. Extract accordion title from .card-header
-  let titleCell;
-  // let eventTable = element.querySelector(':scope > table.s-lc-w-table');
-
-  // if (eventTable.length === 0 && element.classList.contains('s-lc-w-table')) {
-  //   eventTable = [element];
-  // }
-
-  // 3. Collect event rows
-  const contentRows = [];
-  const rows = element.querySelectorAll('.s-lc-w-dtr');
-  rows.forEach(row => {
+  // Collect event rows
+  const contentRows = Array.from(element.querySelectorAll('.s-lc-w-dtr')).map(row => {
     // Date info
     const dateDiv = row.querySelector('.s-lc-w-date');
     const month = dateDiv?.querySelector('.s-lc-w-date-m')?.textContent?.trim() || '';
@@ -23,33 +13,35 @@ export default function parse(element, { document }) {
     const dateCell = document.createElement('div');
     dateCell.textContent = `${month} ${day} ${time}`.trim();
 
-    // Title
-    const titleDiv = row.querySelector('.s-lc-w-title');
-    const titleCell = document.createElement('div');
+    // Title, location, and links (all as text)
+    const titleText = row.querySelector('.s-lc-w-title')?.textContent.trim() || '';
+    const locationText = row.querySelector('.s-lc-w-loc')?.textContent.trim() || '';
 
-    if(titleDiv){
-      titleCell.appendChild(titleDiv.cloneNode(true));
-    }
-
-    // Location
-    const locDiv = row.querySelector('.s-lc-w-loc');
-    const locationCell = locDiv ? locDiv.cloneNode(true) : document.createElement('span');
-    titleCell.appendChild(locationCell);
-
-    // Links
     const linksDiv = document.createElement('div');
     row.querySelectorAll('a').forEach(a => {
-      linksDiv.appendChild(a.cloneNode(true));
+      const link = document.createElement('a');
+      link.href = a.href;
+      link.target = '_blank';
+      link.textContent = a.textContent.trim();
+      linksDiv.appendChild(link);
       linksDiv.appendChild(document.createTextNode(' '));
     });
 
-    titleCell.appendChild(linksDiv);
+    const contentCell = document.createElement('div');
 
-    contentRows.push([dateCell, titleCell]);
+    [titleText, locationText].forEach(text => {
+      if (text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        contentCell.appendChild(div);
+      }
+    });
+    contentCell.appendChild(linksDiv);
+
+    return [dateCell, contentCell];
   });
 
-  // 4. Build DA table
-  const cells = [headerRow, ...contentRows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Build table and replace element
+  const table = WebImporter.DOMUtils.createTable([headerRow, ...contentRows], document);
   element.replaceWith(table);
 }
