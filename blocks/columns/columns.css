@@ -276,219 +276,6 @@
 }
 
 
-.columns.columns31 {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0;
-  background: transparent;
-  max-width: none;
-}
-
-.columns.columns31 > div {
-  max-width: 900px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 18px;
-  box-sizing: border-box;
-}
-
-@media (width <= 900px) {
-  .columns.columns31 {
-    display: block;
-    max-width: 100vw;
-    padding: 0 10px;
-  }
-
-  .columns.columns31 > div {
-    max-width: none;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
-    width: 100%;
-  }
-
-  .columns.columns31 > div > div,
-  .columns.columns31 > div > div:last-child {
-    max-width: none;
-    min-width: 0;
-    width: 100%;
-  }
-
-  .columns.columns31 table {
-    max-width: 100%;
-  }
-}
-
-.columns.columns31 > div > div:first-child {
-  flex: 0 0 400px;
-  max-width: 400px;
-  min-width: 290px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.columns.columns31 > div > div:last-child {
-  flex: 1 1 230px;
-  max-width: 360px;
-  min-width: 180px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.columns.columns31 h2 {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #000;
-  margin: 0 0 10px;
-  text-align: left;
-  line-height: 1.2;
-}
-
-.columns.columns31 > div > div > * {
-  margin-bottom: 0.55em;
-}
-
-.columns.columns31 > div > div > *:last-child {
-  margin-bottom: 0;
-}
-
-.columns.columns31 > div > div > *:first-child {
-  margin-top: 0;
-}
-
-.columns.columns31 > div > div:first-child > p:nth-of-type(1),
-.columns.columns31 > div > div:first-child > ul {
-  display: none;
-}
-
-.columns.columns31 .schedule-header,
-.columns.columns31 .next-day-header,
-.columns.columns31 .date-header,
-.columns.columns31 .next-day-schedule,
-.columns.columns31 .additional-sessions,
-.columns.columns31 .checkbox-element {
-  display: none;
-}
-
-.columns.columns31 > div > div:first-child table:nth-of-type(n+2),
-.columns.columns31 > div > div:first-child .button-container:nth-of-type(n+3) {
-  display: none;
-}
-
-.columns.columns31 table {
-  width: 100%;
-  max-width: 400px;
-  min-width: 0;
-  background: #f2f2f2;
-  border-radius: 12px;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 10px 0 0;
-  font-size: 1em;
-  box-sizing: border-box;
-  padding: 0;
-  box-shadow: none;
-}
-
-.columns.columns31 table tr {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-}
-
-.columns.columns31 table th,
-.columns.columns31 table td {
-  flex: 1 1 0;
-  min-width: 0;
-  box-sizing: border-box;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.columns.columns31 table th {
-  font-weight: 700;
-  color: #b5184a;
-  background: none;
-  border: none;
-  font-size: 1em;
-  padding-left: 8px;
-  padding-right: 8px;
-  text-align: left;
-}
-
-.columns.columns31 table thead th {
-  color: #222;
-  font-weight: 700;
-}
-
-.columns.columns31 td:first-child {
-  color: #b5184a;
-  text-align: left;
-  font-weight: 600;
-  white-space: nowrap;
-  min-width: 90px;
-  padding-right: 4px;
-  padding-left: 10px;
-  flex: 2 1 0;
-}
-
-.columns.columns31 td:last-child {
-  color: #222;
-  text-align: right;
-  font-weight: 400;
-  white-space: nowrap;
-  min-width: 90px;
-  padding-left: 4px;
-  padding-right: 10px;
-  flex: 1 1 0;
-}
-
-.columns.columns31 table thead tr {
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 4px;
-}
-
-.columns.columns31 .button-container a,
-.columns.columns31 .extra-links a,
-.columns.columns31 td a,
-.columns.columns31 ul li:last-child {
-  color: #b5184a;
-  font-weight: 600;
-  text-decoration: underline;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  display: inline;
-  font-size: 1em;
-}
-
-.columns.columns31 .button-container {
-  margin-top: 3px;
-}
-
-.columns.columns31 .button-container a:hover,
-.columns.columns31 .extra-links a:hover,
-.columns.columns31 td a:hover {
-  color: #870b29;
-}
-
-
 .columns.columns33 {
   background: #fff;
   border-radius: 0;
@@ -688,7 +475,6 @@
   padding: 0;
 }
 
-/* Flex row for columns */
 .columns.columns21 > div {
   display: flex;
   flex-direction: row;
@@ -699,14 +485,12 @@
   justify-content: center;
 }
 
-/* Responsive: stack vertically on small screens */
 @media (width <= 600px) {
   .columns.columns21 > div {
     flex-direction: column;
   }
 }
 
-/* Columns: equal width, fill height, background, border */
 .columns.columns21 > div > div {
   flex: 1 1 0;
   min-width: 0;
@@ -727,7 +511,6 @@
   border-right: none;
 }
 
-/* Responsive: horizontal border becomes vertical between stacked columns */
 @media (width <= 600px) {
   .columns.columns21 > div > div {
     border-right: none;
@@ -740,14 +523,12 @@
   }
 }
 
-/* Remove extra spacing in container and paragraphs */
 .columns.columns21 .button-container,
 .columns.columns21 .button-container p {
   margin: 0;
   padding: 0;
 }
 
-/* Button container fills column and centers content */
 .columns.columns21 .button-container {
   width: 100%;
   height: 100%;
@@ -757,7 +538,6 @@
   padding: 0;
 }
 
-/* Button styles: single line, ellipsis on overflow, increased horizontal padding */
 .columns.columns21 .button-container .button {
   background: none;
   border: none;
@@ -780,11 +560,258 @@
   text-overflow: clip;
 }
 
-/* Ensure button stays white in all states */
 .columns.columns21 .button-container .button,
 .columns.columns21 .button-container .button:visited,
 .columns.columns21 .button-container .button:hover,
 .columns.columns21 .button-container .button:focus {
   background: none;
   color: #fff;
+}
+
+
+.columns.columns31 {
+  --wsu-pink: #b1004d;
+  --wsu-gray-bg: #f4f4f4;
+  --wsu-dark-gray: #3c3c3c;
+}
+
+/* Layout: columns side by side, closer together, more balanced widths */
+.columns.columns31 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 22px;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Responsive: stack columns on mobile */
+@media (width <= 900px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 16px;
+    max-width: 100%;
+    margin: 0 8px;
+    width: 100%;
+  }
+}
+
+/* Left and right column widths */
+.columns.columns31 > div > div:first-child {
+  flex: 1.07 1 0;
+  max-width: 350px;
+  min-width: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.columns.columns31 > div > div:last-child {
+  flex: 1 1 0;
+  max-width: 310px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* Hide extra "[x][ ]" line */
+.columns.columns31 > div > div:first-child > p:first-of-type {
+  display: none;
+}
+
+/* Date & WSU Community Hours line styling */
+.columns.columns31 > div > div:first-child > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.48em;
+  list-style: none;
+  margin: 0 0 1em;
+  padding: 0;
+  font-size: 0.99em;
+  background: none;
+}
+
+.columns.columns31 > div > div:first-child > ul li:first-child {
+  background: none;
+  color: #000;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+}
+
+.columns.columns31 > div > div:first-child > ul li:last-child {
+  color: var(--wsu-pink);
+  font-weight: 400;
+  font-size: 0.93em;
+  text-decoration: underline;
+  background: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Show only first table and first .button-container */
+.columns.columns31 > div > div:first-child table:not(:first-of-type),
+.columns.columns31 > div > div:first-child .button-container:not(:first-of-type) {
+  display: none;
+}
+
+/* Table: compact, lighter bg, softer corners */
+.columns.columns31 > div > div:first-child table {
+  width: 100%;
+  max-width: 310px;
+  background: var(--wsu-gray-bg);
+  border-radius: 5px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 0 0.30em;
+  font-size: 0.97em;
+  box-sizing: border-box;
+  padding: 0;
+  box-shadow: none;
+}
+
+.columns.columns31 > div > div:first-child thead th {
+  text-align: left;
+  font-weight: 700;
+  color: #000;
+  background: none;
+  border: none;
+  font-size: 0.99em;
+  padding: 9px 13px 7px 10px;
+  line-height: 1.13;
+}
+
+/* Table row cells */
+.columns.columns31 > div > div:first-child tbody tr td {
+  border: none;
+  vertical-align: middle;
+  font-weight: 400;
+  padding: 6px 8px 6px 10px;
+  font-size: 0.97em;
+  background: none;
+}
+
+/* First column: only links are pink, text is normal */
+.columns.columns31 > div > div:first-child td:first-child {
+  color: #000;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+  min-width: 68px;
+  padding-right: 7px;
+}
+
+.columns.columns31 > div > div:first-child td:first-child a {
+  color: var(--wsu-pink);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* "Opening Hours" row bold only */
+.columns.columns31 > div > div:first-child tbody tr:first-child td {
+  font-weight: 700;
+  color: #000;
+}
+
+/* Second column: dark gray, right aligned, regular weight */
+.columns.columns31 > div > div:first-child td:last-child {
+  color: var(--wsu-dark-gray);
+  text-align: right;
+  font-weight: 400;
+  white-space: nowrap;
+  min-width: 68px;
+  padding-left: 4px;
+}
+
+/* "View all Hours" link: pink, underline, not bold, tighter spacing */
+.columns.columns31 > div > div:first-child .button-container {
+  margin: 0.12em 0 0.02em;
+}
+
+.columns.columns31 > div > div:first-child .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--wsu-pink);
+  font-weight: 500;
+  font-size: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 0 0.05em;
+  text-decoration: underline;
+  line-height: 1.21;
+  text-align: left;
+  display: inline;
+  min-width: 0;
+  max-width: 100%;
+  transition: color 0.18s;
+  cursor: pointer;
+}
+
+.columns.columns31 > div > div:first-child .button-container a.button:hover,
+.columns.columns31 > div > div:first-child .button-container a.button:focus {
+  color: #8c1225;
+}
+
+/* Left column vertical spacing between blocks */
+.columns.columns31 > div > div:first-child > * {
+  margin-bottom: 0.48em;
+}
+
+.columns.columns31 > div > div:first-child > *:last-child {
+  margin-bottom: 0;
+}
+
+.columns.columns31 > div > div:first-child > *:first-child {
+  margin-top: 0;
+}
+
+/* Headings: tune size and boldness */
+.columns.columns31 h2 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 0.4em;
+  line-height: 1.13;
+  padding: 0;
+  text-align: left;
+}
+
+/* Right column heading: top-aligned, left-aligned, no extra margin */
+.columns.columns31 > div > div:last-child h2 {
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  font-size: 1.12rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Responsive: stack columns and allow table to be full-width */
+@media (width <= 900px) {
+  .columns.columns31 > div {
+    flex-direction: column;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 8px;
+    width: 100%;
+  }
+
+  .columns.columns31 > div > div {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .columns.columns31 table {
+    max-width: 100%;
+  }
 }
