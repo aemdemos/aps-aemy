@@ -5,11 +5,11 @@ export default function parse(element, { document }) {
 
  // 2. Extract accordion title from .card-header
   let titleCell;
-  let eventTable = element.querySelector(':scope > table.s-lc-w-table');
+  // let eventTable = element.querySelector(':scope > table.s-lc-w-table');
 
-  if (eventTable.length === 0 && element.classList.contains('s-lc-w-table')) {
-    eventTable = [element];
-  }
+  // if (eventTable.length === 0 && element.classList.contains('s-lc-w-table')) {
+  //   eventTable = [element];
+  // }
 
   // 3. Collect event rows
   const contentRows = [];
@@ -25,11 +25,16 @@ export default function parse(element, { document }) {
 
     // Title
     const titleDiv = row.querySelector('.s-lc-w-title');
-    const titleCell = titleDiv ? titleDiv.cloneNode(true) : document.createElement('span');
+    const titleCell = document.createElement('div');
+
+    if(titleDiv){
+      titleCell.appendChild(titleDiv.cloneNode(true));
+    }
 
     // Location
     const locDiv = row.querySelector('.s-lc-w-loc');
     const locationCell = locDiv ? locDiv.cloneNode(true) : document.createElement('span');
+    titleCell.appendChild(locationCell);
 
     // Links
     const linksDiv = document.createElement('div');
@@ -38,7 +43,9 @@ export default function parse(element, { document }) {
       linksDiv.appendChild(document.createTextNode(' '));
     });
 
-    contentRows.push([dateCell, titleCell, locationCell, linksDiv]);
+    titleCell.appendChild(linksDiv);
+
+    contentRows.push([dateCell, titleCell]);
   });
 
   // 4. Build DA table
