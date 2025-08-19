@@ -203,8 +203,6 @@
   padding: 0;
   border: none;
 }
-
-/* Remove any height/min-height/aspect-ratio from outer wrappers */
 .embed,
 .embed > .block.embed {
   height: auto;
@@ -221,21 +219,17 @@
   padding: 0;
   border: none;
 }
-
-/* Classic responsive video: aspect-ratio wrapper */
 .embed > .block.embed > div[style*="padding-bottom"] {
   width: 100%;
   max-width: 100%;
   position: relative;
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 ratio */
+  padding-bottom: 56.25%;
   margin: 0 auto;
   box-sizing: border-box;
   background: transparent;
   display: block;
 }
-
-/* Video fills wrapper */
 .embed > .block.embed > div[style*="padding-bottom"] > iframe {
   display: block;
   position: absolute;
@@ -249,8 +243,6 @@
   margin: 0;
   padding: 0;
 }
-
-/* Responsive scaling for smaller screens */
 @media (max-width: 1300px) {
   .embed {
     max-width: 100vw;
@@ -267,8 +259,6 @@
     padding: 0;
   }
 }
-
-/* Overlay/vertical button styling (if present in DOM) */
 .embed .invite-librarian-btn {
   position: absolute;
   top: 50%;
@@ -310,4 +300,92 @@
 .embed .youtube-overlay-btn:hover,
 .embed .youtube-overlay-btn:focus {
   opacity: 1;
+}
+
+
+.embed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  width: 100%;
+  max-width: 960px;
+  margin: 72px auto 72px auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+/* Direct child: keep single block centered & allow for future row layouts if needed */
+.embed > .block.embed,
+.embed > div {
+  width: 100%;
+  max-width: 100%;
+  background: transparent;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Aspect-ratio wrapper for YouTube embed */
+.embed > .block.embed > div[style*="padding-bottom"],
+.embed > div[style*="padding-bottom"] {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: block;
+}
+
+/* Ensure iframe fills its parent */
+.embed > .block.embed > div[style*="padding-bottom"] > iframe,
+.embed > div[style*="padding-bottom"] > iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* Remove decorative border if present */
+.embed::before {
+  display: none;
+}
+
+/* Responsive: scale block width & vertical spacing */
+@media (max-width: 1000px) {
+  .embed {
+    max-width: 98vw;
+    margin: 40px auto 40px auto;
+  }
+  .embed > .block.embed > div[style*="padding-bottom"],
+  .embed > div[style*="padding-bottom"] {
+    max-width: 100vw;
+    width: 100vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .embed {
+    max-width: 100vw;
+    margin: 20px auto 20px auto;
+  }
 }
