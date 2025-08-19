@@ -1,58 +1,52 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header must match the example exactly
-  const cells = [['Cards (cards13)']];
-
-  // Find the cards list
-  const ul = element.querySelector('ul.cards__list');
-  if (ul) {
-    const lis = ul.querySelectorAll(':scope > li.cards__item');
-    lis.forEach((li) => {
-      // Image cell: extract from .item-image background-image
-      const imageLink = li.querySelector('.item-image');
-      let imageEl = '';
-      if (imageLink && imageLink.style && imageLink.style.backgroundImage) {
-        const bg = imageLink.style.backgroundImage;
-        const urlMatch = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-        if (urlMatch && urlMatch[1]) {
-          const img = document.createElement('img');
-          img.src = urlMatch[1].trim();
-          img.alt = imageLink.getAttribute('alt') || '';
-          imageEl = img;
-        }
-      }
-
-      // Text cell: build content
-      const content = li.querySelector('.item-content');
-      const textParts = [];
-      if (content) {
-        const title = content.querySelector('.item-content__title');
-        if (title && title.textContent.trim()) {
-          const strong = document.createElement('strong');
-          strong.textContent = title.textContent.trim();
-          textParts.push(strong);
-        }
-        // The description is optional
-        const desc = content.querySelector('.item-content__desc');
-        if (desc && desc.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = desc.textContent.trim();
-          textParts.push(p);
-        }
-        // The CTA link
-        const cta = content.querySelector('.item-content__link');
-        if (cta) {
-          textParts.push(cta);
-        }
-      }
-      // Always include two columns per row
-      cells.push([
-        imageEl || '',
-        textParts.length ? textParts : '',
-      ]);
-    });
+  // Helper to extract background-image URL from style
+  function extractBgImageUrl(style) {
+    if (!style) return '';
+    const match = style.match(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/i);
+    return match ? match[1].trim() : '';
   }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const cardsList = element.querySelector('ul.cards__list');
+  if (!cardsList) return;
+  const rows = [];
+
+  // Header row EXACT match
+  rows.push(['Cards (cards13)']);
+
+  cardsList.querySelectorAll(':scope > li.cards__item').forEach((card) => {
+    // IMAGE
+    const imgAnchor = card.querySelector('.item-image');
+    let imageEl = '';
+    if (imgAnchor) {
+      const imgUrl = extractBgImageUrl(imgAnchor.getAttribute('style') || '');
+      if (imgUrl) {
+        imageEl = document.createElement('img');
+        imageEl.src = imgUrl;
+        imageEl.alt = imgAnchor.getAttribute('alt') || '';
+      }
+    }
+    // TEXT CONTENT
+    const contentDiv = card.querySelector('.item-content');
+    const textContent = [];
+    if (contentDiv) {
+      // Title
+      const title = contentDiv.querySelector('.item-content__title');
+      if (title) textContent.push(title);
+      // Description: include even if empty (but insert only if not null)
+      const desc = contentDiv.querySelector('.item-content__desc');
+      // Fix: Always include the <p> description element, even if empty
+      if (desc) textContent.push(desc);
+      // CTA link
+      const link = contentDiv.querySelector('.item-content__link');
+      if (link) textContent.push(link);
+    }
+    rows.push([
+      imageEl,
+      textContent.length > 0 ? textContent : '',
+    ]);
+  });
+
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

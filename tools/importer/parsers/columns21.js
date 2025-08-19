@@ -1,21 +1,20 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The header row must be a single column, exactly as in the example
+  // Header row must be EXACTLY one column
   const headerRow = ['Columns (columns21)'];
 
-  // Gather all direct anchor children in the <p>
+  // Gather all <a> links from the element for columns
   const links = Array.from(element.querySelectorAll('a'));
+  // Second row: One cell for each link (3 columns)
+  const contentRow = links;
 
-  // Edge case: If no links, don't replace
-  if (links.length === 0) return;
+  // Build cells array: header row is 1 column, content row is N columns
+  const cells = [
+    headerRow,    // ['Columns (columns21)']
+    contentRow    // [<a>, <a>, <a>]
+  ];
 
-  // Table's second row: each link gets its own column
-  const row = links;
-
-  // Structure: headerRow is a single-cell array, row is a multi-cell array
-  const cells = [headerRow, row];
+  // Create the table and replace the element
   const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original element
   element.replaceWith(table);
 }

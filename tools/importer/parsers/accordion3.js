@@ -1,68 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header row, exactly as in the example
+  // The block header row, as per instructions
   const headerRow = ['Accordion (accordion3)'];
+  const rows = [headerRow];
 
-  // Gather all .card elements, if any
-  let cards = element.querySelectorAll(':scope > .card');
-  // If no .card direct children and element itself is a card, treat it as the only card
-  if (cards.length === 0 && element.classList.contains('card')) {
-    cards = [element];
+  // Helper to extract the clickable title from .card-header
+  function extractTitle(cardHeader) {
+    // Prefer h2, but fallback to header's entire content
+    const h2 = cardHeader.querySelector('h2');
+    if (h2) return h2;
+    // If h2 not found, just use the header itself
+    return cardHeader;
   }
 
-  const rows = [];
-  cards.forEach(card => {
-    // Title cell: Extract visible header text
-    let titleElem = card.querySelector('.card-header');
-    let titleContent = '';
-    if (titleElem) {
-      // Use heading text if present, else full header text
-      const heading = titleElem.querySelector('h1, h2, h3, h4, h5, h6');
-      if (heading) {
-        titleContent = heading.textContent.trim();
-      } else {
-        titleContent = titleElem.textContent.trim();
-      }
-    } else {
-      // fallback: first heading in card
-      const heading = card.querySelector('h1, h2, h3, h4, h5, h6');
-      titleContent = heading ? heading.textContent.trim() : '';
-    }
+  // Find all the .card elements
+  let cards;
+  if (element.classList.contains('accordion')) {
+    cards = Array.from(element.querySelectorAll(':scope > .card'));
+  } else if (element.classList.contains('card')) {
+    cards = [element];
+  } else {
+    // Supports edge case: element contains multiple .card children but isn't .accordion
+    cards = Array.from(element.querySelectorAll(':scope > .card'));
+  }
 
-    // Content cell: Find .collapse area (accordion content)
-    let contentElem = null;
+  // For each card, extract [title, content]
+  cards.forEach(card => {
+    // Title cell
+    const cardHeader = card.querySelector('.card-header');
+    let titleElem = cardHeader ? extractTitle(cardHeader) : document.createElement('span');
+
+    // Content cell
     const collapse = card.querySelector('.collapse');
+    let contentElem;
     if (collapse) {
-      // Use all .collapse children, preserve structure
-      const children = Array.from(collapse.childNodes).filter(node => {
-        // Exclude empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (children.length === 1) {
-        contentElem = children[0];
+      // Get .card-body if present, else whole collapse
+      const cardBody = collapse.querySelector('.card-body');
+      if (cardBody) {
+        contentElem = cardBody;
       } else {
-        contentElem = document.createElement('div');
-        children.forEach(node => contentElem.appendChild(node));
+        contentElem = collapse;
       }
     } else {
-      // fallback: everything except .card-header
-      const contentNodes = Array.from(card.childNodes).filter(node => {
-        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('card-header')) return false;
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (contentNodes.length === 1) {
-        contentElem = contentNodes[0];
-      } else {
-        contentElem = document.createElement('div');
-        contentNodes.forEach(node => contentElem.appendChild(node));
-      }
+      // Edge case: no collapse, try .card-body in card
+      const cardBody = card.querySelector('.card-body');
+      contentElem = cardBody ? cardBody : document.createElement('span');
     }
-    // Push row with title and content
-    rows.push([titleContent, contentElem]);
+    rows.push([titleElem, contentElem]);
   });
-  const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Build table block
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
