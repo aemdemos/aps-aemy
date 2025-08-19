@@ -43,12 +43,6 @@
           "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
           "uuid": "3eb45cc1-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
           "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/",
-          "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
-          "uuid": "b61d3d49-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
-          "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
     },
@@ -95,7 +89,7 @@
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]/div[3]",
           "section": "section-1"
         },
-		    {
+        {
           "url": "https://library.westernsydney.edu.au/researchers/openaccessfeesupport",
           "urlHash": "edd6c98d466e418cc77021ae34a47041f35eeab0",
           "uuid": "edd6c98d-04-42b0a7aa8967c65bf13ba9c7a974734586104f75",
@@ -440,7 +434,7 @@
           "uuid": "4e9c189c-05-19c68f7880474fc3790018d2a886d3dba0e0cce9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[5]"
         },
-		    {
+        {
           "url": "https://library.westernsydney.edu.au/collections/open_athens",
           "urlHash": "f2d2538cf47dfc2420eb3e91a9134e94bdbb50d8",
           "uuid": "f2d2538c-07-ba004c2d31d22bc985a11426674c1046d91e140f",
@@ -1624,6 +1618,18 @@
           "urlHash": "29d08a4aa935764578fb54627dac5a05c0df77ed",
           "uuid": "29d08a4a-05-67fbc67dbd8e2900babd745aa6e742bc578c7bc9",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/p[4]"
+        }
+      ]
+    },
+    {
+      "name": "Carousel",
+      "cluster": 49,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/",
+          "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
+          "uuid": "b61d3d49-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
+          "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
     }
