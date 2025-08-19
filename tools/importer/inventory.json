@@ -1470,6 +1470,21 @@
       ]
     },
     {
+      "name": "Event",
+      "cluster": 41,
+      "source": "Event",
+      "target": "Event",
+      "key": "event41",
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/whats_on/study_smart_training",
+          "urlHash": "e8f99b39e6f024bda2138b8247fd0cc30eb5b6c1",
+          "uuid": "3788633d-03-f57707a5a5b34939a91c29671193de0d",
+          "xpath": "/html/body/div[2]/main/div[1]/div[2]/table"
+        }
+      ]
+    },
+    {
       "name": "Embed (video)",
       "cluster": 28,
       "source": "Embed",
@@ -3278,7 +3293,7 @@
       "url": "https://library.westernsydney.edu.au/about_us/whats_on/study_smart_training",
       "urlHash": "e8f99b39e6f024bda2138b8247fd0cc30eb5b6c1",
       "uuid": "e8f99b39-02-d59d7eb439cf982369622d08082f404049853f25",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]"
+      "xpath": "/html/body/div[2]/main/div[1]/div[2]/h3"
     },
     {
       "url": "https://library.westernsydney.edu.au/about_us/news",

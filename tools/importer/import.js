@@ -24,6 +24,7 @@ import cards13Parser from './parsers/cards13.js';
 import accordion3Parser from './parsers/accordion3.js';
 import headerParser from './parsers/header.js';
 import metadataParser from './parsers/metadata.js';
+import eventParse from './parsers/event.js';
 import cleanupTransformer from './transformers/cleanup.js';
 import imageTransformer from './transformers/images.js';
 import linkTransformer from './transformers/links.js';
@@ -49,6 +50,7 @@ const parsers = {
   columns31: columns31Parser,
   cards13: cards13Parser,
   accordion3: accordion3Parser,
+  event: eventParse,
   ...customParsers,
 };
 
@@ -114,7 +116,12 @@ function transformPage(main, { inventory, ...source }) {
   // get dom elements for each block on the current page
   const blockElements = inventoryBlocks
     .flatMap((block) => block.instances
-      .filter((instance) => WebImporter.Import.findSiteUrl(instance, urls)?.url === originalURL)
+      .filter((instance) => {
+        if (block.key === 'event41' || block.name === 'Event') {
+          debugger;
+        }
+        return WebImporter.Import.findSiteUrl(instance, urls)?.url === originalURL;
+      })
       .map((instance) => ({
         ...block,
         uuid: instance.uuid,
