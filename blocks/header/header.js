@@ -17,7 +17,7 @@ function setupSearchForm(headerBlock) {
 
     // Search context switcher
     const searchContextRadios = searchForm.querySelectorAll('[data-type="search-context"]');
-    searchContextRadios.forEach(radio => {
+    searchContextRadios.forEach((radio) => {
       radio.addEventListener('change', () => {
         const searchType = this.value;
         const form = this.closest('form');
@@ -135,7 +135,7 @@ function initializeHeader(headerBlock) {
 
   // Sub navigation toggle for mobile
   const subNavBtns = headerBlock.querySelectorAll('.sub-nav-btn');
-  subNavBtns.forEach(btn => {
+  subNavBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const parentLi = btn.closest('li');
