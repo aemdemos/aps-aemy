@@ -1,158 +1,4 @@
 /**
- * Set up search form functionality
- * @param {Element} headerBlock The header block element
- */
-function setupSearchForm(headerBlock) {
-  // Library search form
-  const searchForm = headerBlock.querySelector('#uws-library-BJA-search-form');
-  if (searchForm) {
-    searchForm.addEventListener('submit', function () {
-      const searchInput = this.querySelector('[data-role="search-input"]');
-      const searchString = this.querySelector('#uws-search-string');
-
-      if (searchInput && searchString && searchInput.value) {
-        searchString.value = `any,contains,${searchInput.value}`;
-      }
-    });
-
-    // Search context switcher
-    const searchContextRadios = searchForm.querySelectorAll('[data-type="search-context"]');
-    searchContextRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        const searchType = this.value;
-        const form = this.closest('form');
-
-        if (form && searchType) {
-          if (searchType === 'site_search') {
-            form.action = 'https://uws.primo.exlibrisgroup.com/discovery/search';
-          } else if (searchType === 'library_search') {
-            form.action = 'https://www.westernsydney.edu.au/search';
-          }
-        }
-      });
-    });
-
-    // Ensure the search button has the right styling
-    const searchButton = searchForm.querySelector('.search-catalogue_btn');
-    if (searchButton) {
-      searchButton.innerHTML = 'Search';
-    }
-  }
-}
-/**
- * Initialize header functionality
- * @param {Element} headerBlock The header block element
- */
-function (headerBlock) {
-  // Toggle Sign In dropdown
-  const signInBtn = headerBlock.querySelector('#sign_in_dd');
-  if (signInBtn) {
-    signInBtn.addEventListener('click', () => {
-      signInBtn.classList.toggle('active');
-      const dropdownWrap = headerBlock.querySelector('.dropdown_wrap');
-      if (dropdownWrap) {
-        dropdownWrap.classList.toggle('active');
-      }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('.sign_in_dd')) {
-        const dropdownWrap = headerBlock.querySelector('.dropdown_wrap');
-        if (dropdownWrap && dropdownWrap.classList.contains('active')) {
-          dropdownWrap.classList.remove('active');
-          signInBtn.classList.remove('active');
-        }
-      }
-    });
-  }
-
-  // Make sure search_tab is always visible and positioned correctly
-  const searchTab = headerBlock.querySelector('.search_tab');
-  if (searchTab) {
-    // Ensure the search_tab is visible and properly styled
-    searchTab.style.display = 'flex';
-    searchTab.style.visibility = 'visible';
-    searchTab.style.opacity = '1';
-  }
-
-  // Toggle QuickLinks
-  const quicklinksTab = headerBlock.querySelector('.quicklinks_tab');
-  if (quicklinksTab) {
-    quicklinksTab.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      quicklinksTab.classList.toggle('quicklinks_tab_active');
-      const quicklinks = headerBlock.querySelector('.quicklinks');
-      const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
-
-      if (quicklinks) {
-        quicklinks.classList.toggle('active');
-      }
-
-      if (quicklinksSlider) {
-        quicklinksSlider.classList.toggle('active');
-      }
-    });
-
-    // Close quicklinks when clicking outside
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('#component_1932595') && !event.target.closest('.quicklinks')) {
-        const quicklinks = headerBlock.querySelector('.quicklinks');
-        const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
-
-        if (quicklinks && quicklinks.classList.contains('active')) {
-          quicklinks.classList.remove('active');
-          quicklinksTab.classList.remove('quicklinks_tab_active');
-        }
-
-        if (quicklinksSlider && quicklinksSlider.classList.contains('active')) {
-          quicklinksSlider.classList.remove('active');
-        }
-      }
-    });
-  }
-
-  // Mobile menu toggle
-  const mainNavBtn = headerBlock.querySelector('.main-nav__btn');
-  const mainNavWrapper = headerBlock.querySelector('.main-nav__wrapper');
-  const mainNavClose = headerBlock.querySelector('.main-nav-close');
-
-  if (mainNavBtn && mainNavWrapper) {
-    mainNavBtn.addEventListener('click', () => {
-      mainNavWrapper.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-    });
-  }
-
-  if (mainNavClose && mainNavWrapper) {
-    mainNavClose.addEventListener('click', () => {
-      mainNavWrapper.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
-    });
-  }
-
-  // Sub navigation toggle for mobile
-  const subNavBtns = headerBlock.querySelectorAll('.sub-nav-btn');
-  subNavBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const parentLi = btn.closest('li');
-      const subNav = parentLi.querySelector('.sub-nav');
-
-      if (parentLi && subNav) {
-        parentLi.classList.toggle('active');
-        subNav.classList.toggle('active');
-      }
-    });
-  });
-
-  // Setup search form functionality
-  setupSearchForm(headerBlock);
-}
-
-/**
  * Decorates the header with functionality based on the header.html structure
  * @param {Element} block The header block element
  */
@@ -644,6 +490,162 @@ export default function decorate(block) {
   if (searchInput) {
     searchInput.placeholder = 'Find books, journals, databases and more...';
   }
+
   // Initialize header functionality
   initializeHeader(block);
+}
+
+/**
+ * Initialize header functionality
+ * @param {Element} headerBlock The header block element
+ */
+function initializeHeader(headerBlock) {
+  // Toggle Sign In dropdown
+  const signInBtn = headerBlock.querySelector('#sign_in_dd');
+  if (signInBtn) {
+    signInBtn.addEventListener('click', () => {
+      signInBtn.classList.toggle('active');
+      const dropdownWrap = headerBlock.querySelector('.dropdown_wrap');
+      if (dropdownWrap) {
+        dropdownWrap.classList.toggle('active');
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.sign_in_dd')) {
+        const dropdownWrap = headerBlock.querySelector('.dropdown_wrap');
+        if (dropdownWrap && dropdownWrap.classList.contains('active')) {
+          dropdownWrap.classList.remove('active');
+          signInBtn.classList.remove('active');
+        }
+      }
+    });
+  }
+
+  // Make sure search_tab is always visible and positioned correctly
+  const searchTab = headerBlock.querySelector('.search_tab');
+  if (searchTab) {
+    // Ensure the search_tab is visible and properly styled
+    searchTab.style.display = 'flex';
+    searchTab.style.visibility = 'visible';
+    searchTab.style.opacity = '1';
+  }
+
+  // Toggle QuickLinks
+  const quicklinksTab = headerBlock.querySelector('.quicklinks_tab');
+  if (quicklinksTab) {
+    quicklinksTab.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      quicklinksTab.classList.toggle('quicklinks_tab_active');
+      const quicklinks = headerBlock.querySelector('.quicklinks');
+      const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
+
+      if (quicklinks) {
+        quicklinks.classList.toggle('active');
+      }
+
+      if (quicklinksSlider) {
+        quicklinksSlider.classList.toggle('active');
+      }
+    });
+
+    // Close quicklinks when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#component_1932595') && !event.target.closest('.quicklinks')) {
+        const quicklinks = headerBlock.querySelector('.quicklinks');
+        const quicklinksSlider = headerBlock.querySelector('.quicklinks_slider');
+
+        if (quicklinks && quicklinks.classList.contains('active')) {
+          quicklinks.classList.remove('active');
+          quicklinksTab.classList.remove('quicklinks_tab_active');
+        }
+
+        if (quicklinksSlider && quicklinksSlider.classList.contains('active')) {
+          quicklinksSlider.classList.remove('active');
+        }
+      }
+    });
+  }
+
+  // Mobile menu toggle
+  const mainNavBtn = headerBlock.querySelector('.main-nav__btn');
+  const mainNavWrapper = headerBlock.querySelector('.main-nav__wrapper');
+  const mainNavClose = headerBlock.querySelector('.main-nav-close');
+
+  if (mainNavBtn && mainNavWrapper) {
+    mainNavBtn.addEventListener('click', () => {
+      mainNavWrapper.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+    });
+  }
+
+  if (mainNavClose && mainNavWrapper) {
+    mainNavClose.addEventListener('click', () => {
+      mainNavWrapper.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    });
+  }
+
+  // Sub navigation toggle for mobile
+  const subNavBtns = headerBlock.querySelectorAll('.sub-nav-btn');
+  subNavBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const parentLi = btn.closest('li');
+      const subNav = parentLi.querySelector('.sub-nav');
+
+      if (parentLi && subNav) {
+        parentLi.classList.toggle('active');
+        subNav.classList.toggle('active');
+      }
+    });
+  });
+
+  // Setup search form functionality
+  setupSearchForm(headerBlock);
+}
+
+/**
+ * Set up search form functionality
+ * @param {Element} headerBlock The header block element
+ */
+function setupSearchForm(headerBlock) {
+  // Library search form
+  const searchForm = headerBlock.querySelector('#uws-library-BJA-search-form');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function (e) {
+      const searchInput = this.querySelector('[data-role="search-input"]');
+      const searchString = this.querySelector('#uws-search-string');
+
+      if (searchInput && searchString && searchInput.value) {
+        searchString.value = `any,contains,${searchInput.value}`;
+      }
+    });
+
+    // Search context switcher
+    const searchContextRadios = searchForm.querySelectorAll('[data-type="search-context"]');
+    searchContextRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        const searchType = this.value;
+        const form = this.closest('form');
+
+        if (form && searchType) {
+          if (searchType === 'site_search') {
+            form.action = 'https://uws.primo.exlibrisgroup.com/discovery/search';
+          } else if (searchType === 'library_search') {
+            form.action = 'https://www.westernsydney.edu.au/search';
+          }
+        }
+      });
+    });
+
+    // Ensure the search button has the right styling
+    const searchButton = searchForm.querySelector('.search-catalogue_btn');
+    if (searchButton) {
+      searchButton.innerHTML = 'Search';
+    }
+  }
 }
