@@ -1,33 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Compose the content for the block cell
-  const content = [];
+  // Compose content for the Embed block: all direct children, including text nodes
+  const cellContent = [];
+  // Get all child nodes (text and elements)
   element.childNodes.forEach((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'IFRAME' && node.src) {
-        // Replace iframe (non-img) with a link
+    if (node.nodeType === Node.TEXT_NODE) {
+      const txt = node.textContent.trim();
+      if (txt) {
+        cellContent.push(document.createTextNode(txt));
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName.toLowerCase() === 'iframe' && node.src) {
+        // Convert iframe to link per requirements
         const link = document.createElement('a');
         link.href = node.src;
         link.textContent = node.src;
-        content.push(link);
+        cellContent.push(link);
       } else {
-        content.push(node);
-      }
-    } else if (node.nodeType === Node.TEXT_NODE) {
-      // Add any text content present directly under the element
-      const txt = node.textContent.trim();
-      if (txt) {
-        content.push(txt);
+        cellContent.push(node);
       }
     }
   });
 
-  // Construct the cells array as per the markdown example
+  // Build the table: 1 column, 2 rows, header is exactly 'Embed'
   const cells = [
-    ['Embed'], // EXACT header from example
-    [content] // All source content, preserving semantic meaning
+    ['Embed'],
+    [cellContent.length === 1 ? cellContent[0] : cellContent]
   ];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element with the block table
+  element.replaceWith(block);
 }

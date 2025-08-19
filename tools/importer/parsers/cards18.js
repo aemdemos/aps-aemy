@@ -1,38 +1,25 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header exactly as specified
   const headerRow = ['Cards (cards18)'];
-  // Get all direct card elements
-  const cards = Array.from(element.children);
-  const rows = cards.map(card => {
-    // Icon (should always exist)
-    const icon = card.querySelector('i');
-    // Number (should always exist)
-    const number = card.querySelector('span.cartfig');
-    // Title (should always exist)
-    const title = card.querySelector('p');
+  const cardDivs = Array.from(element.querySelectorAll(':scope > div'));
+  const rows = [headerRow];
 
-    // First cell: icon element
-    // Second cell: number (heading) + title (description)
-    const cellContent = [];
-    if (number) {
-      // Use <strong> for heading-like text
-      const heading = document.createElement('strong');
-      heading.textContent = number.textContent;
-      cellContent.push(heading);
-      cellContent.push(document.createElement('br'));
+  cardDivs.forEach(card => {
+    // First cell: icon (use existing <i> element)
+    const icon = card.querySelector('i');
+    // Second cell: number (in <span class="cartfig">) and label (in <p>)
+    const fig = card.querySelector('.cartfig');
+    const p = card.querySelector('p');
+    // Combine number (bold) and label (p)
+    const contentDiv = document.createElement('div');
+    if (fig) contentDiv.appendChild(fig);
+    if (p) {
+      if (fig) contentDiv.appendChild(document.createElement('br'));
+      contentDiv.appendChild(p);
     }
-    if (title) {
-      // Use span for description
-      const desc = document.createElement('span');
-      desc.textContent = title.textContent;
-      cellContent.push(desc);
-    }
-    // If number or title missing, skip their cellContent
-    return [icon, cellContent];
+    rows.push([icon, contentDiv]);
   });
-  // All rows: header + card rows
-  const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

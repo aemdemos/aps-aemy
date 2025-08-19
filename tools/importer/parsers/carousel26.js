@@ -1,61 +1,60 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build block table: header row is a single cell ['Carousel']
+  // 1. Header row: one cell with block name
   const cells = [['Carousel']];
 
-  // Get slide elements (non-cloned)
+  // 2. Find main slick-track with slides
   const track = element.querySelector('.slick-track');
   if (!track) return;
-  const slides = Array.from(track.children).filter(slide => !slide.classList.contains('slick-cloned'));
 
-  // Build a map from image src to its modal for extracting text content
-  const modalMap = {};
-  Array.from(element.querySelectorAll('[id^="sliderImgModal-"]')).forEach(modal => {
-    const img = modal.querySelector('.modal-body img');
+  // 3. Get only non-cloned slides
+  const slides = Array.from(track.children).filter(slide =>
+    slide.classList.contains('slick-slide') &&
+    !slide.classList.contains('slick-cloned') &&
+    Number(slide.getAttribute('data-slick-index')) >= 0
+  );
+
+  // 4. Map image src to modal title and ALL <p> elements from modal-footer
+  const modalInfo = {};
+  const modals = element.querySelectorAll('div[id^="sliderImgModal-"]');
+  modals.forEach(modal => {
+    const img = modal.querySelector('img');
+    const h5 = modal.querySelector('h5');
+    // Get all <p> tags inside .modal-footer
+    const descPs = Array.from(modal.querySelectorAll('.modal-footer p'));
     if (img && img.src) {
-      modalMap[img.src] = modal;
+      modalInfo[img.src] = {
+        title: h5 ? h5.textContent.trim() : '',
+        descPs: descPs // preserve paragraph elements even if empty
+      };
     }
   });
 
   slides.forEach(slide => {
     const img = slide.querySelector('img');
-    let textCell = '';
-    if (img && modalMap[img.src]) {
-      const modal = modalMap[img.src];
-      const textContent = [];
-      // Title as heading
-      const title = modal.querySelector('.modal-title');
-      if (title && title.textContent.trim()) {
-        const h2 = document.createElement('h2');
-        h2.textContent = title.textContent.trim();
-        textContent.push(h2);
-      }
-      // Extract description/additional content from modal-body (text nodes and non-img elements)
-      const modalBody = modal.querySelector('.modal-body');
-      if (modalBody) {
-        Array.from(modalBody.childNodes).forEach(node => {
-          if (node.nodeType === 3 && node.textContent.trim()) {
-            const p = document.createElement('p');
-            p.textContent = node.textContent.trim();
-            textContent.push(p);
-          } else if (node.nodeType === 1 && node.tagName !== 'IMG') {
-            textContent.push(node);
-          }
-        });
-      }
-      // Call-to-action or additional content from modal-footer
-      const footerP = modal.querySelector('.modal-footer p');
-      if (footerP && footerP.textContent.trim()) {
-        textContent.push(footerP);
-      }
-      // Only set text cell if any content is present
-      if (textContent.length > 0) {
-        textCell = textContent;
-      }
+    if (!img) return;
+    let title = '', descPs = [];
+    if (modalInfo[img.src]) {
+      title = modalInfo[img.src].title;
+      descPs = modalInfo[img.src].descPs;
+    } else if (img.alt) {
+      title = img.alt;
     }
-    cells.push([img || '', textCell]);
+    // Build text cell: heading then all description paragraphs
+    const textCell = [];
+    if (title) {
+      const h2 = document.createElement('h2');
+      h2.textContent = title;
+      textCell.push(h2);
+    }
+    descPs.forEach(p => textCell.push(p));
+    cells.push([
+      img,
+      textCell.length ? textCell : ''
+    ]);
   });
 
+  // 5. Create and replace with the Carousel block table
   const block = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(block);
 }

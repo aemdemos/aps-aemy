@@ -1,30 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Ensure we robustly extract the two column elements
-  let mediaBody = element.querySelector('.media-body');
-  let mediaRight = element.querySelector('.media-right');
-
-  // Edge case handling: if one is missing, create an empty div so columns align
-  if (!mediaBody) {
-    mediaBody = document.createElement('div');
-  }
-  if (!mediaRight) {
-    mediaRight = document.createElement('div');
-  }
-
-  // The header must match the block name exactly
+  // Header must be an array with a single cell, exactly matching the block name.
   const headerRow = ['Columns (columns33)'];
 
-  // The second row: each cell is a column. Reference the extracted elements directly.
-  const contentRow = [mediaBody, mediaRight];
+  // Extract left (content) and right (image) columns
+  const mediaBody = element.querySelector('.media-body');
+  const mediaRight = element.querySelector('.media-right');
 
-  // Compose the table
+  // Compose left column: heading, description, details
+  const leftColumnContent = [];
+  if (mediaBody) {
+    const heading = mediaBody.querySelector('.media-heading');
+    if (heading) leftColumnContent.push(heading);
+    const desc = mediaBody.querySelector('.s-lc-c-evt-des');
+    if (desc) leftColumnContent.push(desc);
+    const dl = mediaBody.querySelector('dl');
+    if (dl) leftColumnContent.push(dl);
+  }
+  // Compose right column: image only
+  let imageElem = '';
+  if (mediaRight) {
+    const img = mediaRight.querySelector('img');
+    if (img) imageElem = img;
+  }
+
+  // Compose rows: header row is single column, data row is two columns
   const cells = [
     headerRow,
-    contentRow,
+    [leftColumnContent, imageElem]
   ];
 
-  // Create and replace the block table
+  // Create block table and replace
   const block = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(block);
 }
