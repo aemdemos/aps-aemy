@@ -150,128 +150,6 @@
 }
 
 
-.accordion.accordion2 {
-  background: #fafafa;
-  border-radius: 0;
-  padding: 24px;
-  box-sizing: border-box;
-  width: 100%;
-  border: none;
-  display: block;
-}
-
-.accordion.accordion2 details,
-.accordion.accordion2 summary {
-  border: none;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-}
-
-.accordion.accordion2 .accordion-item-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  box-sizing: border-box;
-  min-height: unset;
-  padding: 18px 24px;
-  margin: 0;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.accordion.accordion2 .accordion-item-label h2 {
-  font-size: 16px;
-  font-weight: 500;
-  color: #222;
-  font-family: var(--heading-font-family);
-  margin: 0;
-  padding: 0;
-  line-height: 1.32;
-  background: transparent;
-  white-space: normal;
-  flex: 0 1 auto;
-  text-align: left;
-  letter-spacing: 0;
-}
-
-.accordion.accordion2 details > summary.accordion-item-label::after {
-  display: inline-block;
-  width: 18px;
-  height: 2px;
-  background: #BE0032;
-  border-radius: 1px;
-  margin: 0;
-  align-self: baseline;
-  position: relative;
-  top: 0.35em;
-  vertical-align: baseline;
-  transform: none;
-}
-
-.accordion.accordion2 details > summary::-webkit-details-marker,
-.accordion.accordion2 details > summary::marker {
-  display: none;
-}
-
-.accordion.accordion2 .accordion-item-body {
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.accordion.accordion2 .accordion-item-body ul {
-  margin: 0;
-  padding-left: 22px;
-  list-style: disc;
-}
-
-.accordion.accordion2 .accordion-item-body ul li {
-  color: #222;
-  font-size: 15px;
-  margin-bottom: 12px;
-  line-height: 1.6;
-  padding-left: 0;
-}
-
-.accordion.accordion2 .accordion-item-body ul li::marker {
-  color: #BE0032;
-}
-
-.accordion.accordion2 .accordion-item-body a {
-  color: #BE0032;
-  text-decoration: underline;
-  font-weight: 400;
-}
-
-.accordion.accordion2 .accordion-item-body p {
-  margin: 0 0 5px;
-  padding: 0;
-}
-
-@media (width <= 600px) {
-  .accordion.accordion2 {
-    padding: 16px 8px;
-  }
-
-  .accordion.accordion2 .accordion-item-label {
-    padding: 12px 8px;
-    gap: 6px;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  .accordion.accordion2 .accordion-item-label h2 {
-    font-size: 15px;
-  }
-}
-
-
 .accordion.accordion3 details > summary.accordion-item-label,
 .accordion.accordion3 .accordion-item-label {
   display: flex;
@@ -343,5 +221,155 @@
   .accordion.accordion3 .accordion-item-body {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+
+.accordion.accordion2 {
+  background: #f5f5f5;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  display: block;
+}
+
+/* Make sure details and summary take full block width */
+.accordion.accordion2 details {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+  display: block;
+}
+
+/* HEADER ROW: Flexbox, align items center, minus bar flush right, tighter space to heading */
+.accordion.accordion2 .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 10px;
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Heading: match h2 weight, left-aligned, slightly less bold than before */
+.accordion.accordion2 .accordion-item-label h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  font-family: var(--heading-font-family);
+  line-height: 1.25;
+  white-space: normal;
+  flex: 1 1 0;
+  text-align: left;
+  letter-spacing: 0;
+  overflow: visible;
+}
+
+/* Remove marker from details/summary */
+.accordion.accordion2 details > summary::-webkit-details-marker,
+.accordion.accordion2 details > summary::marker {
+  display: none;
+}
+
+/* MINUS BAR: strictly horizontal, flush right, smaller and closer to heading */
+.accordion.accordion2 details > summary.accordion-item-label::after {
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: #BE0032;
+  border-radius: 1px;
+  margin-left: 8px;
+  margin-right: 0;
+  align-self: center;
+  vertical-align: middle;
+  position: static;
+  transform: none;
+}
+
+/* Accordion body: full width under header */
+.accordion.accordion2 .accordion-item-body {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Bullet list: standard vertical, indent 22px, no extra gap */
+.accordion.accordion2 .accordion-item-body ul {
+  margin: 0;
+  padding-left: 22px;
+  list-style: disc;
+  display: block;
+}
+
+/* List items: correct size, color, spacing, tighter vertical rhythm */
+.accordion.accordion2 .accordion-item-body ul li {
+  color: #4a4a4a;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding-left: 0;
+  line-height: 1.6;
+}
+
+.accordion.accordion2 .accordion-item-body ul li::marker {
+  color: #d0021b;
+  font-size: 14px;
+}
+
+/* Links in bullets: accent color and underline */
+.accordion.accordion2 .accordion-item-body a {
+  color: #d0021b;
+  text-decoration: underline;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.accordion.accordion2 .accordion-item-body a:hover,
+.accordion.accordion2 .accordion-item-body a:focus {
+  color: #a00023;
+  text-decoration: underline;
+}
+
+/* Inline paragraphs in bullets */
+.accordion.accordion2 .accordion-item-body p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsive: tighter spacing/font size for mobile */
+@media (width <= 600px) {
+  .accordion.accordion2 {
+    padding: 10px 4px;
+  }
+
+  .accordion.accordion2 .accordion-item-label {
+    padding: 0 0 6px;
+  }
+
+  .accordion.accordion2 .accordion-item-label h2 {
+    font-size: 15px;
+  }
+
+  .accordion.accordion2 .accordion-item-body ul li {
+    font-size: 13px;
+    margin-bottom: 7px;
+  }
+
+  .accordion.accordion2 details > summary.accordion-item-label::after {
+    width: 11px;
+    height: 2px;
+    margin-left: 5px;
   }
 }
