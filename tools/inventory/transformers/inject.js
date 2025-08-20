@@ -37,4 +37,12 @@
     targetTable.classList.add('blu-det-container');
     console.log('Added blu-det-container class to table34264');
   }
+
+  const videoIframes = document.querySelectorAll('iframe[src*="youtube.com/embed"]');
+  videoIframes.forEach((iframe) => {
+    const sectionAncestor = iframe.closest('section');
+    if (sectionAncestor) {
+      sectionAncestor.classList.add('blu-det-container');
+    }
+  });
 })();
