@@ -31,4 +31,10 @@
   ['.left-nav', 'header.header', 'footer.footer'].forEach((selector) => {
     document.querySelectorAll(selector).forEach((el) => el.remove());
   });
+
+  const targetTable = document.getElementById('table34264');
+  if (targetTable) {
+    targetTable.classList.add('blu-det-container');
+    console.log('Added blu-det-container class to table34264');
+  }
 })();
