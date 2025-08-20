@@ -1635,6 +1635,146 @@
           "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
+    },
+    {
+      "name": "new",
+      "cluster": 50,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
+          "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
+          "uuid": "7c969a3c-07-c609f131ceccf106e94a6b00955356001b011d3e",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 51,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
+          "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
+          "uuid": "c51cd8f5-05-c609f131ceccf106e94a6b00955356001b011d3e",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 52,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/bankstown_city",
+          "urlHash": "370c3ef970ae1450e3e4a5fb559fe5e22c83d46a",
+          "uuid": "370c3ef9-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 53,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
+          "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
+          "uuid": "5b388e5b-03-ea74c947c21cb371847451b049d95e1ea7d387d3",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 54,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
+          "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
+          "uuid": "245b75b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 55,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/campbelltown",
+          "urlHash": "9b8a2c7b0679afa98c3505c663c1bcb3b2c2d14b",
+          "uuid": "9b8a2c7b-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 56,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/penrith",
+          "urlHash": "b31ab19829578e9bec53e9e08419fddff862f404",
+          "uuid": "b31ab198-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 57,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_city",
+          "urlHash": "baf84ed0f187ee14abd8924619f8c096836e1961",
+          "uuid": "baf84ed0-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 58,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
+          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
+          "uuid": "dc15ab3a-03-b9ac757aa4c89dae46e5bf4e5abc5b33240f24ef",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 59,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
+          "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
+          "uuid": "fc0098b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
+    },
+    {
+      "name": "new",
+      "cluster": 60,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/liverpool",
+          "urlHash": "f37ca4e199eebaef3e48239df281d2040945e46f",
+          "uuid": "f37ca4e1-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -1809,13 +1949,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
       "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
-      "uuid": "245b75b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/hawkesbury",
-      "urlHash": "245b75b39aaafc350374f589a34bf637f87cd009",
       "uuid": "245b75b3-04-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
@@ -1982,13 +2115,6 @@
       "urlHash": "370c3ef970ae1450e3e4a5fb559fe5e22c83d46a",
       "uuid": "370c3ef9-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/bankstown_city",
-      "urlHash": "370c3ef970ae1450e3e4a5fb559fe5e22c83d46a",
-      "uuid": "370c3ef9-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
     },
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/bankstown_city",
@@ -2264,12 +2390,6 @@
       "section": "section-5"
     },
     {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
-      "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
-      "uuid": "5b388e5b-03-ea74c947c21cb371847451b049d95e1ea7d387d3",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
-    },
-    {
       "url": "https://library.westernsydney.edu.au/students/using_the_library/printing",
       "urlHash": "5b9cf3e7328c3a2108a611cecce2f916b0ecf89d",
       "uuid": "5b9cf3e7-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -2519,12 +2639,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
       "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
-      "uuid": "7c969a3c-07-c609f131ceccf106e94a6b00955356001b011d3e",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
-      "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
       "uuid": "7c969a3c-17-07e3b402fe7863c790d7d39c2af693401fb94f81",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/ul[1]"
     },
@@ -2741,13 +2855,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/campbelltown",
       "urlHash": "9b8a2c7b0679afa98c3505c663c1bcb3b2c2d14b",
-      "uuid": "9b8a2c7b-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/campbelltown",
-      "urlHash": "9b8a2c7b0679afa98c3505c663c1bcb3b2c2d14b",
       "uuid": "9b8a2c7b-04-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
@@ -2910,13 +3017,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/penrith",
       "urlHash": "b31ab19829578e9bec53e9e08419fddff862f404",
-      "uuid": "b31ab198-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/penrith",
-      "urlHash": "b31ab19829578e9bec53e9e08419fddff862f404",
       "uuid": "b31ab198-04-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
@@ -2978,13 +3078,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_city",
       "urlHash": "baf84ed0f187ee14abd8924619f8c096836e1961",
-      "uuid": "baf84ed0-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_city",
-      "urlHash": "baf84ed0f187ee14abd8924619f8c096836e1961",
       "uuid": "baf84ed0-04-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
@@ -3041,12 +3134,6 @@
       "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
       "uuid": "c51cd8f5-04-07e3b402fe7863c790d7d39c2af693401fb94f81",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/ul[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
-      "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
-      "uuid": "c51cd8f5-05-c609f131ceccf106e94a6b00955356001b011d3e",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
@@ -3211,13 +3298,6 @@
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
     {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
-      "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
-      "uuid": "dc15ab3a-03-b9ac757aa4c89dae46e5bf4e5abc5b33240f24ef",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[1]",
-      "section": "section-1"
-    },
-    {
       "url": "https://library.westernsydney.edu.au/researchers/data-management/data_management_planning",
       "urlHash": "dd7edd12bbf7816f9e1940755dce858abfaec961",
       "uuid": "dd7edd12-00-0237a165e94eef67f3dd016f1839339cfb13cb6b",
@@ -3370,13 +3450,6 @@
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/liverpool",
       "urlHash": "f37ca4e199eebaef3e48239df281d2040945e46f",
-      "uuid": "f37ca4e1-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/liverpool",
-      "urlHash": "f37ca4e199eebaef3e48239df281d2040945e46f",
       "uuid": "f37ca4e1-04-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
     },
@@ -3391,13 +3464,6 @@
       "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
       "uuid": "fc0098b3-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
-      "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
-      "uuid": "fc0098b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
     },
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
