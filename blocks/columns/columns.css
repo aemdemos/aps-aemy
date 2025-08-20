@@ -376,238 +376,6 @@
 }
 
 
-.columns.columns31 {
-  --wsu-pink: #b1004d;
-  --wsu-gray-bg: #f4f4f4;
-  --wsu-dark-gray: #3c3c3c;
-}
-
-.columns.columns31 > div {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 22px;
-  max-width: 850px;
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-@media (width <= 900px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 16px;
-    max-width: 100%;
-    margin: 0 8px;
-    width: 100%;
-  }
-}
-
-.columns.columns31 > div > div:first-child {
-  flex: 1.07 1 0;
-  max-width: 350px;
-  min-width: 210px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.columns.columns31 > div > div:last-child {
-  flex: 1 1 0;
-  max-width: 310px;
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.columns.columns31 > div > div:first-child > p:first-of-type {
-  display: none;
-}
-
-.columns.columns31 > div > div:first-child > ul {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.48em;
-  list-style: none;
-  margin: 0 0 1em;
-  padding: 0;
-  font-size: 0.99em;
-  background: none;
-}
-
-.columns.columns31 > div > div:first-child > ul li:first-child {
-  background: none;
-  color: #000;
-  font-weight: 600;
-  font-size: 1em;
-  padding: 0;
-  margin: 0;
-}
-
-.columns.columns31 > div > div:first-child > ul li:last-child {
-  color: var(--wsu-pink);
-  font-weight: 400;
-  font-size: 0.93em;
-  text-decoration: underline;
-  background: none;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
-.columns.columns31 > div > div:first-child table:not(:first-of-type),
-.columns.columns31 > div > div:first-child .button-container:not(:first-of-type) {
-  display: none;
-}
-
-.columns.columns31 > div > div:first-child table {
-  width: 100%;
-  max-width: 310px;
-  background: var(--wsu-gray-bg);
-  border-radius: 5px;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0 0 0.30em;
-  font-size: 0.97em;
-  box-sizing: border-box;
-  padding: 0;
-  box-shadow: none;
-}
-
-.columns.columns31 > div > div:first-child thead th {
-  text-align: left;
-  font-weight: 700;
-  color: #000;
-  background: none;
-  border: none;
-  font-size: 0.99em;
-  padding: 9px 13px 7px 10px;
-  line-height: 1.13;
-}
-
-.columns.columns31 > div > div:first-child tbody tr td {
-  border: none;
-  vertical-align: middle;
-  font-weight: 400;
-  padding: 6px 8px 6px 10px;
-  font-size: 0.97em;
-  background: none;
-}
-
-.columns.columns31 > div > div:first-child td:first-child {
-  color: #000;
-  font-weight: 400;
-  text-align: left;
-  white-space: nowrap;
-  min-width: 68px;
-  padding-right: 7px;
-}
-
-.columns.columns31 > div > div:first-child td:first-child a {
-  color: var(--wsu-pink);
-  font-weight: 500;
-  text-decoration: underline;
-}
-
-.columns.columns31 > div > div:first-child tbody tr:first-child td {
-  font-weight: 700;
-  color: #000;
-}
-
-.columns.columns31 > div > div:first-child td:last-child {
-  color: var(--wsu-dark-gray);
-  text-align: right;
-  font-weight: 400;
-  white-space: nowrap;
-  min-width: 68px;
-  padding-left: 4px;
-}
-
-.columns.columns31 > div > div:first-child .button-container {
-  margin: 0.12em 0 0.02em;
-}
-
-.columns.columns31 > div > div:first-child .button-container a.button {
-  background: none;
-  border: none;
-  color: var(--wsu-pink);
-  font-weight: 500;
-  font-size: 1em;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  margin: 0 0 0.05em;
-  text-decoration: underline;
-  line-height: 1.21;
-  text-align: left;
-  display: inline;
-  min-width: 0;
-  max-width: 100%;
-  transition: color 0.18s;
-  cursor: pointer;
-}
-
-.columns.columns31 > div > div:first-child .button-container a.button:hover,
-.columns.columns31 > div > div:first-child .button-container a.button:focus {
-  color: #8c1225;
-}
-
-.columns.columns31 > div > div:first-child > * {
-  margin-bottom: 0.48em;
-}
-
-.columns.columns31 > div > div:first-child > *:last-child {
-  margin-bottom: 0;
-}
-
-.columns.columns31 > div > div:first-child > *:first-child {
-  margin-top: 0;
-}
-
-.columns.columns31 h2 {
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0 0 0.4em;
-  line-height: 1.13;
-  padding: 0;
-  text-align: left;
-}
-
-.columns.columns31 > div > div:last-child h2 {
-  margin-top: 0;
-  margin-bottom: 0.8em;
-  font-size: 1.12rem;
-  font-weight: 700;
-  text-align: left;
-}
-
-@media (width <= 900px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 14px;
-    max-width: 100%;
-    margin: 0 8px;
-    width: 100%;
-  }
-
-  .columns.columns31 > div > div {
-    min-width: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .columns.columns31 table {
-    max-width: 100%;
-  }
-}
-
-
 .columns.columns33 {
   background: #fff;
   max-width: 900px;
@@ -681,7 +449,6 @@
   }
 }
 
-/* Image: make it visually larger and balanced */
 .columns.columns33 .columns-img-col img,
 .columns.columns33 .columns-img-col picture {
   width: 100%;
@@ -713,7 +480,6 @@
   }
 }
 
-/* Heading: slightly larger and underline closer */
 .columns.columns33 h3 {
   color: #b4005e;
   font-size: 1.52rem;
@@ -737,7 +503,6 @@
   text-decoration: underline;
 }
 
-/* Body text */
 .columns.columns33 p,
 .columns.columns33 li {
   color: #555;
@@ -748,7 +513,6 @@
   overflow: visible;
 }
 
-/* Bold for sections that should pop, but not the whole block */
 .columns.columns33 p strong,
 .columns.columns33 strong,
 .columns.columns33 ul li > p:first-child,
@@ -757,7 +521,6 @@
   color: #555;
 }
 
-/* Remove bullets, make label-value inline for event info lists */
 .columns.columns33 ul,
 .columns.columns33 ol {
   list-style: none;
@@ -795,7 +558,6 @@
   display: none;
 }
 
-/* Registration link and other links */
 .columns.columns33 .button-container {
   margin: 16px 0 0;
 }
@@ -829,4 +591,270 @@
 
 .columns.columns33 ol li {
   margin-bottom: 8px;
+}
+
+
+.columns.columns31 {
+  background: #f2f2f2;
+  border-radius: 0;
+  max-width: 720px;
+  margin-left: 48px;
+  margin-right: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.columns.columns31 > div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.columns.columns31 > div > div {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.columns.columns31 > div > div:first-child {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 38px 18px 32px 38px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Hide [x][ ] line, which is a p directly after h2 */
+.columns.columns31 h2 + p {
+  display: none;
+}
+
+.columns.columns31 h2 {
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 12px;
+  padding: 0;
+  line-height: 1.17;
+}
+
+/* Date and Community Hours Row: Flex, minimal gap, tight baseline alignment */
+.columns.columns31 ul {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.01em;
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.97em;
+}
+
+.columns.columns31 ul li:first-child {
+  background: #e6e6e6;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+  font-size: inherit;
+  letter-spacing: 0.01em;
+  display: inline-block;
+}
+
+.columns.columns31 ul li:last-child {
+  color: #B60048;
+  font-weight: 400;
+  margin: 0 0 0 2px;
+  padding: 0 3px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-size: 1em;
+  text-decoration: none;
+  display: inline-block;
+  align-self: baseline;
+}
+
+.columns.columns31 ul:not(:first-of-type) {
+  display: none;
+}
+
+.columns.columns31 ul + p:not(.button-container) {
+  display: none;
+}
+
+/* Hours Table Layout: Use CSS Grid for two columns, add small gap for breathing room */
+.columns.columns31 table {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 0 8px;
+  font-size: 1em;
+  box-sizing: border-box;
+  table-layout: fixed;
+}
+
+.columns.columns31 thead {
+  display: none;
+}
+
+/* Tighter grid: columns hug text, add column-gap for better separation */
+.columns.columns31 tbody {
+  display: grid;
+  grid-template-columns: max-content auto;
+  column-gap: 18px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.columns.columns31 tbody tr {
+  display: contents;
+}
+
+.columns.columns31 td {
+  padding: 6px 8px 6px 0;
+  border: none;
+  background: none;
+  font-size: 1em;
+  color: #222;
+  line-height: 1.21;
+  min-width: 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Hide header/info rows (e.g. "Opening Hours"/"Spring Session" first row in tbody) */
+.columns.columns31 tbody tr:first-child td {
+  display: none;
+}
+
+/* Left (campus) column: normal weight, underline, maroon; don't style second table as links */
+.columns.columns31 td:first-child {
+  color: #B60048;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: underline;
+  white-space: nowrap;
+  padding-right: 4px;
+  font-size: 1em;
+  vertical-align: middle;
+}
+
+/* Right (hour) column: gray, right-aligned */
+.columns.columns31 td:last-child {
+  color: #666;
+  font-weight: 400;
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 4px;
+  font-size: 1em;
+  vertical-align: middle;
+}
+
+/* Make sure only the first table uses link style for campus names */
+.columns.columns31 table:not(:last-of-type) td:first-child a {
+  color: #B60048;
+  text-decoration: underline;
+  font-weight: 500;
+  pointer-events: auto;
+}
+
+.columns.columns31 table:last-of-type td:first-child a,
+.columns.columns31 table:last-of-type td:first-child {
+  color: #888;
+  font-weight: 400;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Remove underline on hover, keep color */
+.columns.columns31 a:not(.button):hover,
+.columns.columns31 a:not(.button):focus {
+  color: #870031;
+  text-decoration: underline;
+}
+
+/* Hide extra tables (i.e. only show first table, hide subsequent) if you want to show only first set */
+.columns.columns31 table + table + table {
+  display: none;
+}
+
+/* Hide extra button containers (only show first two) */
+.columns.columns31 .button-container:not(:first-of-type) {
+  display: none;
+}
+
+/* Button containers/links: block, left, maroon, underlined */
+.columns.columns31 .button-container {
+  margin: 13px 0 0;
+  padding: 0;
+  text-align: left;
+  display: block;
+}
+
+.columns.columns31 .button-container a,
+.columns.columns31 .button-container a.button {
+  color: #B60048;
+  font-weight: 500;
+  font-size: 1em;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 0.35em;
+  border-radius: 0;
+  box-shadow: none;
+  display: inline-block;
+  transition: color 0.16s;
+}
+
+.columns.columns31 .button-container a:last-child {
+  margin-bottom: 0;
+}
+
+.columns.columns31 .button-container a:hover,
+.columns.columns31 .button-container a.button:hover,
+.columns.columns31 .button-container a:focus,
+.columns.columns31 .button-container a.button:focus {
+  color: #870031;
+  text-decoration: underline;
+}
+
+/* Responsive: shrink padding and font-size, stack grid columns vertically for narrow screens */
+@media (width <= 700px) {
+  .columns.columns31 {
+    max-width: 100vw;
+    border-radius: 0;
+    padding: 0;
+    margin-left: 0;
+  }
+
+  .columns.columns31 > div > div:first-child {
+    padding: 7vw 2vw 4vw;
+  }
+
+  .columns.columns31 table {
+    font-size: 0.97em;
+  }
+
+  .columns.columns31 tbody {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .columns.columns31 td {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
