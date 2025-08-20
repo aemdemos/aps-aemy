@@ -1749,6 +1749,19 @@
           "section": "section-1"
         }
       ]
+    },
+    {
+      "name": "new",
+      "cluster": 59,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
+          "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
+          "uuid": "fc0098b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
+          "section": "section-1"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -3445,13 +3458,6 @@
       "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
       "uuid": "fc0098b3-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
-      "urlHash": "fc0098b33676065d18ef908693b6e8b8167ba4df",
-      "uuid": "fc0098b3-02-d0eeb9798678b82a313b3213f9977c130423fec7",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]",
-      "section": "section-1"
     },
     {
       "url": "https://library.westernsydney.edu.au/about_us/campus/locations/parramatta_south",
