@@ -1635,6 +1635,18 @@
           "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
+    },
+    {
+      "name": "new",
+      "cluster": 50,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
+          "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
+          "uuid": "7c969a3c-07-c609f131ceccf106e94a6b00955356001b011d3e",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -2515,12 +2527,6 @@
       "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
       "uuid": "7c969a3c-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
-      "urlHash": "7c969a3ca373206be26ffe48821b9fbbf841180a",
-      "uuid": "7c969a3c-07-c609f131ceccf106e94a6b00955356001b011d3e",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
     },
     {
       "url": "https://library.westernsydney.edu.au/about_us/membership/blocks_charges_holds",
