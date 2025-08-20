@@ -1647,6 +1647,18 @@
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
         }
       ]
+    },
+    {
+      "name": "new",
+      "cluster": 51,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
+          "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
+          "uuid": "c51cd8f5-05-c609f131ceccf106e94a6b00955356001b011d3e",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -3047,12 +3059,6 @@
       "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
       "uuid": "c51cd8f5-04-07e3b402fe7863c790d7d39c2af693401fb94f81",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/ul[1]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
-      "urlHash": "c51cd8f505faacf0fa317757675ff9806d63bc19",
-      "uuid": "c51cd8f5-05-c609f131ceccf106e94a6b00955356001b011d3e",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/table[1]"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/data-management/data_literacy",
