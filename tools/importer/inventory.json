@@ -1736,6 +1736,19 @@
           "section": "section-1"
         }
       ]
+    },
+    {
+      "name": "new",
+      "cluster": 58,
+      "instances": [
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
+          "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
+          "uuid": "dc15ab3a-03-b9ac757aa4c89dae46e5bf4e5abc5b33240f24ef",
+          "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[1]",
+          "section": "section-1"
+        }
+      ]
     }
   ],
   "outliers": [
@@ -3257,13 +3270,6 @@
       "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
       "uuid": "dc15ab3a-02-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/online_librarian",
-      "urlHash": "dc15ab3a2a219602a1e3f73073f9f1c648cbb8fb",
-      "uuid": "dc15ab3a-03-b9ac757aa4c89dae46e5bf4e5abc5b33240f24ef",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]/div[1]",
-      "section": "section-1"
     },
     {
       "url": "https://library.westernsydney.edu.au/researchers/data-management/data_management_planning",
