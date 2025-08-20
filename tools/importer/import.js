@@ -24,6 +24,7 @@ import cards13Parser from './parsers/cards13.js';
 import accordion3Parser from './parsers/accordion3.js';
 import headerParser from './parsers/header.js';
 import metadataParser from './parsers/metadata.js';
+import handleTable from './parsers/table.js';
 import cleanupTransformer from './transformers/cleanup.js';
 import imageTransformer from './transformers/images.js';
 import linkTransformer from './transformers/links.js';
@@ -262,6 +263,8 @@ export default {
 
   transform: async (source) => {
     const { document, params: { originalURL } } = source;
+
+    handleTable(document); // do this before generating the tables for other blocks
 
     /* eslint-disable-next-line prefer-const */
     let publishUrl = window.location.origin;
