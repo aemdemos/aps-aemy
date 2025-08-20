@@ -595,255 +595,261 @@
 
 
 .columns.columns31 {
-  --library-accent: #e1007b;
-  --library-accent-hover: #b80063;
-  --library-gray-bg: #eee;
-  --library-table-header: #232323;
-  --library-date-bg: #f7f7f7;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  background: transparent;
+  box-sizing: border-box;
+  gap: 8px; /* much smaller gap for a cohesive block */
 }
 
-/* Center the block and improve evenness of both columns */
 .columns.columns31 > div {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 54px;
-  max-width: 900px;
-  margin: 40px auto 0;
   width: 100%;
-  box-sizing: border-box;
-}
-
-/* Responsive: stack vertically on small screens */
-@media (width <= 900px) {
-  .columns.columns31 > div {
-    flex-direction: column;
-    gap: 28px;
-    max-width: 98vw;
-    margin: 18px auto 0;
-    padding: 0 2vw;
-  }
-}
-
-/* Left column: narrower and more compact */
-.columns.columns31 > div > div:first-child {
-  flex: 0 1 340px;
-  max-width: 380px;
-  min-width: 220px;
-  background: var(--library-gray-bg);
-  border-radius: 10px;
-  padding: 22px 18px 22px 22px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   gap: 0;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 3%);
-  border: 1px solid #ececec;
+  box-sizing: border-box;
 }
 
-@media (width <= 900px) {
-  .columns.columns31 > div > div:first-child {
-    max-width: 100%;
-    padding: 14px 6px;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-  }
-}
-
-/* Headings: slightly less bold and compact */
-.columns.columns31 h2,
-.columns.columns31 h3 {
-  color: var(--library-table-header);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0 0 8px;
-  line-height: 1.15;
-  letter-spacing: 0;
-  text-align: left;
-  padding: 0;
-}
-
-/* Tabs/date/community row: more compact */
-.columns.columns31 > div > div:first-child > ul {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  list-style: none;
-  margin: 0 0 7px;
-  padding: 0;
-  font-size: 0.96rem;
-}
-
-.columns.columns31 > div > div:first-child > ul li:first-child {
-  background: var(--library-date-bg);
-  font-weight: 500;
-  color: #232323;
-  padding: 1px 8px;
-  border-radius: 3px;
-  font-size: 0.96em;
-}
-
-.columns.columns31 > div > div:first-child > ul li:last-child {
-  color: var(--library-accent);
-  font-weight: 500;
-  padding: 0;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 0.96em;
-}
-
-/* Table: flush, compact, less bold, even row height */
-.columns.columns31 > div > div:first-child table {
-  width: 100%;
-  border-collapse: collapse;
-  background: transparent;
-  font-size: 0.97rem;
-  margin: 0 0 2px;
+/* --- LEFT PANEL ("Today's Hours") --- */
+.columns.columns31 > div > div:first-child {
+  background: #f8f8f8;
   border-radius: 0;
   box-shadow: none;
+  padding: 28px 20px 20px 24px;
+  min-width: 370px;
+  max-width: 480px;
+  width: 50%;
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-.columns.columns31 > div > div:first-child th,
-.columns.columns31 > div > div:first-child td {
-  padding: 4px 5px;
-  background: none;
-  color: #232323;
-  font-size: 1em;
+.columns.columns31 > div > div:first-child h3,
+.columns.columns31 > div > div:first-child .extra-headings,
+.columns.columns31 > div > div:first-child .controls {
+  display: none;
+}
+
+/* Hide placeholder row ([x][ ]) if present */
+.columns.columns31 > div > div:first-child p,
+.columns.columns31 > div > div:first-child ul + p {
+  display: none;
+}
+
+.columns.columns31 > div > div:first-child h2 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 13px;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.columns.columns31 > div > div:first-child ul {
+  display: flex;
+  gap: 0;
+  align-items: baseline;
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: 1rem;
+}
+
+/* Date label styling: more subtle, slightly smaller, less bold */
+.columns.columns31 > div > div:first-child ul li:first-child {
+  background: transparent;
   border: none;
-  vertical-align: middle;
-  font-weight: 500;
+  font-weight: 600;
+  color: #222;
+  font-size: 1rem;
+  padding: 0 0 0 2px;
+  margin: 0;
+  border-radius: 0;
 }
 
-.columns.columns31 > div > div:first-child th {
-  font-weight: 600;
-  color: var(--library-table-header);
-  background: none;
-  padding: 6px 5px 2px;
-  text-align: left;
+/* 'WSU Community Hours' tab styling - better separation, slightly lower baseline */
+.columns.columns31 > div > div:first-child ul li:last-child {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #cbcbcb;
   border-bottom: none;
+  color: #903;
+  font-weight: 600;
+  border-radius: 5px 5px 0 0;
+  padding: 6px 18px 7px;
+  margin-left: 24px;
+  margin-top: 2px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.columns.columns31 > div > div:first-child ul:not(:first-of-type) {
+  display: none;
+}
+
+/* --- HOURS TABLE --- */
+
+/* Remove all heading and info rows */
+.columns.columns31 > div > div:first-child table tr:first-child,
+.columns.columns31 > div > div:first-child table thead,
+.columns.columns31 > div > div:first-child table tr:nth-child(2) {
+  display: none;
+}
+
+.columns.columns31 > div > div:first-child table {
+  border-collapse: collapse;
+  width: 100%;
+  background: transparent;
+  font-size: 1rem;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.columns.columns31 > div > div:first-child tbody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px 0;
+  padding: 0;
+}
+
+.columns.columns31 > div > div:first-child tbody tr {
+  display: contents;
+}
+
+.columns.columns31 > div > div:first-child td {
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-width: 0;
+  margin: 0;
 }
 
 .columns.columns31 > div > div:first-child td:first-child {
-  color: var(--library-accent);
-  font-weight: 500;
+  color: #903;
+  font-weight: normal;
   text-align: left;
-  min-width: 90px;
-  padding-left: 0;
-  padding-right: 6px;
+  text-decoration: underline;
+  font-size: 1rem;
+  white-space: nowrap;
+  padding-right: 0;
+}
+
+.columns.columns31 > div > div:first-child a:not(.button) {
+  color: #903;
+  font-weight: normal;
+  text-decoration: underline;
   background: none;
 }
 
 .columns.columns31 > div > div:first-child td:last-child {
-  text-align: right;
-  color: #505050;
+  color: #636363;
   font-weight: 400;
-  min-width: 74px;
-  padding-right: 0;
-  padding-left: 6px;
-  background: none;
+  text-align: right;
+  font-size: 1rem;
+  white-space: nowrap;
+  padding-left: 0;
 }
 
-.columns.columns31 > div > div:first-child a:not(.button) {
-  color: var(--library-accent);
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.15s;
-}
-
-.columns.columns31 > div > div:first-child a:not(.button):hover {
-  color: var(--library-accent-hover);
-}
-
-/* Subtle links below table */
-.columns.columns31 > div > div:first-child .button-container {
+.columns.columns31 > div > div:first-child table,
+.columns.columns31 > div > div:first-child tbody {
+  border: none;
   margin: 0;
+}
+
+/* --- Footer/action link styling --- */
+.columns.columns31 > div > div:first-child .button-container {
+  margin: 16px 0 0;
   padding: 0;
+  text-align: left;
 }
 
 .columns.columns31 > div > div:first-child .button-container a,
 .columns.columns31 > div > div:first-child .button-container a.button {
+  color: #903;
+  font-weight: normal;
+  font-size: 1rem;
+  text-decoration: underline;
   background: none;
   border: none;
-  color: var(--library-accent);
-  font-weight: 500;
-  font-size: 0.92em;
+  padding: 0;
+  margin-right: 10px;
   border-radius: 0;
   box-shadow: none;
-  padding: 0;
-  margin: 0 10px 0 0;
-  text-decoration: underline;
-  line-height: 1.2;
-  text-align: left;
   display: inline;
 }
 
-.columns.columns31 > div > div:first-child .button-container a:hover,
-.columns.columns31 > div > div:first-child .button-container a.button:hover {
-  color: var(--library-accent-hover);
-}
-
-.columns.columns31 > div > div:first-child > table:not(:first-of-type),
-.columns.columns31 > div > div:first-child > .button-container:not(:nth-of-type(1)) {
+.columns.columns31 > div > div:first-child .button-container:not(:first-of-type) {
   display: none;
 }
 
-/* Right column: wider, more balanced, compact heading */
+/* --- RIGHT PANEL ("Online Librarian") --- */
 .columns.columns31 > div > div:last-child {
-  flex: 0 1 330px;
-  min-width: 200px;
-  max-width: 350px;
-  background: transparent;
-  box-sizing: border-box;
-  padding: 22px 0;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 28px 20px 20px;
+  min-width: 330px;
+  max-width: 400px;
+  width: 50%;
+  flex: 1 1 50%;
   display: flex;
   flex-direction: column;
-  gap: 0;
   justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.columns.columns31 > div > div:last-child h2 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 13px;
+  padding: 0;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.columns.columns31 > div > div + div {
+  margin-left: 0;
 }
 
 @media (width <= 900px) {
-  .columns.columns31 > div > div:last-child {
-    min-width: 0;
-    max-width: 100%;
-    padding: 12px 0;
-  }
-}
-
-.columns.columns31 > div > div:last-child h2,
-.columns.columns31 > div > div:last-child h3 {
-  color: var(--library-table-header);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0 0 8px;
-  line-height: 1.15;
-  letter-spacing: 0;
-  text-align: left;
-  padding: 0;
-}
-
-.columns.columns31 > div > div:last-child > * {
-  margin-bottom: 8px;
-}
-
-.columns.columns31 > div > div:last-child > *:last-child {
-  margin-bottom: 0;
-}
-
-/* Responsive for extra small screens */
-@media (width <= 540px) {
+  .columns.columns31,
   .columns.columns31 > div {
     flex-direction: column;
-    gap: 6px;
+    width: 100%;
     max-width: 100vw;
-    margin: 0 auto;
-    padding: 0 1vw;
+    gap: 0;
+  }
+
+  .columns.columns31 > div > div {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    padding: 18px 3vw;
+    box-sizing: border-box;
   }
 
   .columns.columns31 > div > div:first-child,
   .columns.columns31 > div > div:last-child {
-    padding: 6px 1vw;
-    border-radius: 0;
+    padding: 18px 3vw;
+  }
+
+  .columns.columns31 > div > div:first-child ul,
+  .columns.columns31 > div > div:last-child ul {
+    margin-bottom: 12px;
   }
 }
