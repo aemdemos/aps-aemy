@@ -1,68 +1,68 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header row, exactly as in the example
-  const headerRow = ['Accordion (accordion3)'];
-
-  // Gather all .card elements, if any
-  let cards = element.querySelectorAll(':scope > .card');
-  // If no .card direct children and element itself is a card, treat it as the only card
-  if (cards.length === 0 && element.classList.contains('card')) {
-    cards = [element];
+  // 1. Find the root accordion block (can be .accordion, or just .card for single item)
+  let accordionRoot;
+  if (element.classList.contains('accordion')) {
+    accordionRoot = element;
+  } else if (element.classList.contains('card')) {
+    // single card treated as accordion of one
+    accordionRoot = element;
+  } else if (element.querySelector('.accordion')) {
+    accordionRoot = element.querySelector('.accordion');
+  } else {
+    accordionRoot = element;
   }
 
+  // 2. Gather all direct .card children (or treat a .card as a single-item accordion)
+  let cards = [];
+  if (accordionRoot.classList.contains('accordion')) {
+    cards = Array.from(accordionRoot.querySelectorAll(':scope > .card'));
+  } else if (accordionRoot.classList.contains('card')) {
+    cards = [accordionRoot];
+  }
+
+  // 3. Build the table
   const rows = [];
+  // Header row, exactly as specified
+  rows.push(['Accordion (accordion3)']);
+
+  // 4. For each .card extract title and body
   cards.forEach(card => {
-    // Title cell: Extract visible header text
-    let titleElem = card.querySelector('.card-header');
-    let titleContent = '';
-    if (titleElem) {
-      // Use heading text if present, else full header text
-      const heading = titleElem.querySelector('h1, h2, h3, h4, h5, h6');
-      if (heading) {
-        titleContent = heading.textContent.trim();
+    // Title: from .card-header h2, or fallback to .card-header text
+    let titleElem = null;
+    const header = card.querySelector('.card-header');
+    if (header) {
+      const h2 = header.querySelector('h2');
+      if (h2) {
+        // Use h2 directly, not just text, to preserve any formatting
+        titleElem = h2;
       } else {
-        titleContent = titleElem.textContent.trim();
+        // Use header element itself if no h2
+        titleElem = header;
       }
     } else {
-      // fallback: first heading in card
-      const heading = card.querySelector('h1, h2, h3, h4, h5, h6');
-      titleContent = heading ? heading.textContent.trim() : '';
+      // Fallback: create a span with card's textContent
+      titleElem = document.createElement('span');
+      titleElem.textContent = card.textContent.trim();
     }
 
-    // Content cell: Find .collapse area (accordion content)
-    let contentElem = null;
-    const collapse = card.querySelector('.collapse');
-    if (collapse) {
-      // Use all .collapse children, preserve structure
-      const children = Array.from(collapse.childNodes).filter(node => {
-        // Exclude empty text nodes
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (children.length === 1) {
-        contentElem = children[0];
+    // Content: .card-body if present, or actual collapse section, else card itself
+    let contentElem = card.querySelector('.card-body');
+    if (!contentElem) {
+      const collapse = card.querySelector('.collapse');
+      if (collapse) {
+        contentElem = collapse;
       } else {
-        contentElem = document.createElement('div');
-        children.forEach(node => contentElem.appendChild(node));
-      }
-    } else {
-      // fallback: everything except .card-header
-      const contentNodes = Array.from(card.childNodes).filter(node => {
-        if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('card-header')) return false;
-        if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) return false;
-        return true;
-      });
-      if (contentNodes.length === 1) {
-        contentElem = contentNodes[0];
-      } else {
-        contentElem = document.createElement('div');
-        contentNodes.forEach(node => contentElem.appendChild(node));
+        contentElem = card;
       }
     }
-    // Push row with title and content
-    rows.push([titleContent, contentElem]);
+
+    rows.push([titleElem, contentElem]);
   });
-  const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+
+  // 5. Build the block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+
+  // 6. Replace the accordion block (or single card) with the new table
+  accordionRoot.replaceWith(table);
 }

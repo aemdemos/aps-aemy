@@ -1,61 +1,60 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row should match the block name exactly
+  // 1. Header row
   const headerRow = ['Hero (hero38)'];
 
-  // Extract background image url from style attribute
-  let bgUrl = '';
-  if (element.hasAttribute('style')) {
-    const style = element.getAttribute('style');
-    const match = style.match(/background:\s*url\(['"]?([^'"]+)['"]?/i);
-    if (match && match[1]) {
-      bgUrl = match[1];
-    }
+  // 2. Get background image from style
+  let bgImageUrl = '';
+  const style = element.getAttribute('style') || '';
+  const urlMatch = style.match(/background:\s*url\('(.*?)'/);
+  if (urlMatch && urlMatch[1]) {
+    bgImageUrl = urlMatch[1];
   }
-  // If image exists, use single cell with image element
   let imageEl = null;
-  if (bgUrl) {
+  if (bgImageUrl) {
     imageEl = document.createElement('img');
-    imageEl.src = bgUrl;
+    imageEl.src = bgImageUrl;
     imageEl.alt = '';
   }
-  const imageRow = [imageEl];
 
-  // Content row: get all content from the banner except the background image
-  // We want the *visible* text in the banner, organized semantically
-  // The structure is: <a ...> <div> <div>Text content</div> </div> </a>
-  // We'll use the innermost child (the message div) as the main content
-  let contentCellElements = [];
-  // Try to grab the main description/message
-  const desc = element.querySelector('.home-banner__desc');
-  if (desc && desc.textContent.trim()) {
-    // Create a heading element for the description
-    const heading = document.createElement('h2');
-    heading.textContent = desc.textContent.trim();
-    contentCellElements.push(heading);
+  // 3. Content - headline and CTA if present
+  const contentEls = [];
+  // Get the description text
+  const descWrapper = element.querySelector('.home-banner__desc-wrapper');
+  if (descWrapper) {
+    const desc = descWrapper.querySelector('.home-banner__desc');
+    if (desc && desc.textContent.trim()) {
+      // Use a heading for semantic meaning
+      const heading = document.createElement('h2');
+      heading.textContent = desc.textContent.trim();
+      contentEls.push(heading);
+    }
   }
-  // Always include a call-to-action link using the banner's href if present
+  // Add CTA if element is a link itself and has an href
   if (element.href) {
-    const link = document.createElement('a');
-    link.href = element.href;
-    // Use the description as link text if available
-    link.textContent = desc && desc.textContent.trim() ? desc.textContent.trim() : element.href;
-    contentCellElements.push(link);
+    // Only add the link if there's non-empty text content
+    let ctaText = '';
+    // If there is a description, use that as CTA text
+    if (descWrapper && descWrapper.textContent.trim()) {
+      ctaText = descWrapper.textContent.trim();
+    } else {
+      ctaText = 'Learn more';
+    }
+    // Only add a CTA button if not duplicate (if the heading is the same text, skip it)
+    if (!contentEls.some(e => e.textContent && e.textContent.trim() === ctaText)) {
+      const link = document.createElement('a');
+      link.href = element.href;
+      link.textContent = ctaText;
+      contentEls.push(link);
+    }
   }
-  // If no content found, fallback to any textContent
-  if (contentCellElements.length === 0 && element.textContent.trim()) {
-    const fallback = document.createElement('p');
-    fallback.textContent = element.textContent.trim();
-    contentCellElements.push(fallback);
-  }
-  const contentRow = [contentCellElements];
 
-  // Compose the table
+  // Build the table structure per block guidelines
   const cells = [
     headerRow,
-    imageRow,
-    contentRow
+    [imageEl],
+    [contentEls]
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

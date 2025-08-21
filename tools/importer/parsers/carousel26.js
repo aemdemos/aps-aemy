@@ -1,61 +1,71 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build block table: header row is a single cell ['Carousel']
-  const cells = [['Carousel']];
+  // Header row as per example
+  const rows = [['Carousel']];
 
-  // Get slide elements (non-cloned)
-  const track = element.querySelector('.slick-track');
-  if (!track) return;
-  const slides = Array.from(track.children).filter(slide => !slide.classList.contains('slick-cloned'));
+  // Locate the slick-track containing the slides
+  const slickTrack = element.querySelector('.slick-track');
+  if (!slickTrack) return;
 
-  // Build a map from image src to its modal for extracting text content
-  const modalMap = {};
-  Array.from(element.querySelectorAll('[id^="sliderImgModal-"]')).forEach(modal => {
-    const img = modal.querySelector('.modal-body img');
-    if (img && img.src) {
-      modalMap[img.src] = modal;
+  // Get all unique slides (not .slick-cloned)
+  let slides = Array.from(slickTrack.children).filter(slide => {
+    const idx = parseInt(slide.getAttribute('data-slick-index'), 10);
+    return !slide.classList.contains('slick-cloned') && idx >= 0;
+  });
+  if (slides.length === 0) {
+    slides = Array.from(slickTrack.children).filter(slide => {
+      const idx = parseInt(slide.getAttribute('data-slick-index'), 10);
+      return idx >= 0;
+    }).slice(0, 5);
+  }
+
+  // Build a map: image src -> { title, description } from modals
+  const modalMeta = {};
+  element.querySelectorAll('[id^="sliderImgModal-"]').forEach(modal => {
+    const img = modal.querySelector('img');
+    const titleEl = modal.querySelector('.modal-title');
+    // Find description/caption in modal-footer <p>
+    let descText = '';
+    const footerP = modal.querySelector('.modal-footer p');
+    if (footerP && footerP.textContent.trim()) {
+      descText = footerP.textContent.trim();
+    }
+    if (img) {
+      modalMeta[img.src] = {
+        title: titleEl ? titleEl.textContent.trim() : '',
+        description: descText
+      };
     }
   });
 
   slides.forEach(slide => {
     const img = slide.querySelector('img');
-    let textCell = '';
-    if (img && modalMap[img.src]) {
-      const modal = modalMap[img.src];
-      const textContent = [];
-      // Title as heading
-      const title = modal.querySelector('.modal-title');
-      if (title && title.textContent.trim()) {
-        const h2 = document.createElement('h2');
-        h2.textContent = title.textContent.trim();
-        textContent.push(h2);
-      }
-      // Extract description/additional content from modal-body (text nodes and non-img elements)
-      const modalBody = modal.querySelector('.modal-body');
-      if (modalBody) {
-        Array.from(modalBody.childNodes).forEach(node => {
-          if (node.nodeType === 3 && node.textContent.trim()) {
-            const p = document.createElement('p');
-            p.textContent = node.textContent.trim();
-            textContent.push(p);
-          } else if (node.nodeType === 1 && node.tagName !== 'IMG') {
-            textContent.push(node);
-          }
-        });
-      }
-      // Call-to-action or additional content from modal-footer
-      const footerP = modal.querySelector('.modal-footer p');
-      if (footerP && footerP.textContent.trim()) {
-        textContent.push(footerP);
-      }
-      // Only set text cell if any content is present
-      if (textContent.length > 0) {
-        textCell = textContent;
-      }
+    if (!img) return;
+    const imgSrc = img.src;
+    const meta = modalMeta[imgSrc] || {};
+    const textEls = [];
+    // Add title if present
+    if (meta.title) {
+      const h3 = document.createElement('h3');
+      h3.textContent = meta.title;
+      textEls.push(h3);
+    } else if (img.alt && img.alt.trim()) {
+      const h3 = document.createElement('h3');
+      h3.textContent = img.alt.trim();
+      textEls.push(h3);
     }
-    cells.push([img || '', textCell]);
+    // Add description/caption if present
+    if (meta.description) {
+      const p = document.createElement('p');
+      p.textContent = meta.description;
+      textEls.push(p);
+    }
+    rows.push([
+      img,
+      textEls.length ? textEls : ''
+    ]);
   });
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

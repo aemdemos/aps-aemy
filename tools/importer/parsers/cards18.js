@@ -1,37 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header exactly as specified
+  // Block header row matching example
   const headerRow = ['Cards (cards18)'];
-  // Get all direct card elements
-  const cards = Array.from(element.children);
-  const rows = cards.map(card => {
-    // Icon (should always exist)
-    const icon = card.querySelector('i');
-    // Number (should always exist)
-    const number = card.querySelector('span.cartfig');
-    // Title (should always exist)
-    const title = card.querySelector('p');
-
-    // First cell: icon element
-    // Second cell: number (heading) + title (description)
-    const cellContent = [];
-    if (number) {
-      // Use <strong> for heading-like text
-      const heading = document.createElement('strong');
-      heading.textContent = number.textContent;
-      cellContent.push(heading);
-      cellContent.push(document.createElement('br'));
+  const rows = [];
+  // Get each card in container
+  const cardDivs = element.querySelectorAll(':scope > div');
+  cardDivs.forEach((cardDiv) => {
+    // First cell: Icon (element)
+    const icon = cardDiv.querySelector('i');
+    // Second cell: Text content
+    const count = cardDiv.querySelector('.cartfig');
+    const type = cardDiv.querySelector('p');
+    // Compose text cell
+    // Use <div>: <strong>count</strong><br />type (as normal text)
+    const textCell = document.createElement('div');
+    if (count) {
+      const strong = document.createElement('strong');
+      strong.textContent = count.textContent;
+      textCell.appendChild(strong);
+      textCell.appendChild(document.createElement('br'));
     }
-    if (title) {
-      // Use span for description
-      const desc = document.createElement('span');
-      desc.textContent = title.textContent;
-      cellContent.push(desc);
+    if (type) {
+      textCell.appendChild(document.createTextNode(type.textContent));
     }
-    // If number or title missing, skip their cellContent
-    return [icon, cellContent];
+    rows.push([icon, textCell]);
   });
-  // All rows: header + card rows
+  // Build table
   const cells = [headerRow, ...rows];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
