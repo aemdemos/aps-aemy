@@ -26,6 +26,7 @@
 
   // remove offline chatwidget
   document.querySelector('[aria-label="Chat Widget"]')?.remove();
+  document.querySelector('.breadcrumb__wrapper')?.remove();
 
   // remove left navigation, header, and footer elements if present
   ['.left-nav', 'header.header', 'footer.footer'].forEach((selector) => {
