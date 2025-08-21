@@ -55,9 +55,6 @@ export const customTransformers = {
       // remove offline chatwidget
       document.querySelector('[aria-label="Chat Widget"]')?.remove();
 
-      //remove breadcrumb
-      document.querySelector('.breadcrumb__wrapper')?.remove();
-
       // remove left navigation, header, and footer elements if present
       ['.left-nav', 'header.header', 'footer.footer'].forEach((selector) => {
         document.querySelectorAll(selector).forEach((el) => el.remove());
