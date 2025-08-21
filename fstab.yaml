@@ -1,4 +1,4 @@
 mountpoints:
   /: 
-    url: https://content.da.live/aemdemos/aps-aemy/
+    url: https://content.da.live/wsu-do/library/
     type: markup
