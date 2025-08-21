@@ -267,7 +267,7 @@ export default {
 
     handleTable(document); // do this before generating the tables for other blocks
 
-    handleVideo(document); // do this before generating the tables for other blocks
+    handleVideo(document); // handle video blocks
 
     /* eslint-disable-next-line prefer-const */
     let publishUrl = window.location.origin;

@@ -2,6 +2,12 @@
 export default function parse(element, { document }) {
   // Compose the content for the block cell
   const content = [];
+  const tableElement = element.querySelector('table');
+  if (tableElement) {
+    // Replace the <h4> element with its child table
+    element.parentNode.replaceChild(tableElement, element);
+    return;
+  }
   element.childNodes.forEach((node) => {
     if (node.nodeType === Node.ELEMENT_NODE) {
       if (node.tagName === 'IFRAME' && node.src) {
