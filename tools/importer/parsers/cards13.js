@@ -1,58 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header must match the example exactly
-  const cells = [['Cards (cards13)']];
+  // Cards block header
+  const headerRow = ['Cards (cards13)'];
+  const cells = [headerRow];
 
-  // Find the cards list
-  const ul = element.querySelector('ul.cards__list');
-  if (ul) {
-    const lis = ul.querySelectorAll(':scope > li.cards__item');
-    lis.forEach((li) => {
-      // Image cell: extract from .item-image background-image
-      const imageLink = li.querySelector('.item-image');
-      let imageEl = '';
-      if (imageLink && imageLink.style && imageLink.style.backgroundImage) {
-        const bg = imageLink.style.backgroundImage;
-        const urlMatch = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-        if (urlMatch && urlMatch[1]) {
-          const img = document.createElement('img');
-          img.src = urlMatch[1].trim();
-          img.alt = imageLink.getAttribute('alt') || '';
-          imageEl = img;
+  // Find all cards
+  const cardsList = element.querySelector('ul.cards__list');
+  if (cardsList) {
+    const cardItems = cardsList.querySelectorAll('li.cards__item');
+    cardItems.forEach((li) => {
+      // --- IMAGE CELL ---
+      let imageCell = '';
+      const imageLink = li.querySelector('.item-wrapper > a.item-image');
+      if (imageLink) {
+        // Get image url from style
+        const bgStyle = imageLink.getAttribute('style') || '';
+        const match = bgStyle.match(/url\(['"]?(.*?)['"]?\)/);
+        const imageUrl = match ? match[1].trim() : '';
+        if (imageUrl) {
+          // Use a single <img> element per requirements
+          const imgEl = document.createElement('img');
+          imgEl.src = imageUrl;
+          imgEl.alt = imageLink.getAttribute('alt') || '';
+          imageCell = imgEl;
         }
       }
-
-      // Text cell: build content
-      const content = li.querySelector('.item-content');
-      const textParts = [];
-      if (content) {
-        const title = content.querySelector('.item-content__title');
-        if (title && title.textContent.trim()) {
-          const strong = document.createElement('strong');
-          strong.textContent = title.textContent.trim();
-          textParts.push(strong);
-        }
-        // The description is optional
-        const desc = content.querySelector('.item-content__desc');
-        if (desc && desc.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = desc.textContent.trim();
-          textParts.push(p);
-        }
-        // The CTA link
-        const cta = content.querySelector('.item-content__link');
-        if (cta) {
-          textParts.push(cta);
-        }
+      // --- CONTENT CELL ---
+      const contentDiv = li.querySelector('.item-wrapper > .item-content');
+      const contentParts = [];
+      if (contentDiv) {
+        // Title
+        const titleEl = contentDiv.querySelector('.item-content__title');
+        if (titleEl) contentParts.push(titleEl);
+        // Description (rarely present in this HTML, but included for robustness)
+        const descEl = contentDiv.querySelector('.item-content__desc');
+        if (descEl && descEl.textContent.trim()) contentParts.push(descEl);
+        // CTA Link
+        const ctaLinkEl = contentDiv.querySelector('.item-content__link');
+        if (ctaLinkEl) contentParts.push(ctaLinkEl);
       }
-      // Always include two columns per row
-      cells.push([
-        imageEl || '',
-        textParts.length ? textParts : '',
-      ]);
+      // Add row: always two columns, image and text parts
+      cells.push([imageCell, contentParts]);
     });
   }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

@@ -1,55 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header matches example exactly
+  // Header row as per example
   const headerRow = ['Cards (cards1)'];
-  const cells = [headerRow];
+  const rows = [headerRow];
 
-  // Find the list of cards
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll('li.cards__item');
+  // Find main track and slides <ul>
+  const track = element.querySelector('.glide__track');
+  const ul = track && track.querySelector('ul');
+  if (!ul) return;
 
-  items.forEach((item) => {
-    // 1st cell: image from background-image
-    const imageLink = item.querySelector('.item-image');
-    let imgEl = null;
-    if (imageLink) {
-      const style = imageLink.getAttribute('style') || '';
-      const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
-      if (match && match[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = match[1].trim();
-        imgEl.alt = imageLink.getAttribute('alt') || '';
-      }
-    }
+  // To avoid duplicate cards by image src
+  const seen = new Set();
+  // Only non-clone slides
+  const liCards = Array.from(ul.querySelectorAll('li.glide__slide:not(.glide__slide--clone)'));
 
-    // 2nd cell: text content (title, description, CTA)
-    const content = item.querySelector('.item-content');
+  liCards.forEach(li => {
+    // Get image (first img in card)
+    const img = li.querySelector('img');
+    if (!img || seen.has(img.src)) return;
+    seen.add(img.src);
+
+    // Get card content (text cell)
+    const content = li.querySelector('.slide-content');
+    if (!content) return;
+
+    // To ensure all text content is included and semantic meaning preserved,
+    // we reference the existing children of .slide-content directly.
+    // This includes heading, description, and CTA link if present.
+    // We do NOT clone, just reference.
     const textCell = [];
-    if (content) {
-      const title = content.querySelector('.item-content__title');
-      if (title) {
-        textCell.push(title); // direct reference, not cloning
-      }
-      const desc = content.querySelector('.item-content__desc');
-      if (desc) {
-        textCell.push(desc); // direct reference
-      }
-      const link = content.querySelector('.item-content__link');
-      if (link) {
-        textCell.push(link); // direct reference
-      }
-    }
+    Array.from(content.children).forEach(child => {
+      textCell.push(child);
+    });
 
-    // Only add the row if there is image or text
-    if (imgEl || textCell.length) {
-      cells.push([
-        imgEl,
-        textCell
-      ]);
+    // Only push row if both img and textCell have content
+    if (img && textCell.length) {
+      rows.push([img, textCell]);
     }
   });
-  // Create and replace the table
-  const block = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Create the table block and replace the original element
+  const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }
