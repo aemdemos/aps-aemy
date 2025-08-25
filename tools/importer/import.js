@@ -11,21 +11,20 @@
  */
 /* global WebImporter */
 /* eslint-disable no-console */
-import columns33Parser from './parsers/columns33.js';
 import accordion2Parser from './parsers/accordion2.js';
-import cards18Parser from './parsers/cards18.js';
-import columns21Parser from './parsers/columns21.js';
-import cards1Parser from './parsers/cards1.js';
 import embedVideo28Parser from './parsers/embedVideo28.js';
+import columns33Parser from './parsers/columns33.js';
 import hero38Parser from './parsers/hero38.js';
-import carousel26Parser from './parsers/carousel26.js';
 import columns31Parser from './parsers/columns31.js';
+import cards1Parser from './parsers/cards1.js';
+import cards18Parser from './parsers/cards18.js';
+import carousel49 (carousel49)Parser from './parsers/carousel49 (carousel49).js';
+import columns21Parser from './parsers/columns21.js';
 import cards13Parser from './parsers/cards13.js';
 import accordion3Parser from './parsers/accordion3.js';
+import carousel26Parser from './parsers/carousel26.js';
 import headerParser from './parsers/header.js';
 import metadataParser from './parsers/metadata.js';
-import handleTable from './parsers/table.js';
-import handleVideo from './parsers/video.js';
 import cleanupTransformer from './transformers/cleanup.js';
 import imageTransformer from './transformers/images.js';
 import linkTransformer from './transformers/links.js';
@@ -40,17 +39,18 @@ import {
 
 const parsers = {
   metadata: metadataParser,
-  columns33: columns33Parser,
   accordion2: accordion2Parser,
-  cards18: cards18Parser,
-  columns21: columns21Parser,
-  cards1: cards1Parser,
   embedVideo28: embedVideo28Parser,
+  columns33: columns33Parser,
   hero38: hero38Parser,
-  carousel26: carousel26Parser,
   columns31: columns31Parser,
+  cards1: cards1Parser,
+  cards18: cards18Parser,
+  carousel49 (carousel49): carousel49 (carousel49)Parser,
+  columns21: columns21Parser,
   cards13: cards13Parser,
   accordion3: accordion3Parser,
+  carousel26: carousel26Parser,
   ...customParsers,
 };
 
@@ -264,10 +264,6 @@ export default {
 
   transform: async (source) => {
     const { document, params: { originalURL } } = source;
-
-    handleTable(document); // do this before generating the tables for other blocks
-
-    handleVideo(document); // handle video blocks
 
     /* eslint-disable-next-line prefer-const */
     let publishUrl = window.location.origin;

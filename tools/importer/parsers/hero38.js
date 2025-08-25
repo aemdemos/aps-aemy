@@ -1,61 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row should match the block name exactly
+  // 1. Block name header row
   const headerRow = ['Hero (hero38)'];
 
-  // Extract background image url from style attribute
+  // 2. Background image row: extract from style
   let bgUrl = '';
-  if (element.hasAttribute('style')) {
-    const style = element.getAttribute('style');
-    const match = style.match(/background:\s*url\(['"]?([^'"]+)['"]?/i);
-    if (match && match[1]) {
-      bgUrl = match[1];
-    }
+  const style = element.getAttribute('style') || '';
+  const match = style.match(/background\s*:\s*url\(['"]?([^'")]+)['"]?/i);
+  if (match) {
+    bgUrl = match[1];
   }
-  // If image exists, use single cell with image element
-  let imageEl = null;
+  let bgImg = null;
   if (bgUrl) {
-    imageEl = document.createElement('img');
-    imageEl.src = bgUrl;
-    imageEl.alt = '';
+    bgImg = document.createElement('img');
+    bgImg.src = bgUrl;
+    bgImg.alt = '';
   }
-  const imageRow = [imageEl];
 
-  // Content row: get all content from the banner except the background image
-  // We want the *visible* text in the banner, organized semantically
-  // The structure is: <a ...> <div> <div>Text content</div> </div> </a>
-  // We'll use the innermost child (the message div) as the main content
-  let contentCellElements = [];
-  // Try to grab the main description/message
+  // 3. Content row: headline and CTA (link)
+  // The text is inside .home-banner__desc
   const desc = element.querySelector('.home-banner__desc');
+  let content = [];
   if (desc && desc.textContent.trim()) {
-    // Create a heading element for the description
-    const heading = document.createElement('h2');
+    const heading = document.createElement('h1');
     heading.textContent = desc.textContent.trim();
-    contentCellElements.push(heading);
+    content.push(heading);
   }
-  // Always include a call-to-action link using the banner's href if present
+  // CTA link (always present as <a> itself)
   if (element.href) {
-    const link = document.createElement('a');
-    link.href = element.href;
-    // Use the description as link text if available
-    link.textContent = desc && desc.textContent.trim() ? desc.textContent.trim() : element.href;
-    contentCellElements.push(link);
+    // If the main text is not already the link, add a CTA link
+    const cta = document.createElement('a');
+    cta.href = element.href;
+    cta.textContent = 'Learn more';
+    content.push(cta);
   }
-  // If no content found, fallback to any textContent
-  if (contentCellElements.length === 0 && element.textContent.trim()) {
-    const fallback = document.createElement('p');
-    fallback.textContent = element.textContent.trim();
-    contentCellElements.push(fallback);
-  }
-  const contentRow = [contentCellElements];
 
-  // Compose the table
-  const cells = [
+  // Compose rows
+  const rows = [
     headerRow,
-    imageRow,
-    contentRow
+    [bgImg],
+    [content],
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Create table and replace
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

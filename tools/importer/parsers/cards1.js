@@ -1,55 +1,51 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header matches example exactly
+  // Table header matches example
   const headerRow = ['Cards (cards1)'];
-  const cells = [headerRow];
+  const rows = [headerRow];
 
-  // Find the list of cards
-  const list = element.querySelector('ul.cards__list');
-  if (!list) return;
-  const items = list.querySelectorAll('li.cards__item');
-
-  items.forEach((item) => {
-    // 1st cell: image from background-image
-    const imageLink = item.querySelector('.item-image');
-    let imgEl = null;
-    if (imageLink) {
-      const style = imageLink.getAttribute('style') || '';
-      const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/i);
-      if (match && match[1]) {
-        imgEl = document.createElement('img');
-        imgEl.src = match[1].trim();
-        imgEl.alt = imageLink.getAttribute('alt') || '';
-      }
+  // Find all unique slides (ignore clones, only take first instance of each image)
+  const slideList = element.querySelectorAll('.glide__slide, .glide__slide--active');
+  const seenImages = new Set();
+  slideList.forEach((slide) => {
+    const wrapper = slide.querySelector('.slide-wrapper');
+    if (!wrapper) return;
+    // Image column
+    const imgLink = wrapper.querySelector('img');
+    if (!imgLink || seenImages.has(imgLink.src)) return;
+    seenImages.add(imgLink.src);
+    // Text content column
+    const contentDiv = wrapper.querySelector('.slide-content');
+    if (!contentDiv) return;
+    const cellContent = [];
+    // Title as strong
+    const title = contentDiv.querySelector('.slide-content__title');
+    if (title && title.textContent.trim()) {
+      const strong = document.createElement('strong');
+      strong.textContent = title.textContent.trim();
+      cellContent.push(strong);
+      cellContent.push(document.createElement('br'));
     }
-
-    // 2nd cell: text content (title, description, CTA)
-    const content = item.querySelector('.item-content');
-    const textCell = [];
-    if (content) {
-      const title = content.querySelector('.item-content__title');
-      if (title) {
-        textCell.push(title); // direct reference, not cloning
-      }
-      const desc = content.querySelector('.item-content__desc');
-      if (desc) {
-        textCell.push(desc); // direct reference
-      }
-      const link = content.querySelector('.item-content__link');
-      if (link) {
-        textCell.push(link); // direct reference
-      }
+    // Description
+    const desc = contentDiv.querySelector('.slide-content__desc');
+    if (desc && desc.textContent.trim()) {
+      // Reference original element for resilience
+      cellContent.push(desc);
+      cellContent.push(document.createElement('br'));
     }
-
-    // Only add the row if there is image or text
-    if (imgEl || textCell.length) {
-      cells.push([
-        imgEl,
-        textCell
-      ]);
+    // CTA link
+    const link = contentDiv.querySelector('.slide-content__link');
+    if (link && link.textContent.trim()) {
+      cellContent.push(link);
     }
+    // Remove trailing <br> if present
+    while (cellContent.length && cellContent[cellContent.length - 1].tagName === 'BR') {
+      cellContent.pop();
+    }
+    rows.push([imgLink, cellContent]);
   });
-  // Create and replace the table
-  const block = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Create and replace the block
+  const block = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(block);
 }

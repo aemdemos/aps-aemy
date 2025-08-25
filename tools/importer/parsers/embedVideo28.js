@@ -1,39 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Compose the content for the block cell
-  const content = [];
-  const tableElement = element.querySelector('table');
-  if (tableElement) {
-    // Replace the <h4> element with its child table
-    element.parentNode.replaceChild(tableElement, element);
-    return;
-  }
+  // Table header row exactly as in the example
+  const headerRow = ['Embed'];
+
+  // Gather all relevant content from the element: both text and non-img elements (iframe, etc)
+  const cellContent = [];
+  // Edge case: if block contains text nodes or other inline content, include all
   element.childNodes.forEach((node) => {
     if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'IFRAME' && node.src) {
-        // Replace iframe (non-img) with a link
-        const link = document.createElement('a');
-        link.href = node.src;
-        link.textContent = node.src;
-        content.push(link);
+      if (node.tagName === 'IFRAME') {
+        // Convert iframes to links with href = src
+        if (node.src) {
+          const linkEl = document.createElement('a');
+          linkEl.href = node.src;
+          linkEl.textContent = node.src;
+          cellContent.push(linkEl);
+        }
       } else {
-        content.push(node);
+        // Include any other elements as-is
+        cellContent.push(node);
       }
     } else if (node.nodeType === Node.TEXT_NODE) {
-      // Add any text content present directly under the element
-      const txt = node.textContent.trim();
-      if (txt) {
-        content.push(txt);
+      const text = node.textContent.trim();
+      if (text) {
+        cellContent.push(text);
       }
     }
   });
 
-  // Construct the cells array as per the markdown example
-  const cells = [
-    ['Embed'], // EXACT header from example
-    [content] // All source content, preserving semantic meaning
-  ];
+  // Fallback to empty string if no content found
+  const contentRow = [cellContent.length ? cellContent : ['']];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create the block table
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
+
+  // Replace the original element
   element.replaceWith(table);
 }

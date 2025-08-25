@@ -1,38 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header exactly as specified
+  // Compose the header row
   const headerRow = ['Cards (cards18)'];
-  // Get all direct card elements
-  const cards = Array.from(element.children);
-  const rows = cards.map(card => {
-    // Icon (should always exist)
-    const icon = card.querySelector('i');
-    // Number (should always exist)
-    const number = card.querySelector('span.cartfig');
-    // Title (should always exist)
-    const title = card.querySelector('p');
 
-    // First cell: icon element
-    // Second cell: number (heading) + title (description)
-    const cellContent = [];
+  // Get all immediate child cards (each card is a div)
+  const cards = Array.from(element.querySelectorAll(':scope > div'));
+  const rows = cards.map(card => {
+    // First column: the icon (i) and number (span.cartfig)
+    const icon = card.querySelector('i');
+    const number = card.querySelector('.cartfig');
+
+    // Compose first cell: icon (if present) above number (if present), preserving formatting
+    const iconDiv = document.createElement('div');
+    if (icon) iconDiv.appendChild(icon);
     if (number) {
-      // Use <strong> for heading-like text
-      const heading = document.createElement('strong');
-      heading.textContent = number.textContent;
-      cellContent.push(heading);
-      cellContent.push(document.createElement('br'));
+      iconDiv.appendChild(document.createElement('br'));
+      iconDiv.appendChild(number);
     }
-    if (title) {
-      // Use span for description
-      const desc = document.createElement('span');
-      desc.textContent = title.textContent;
-      cellContent.push(desc);
-    }
-    // If number or title missing, skip their cellContent
-    return [icon, cellContent];
+
+    // Second column: the descriptive text (p)
+    const text = card.querySelector('p');
+    // Use the paragraph directly if present
+    const rightCell = text ? text : document.createElement('span');
+
+    return [iconDiv, rightCell];
   });
-  // All rows: header + card rows
+
+  // Build cells: first row is header, following rows are cards
   const cells = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

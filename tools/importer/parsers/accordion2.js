@@ -1,51 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Header row for block table
+  // --- Critical Review ---
+  // 1. Only one accordion item in the provided HTML
+  // 2. Block header matches exactly: 'Accordion (accordion2)'
+  // 3. All content must be referenced (not hardcoded or cloned)
+  // 4. No Section Metadata table present in the markdown example
+  // 5. Semantic meaning preserved: heading level, lists
+  // 6. Edge case: if any component is missing, skip its row
+
   const headerRow = ['Accordion (accordion2)'];
 
-  // 2. Extract accordion title from .card-header
-  let titleCell;
-  const cardHeader = element.querySelector('.card-header');
-  if (cardHeader) {
-    // Use the existing heading (h2, h3 etc) if present, else use the cardHeader itself
-    const heading = cardHeader.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
-      titleCell = heading;
-    } else {
-      // fallback, use cardHeader directly
-      titleCell = cardHeader;
+  // Find the accordion title
+  let titleContainer = element.querySelector('.card-header');
+  let titleEl = null;
+  if (titleContainer) {
+    // Prefer heading inside card-header
+    titleEl = titleContainer.querySelector('h1,h2,h3,h4,h5,h6');
+    if (!titleEl) {
+      // fallback: use card-header itself if no heading
+      titleEl = titleContainer;
     }
-  } else {
-    // fallback: blank cell
-    titleCell = document.createElement('span');
-    titleCell.textContent = '';
   }
 
-  // 3. Extract accordion content from .card-body inside the .collapse content
-  let contentCell;
-  const collapseDiv = element.querySelector('.collapse');
-  if (collapseDiv) {
-    const cardBody = collapseDiv.querySelector('.card-body');
-    if (cardBody) {
-      contentCell = cardBody;
-    } else {
-      // fallback, use the collapseDiv
-      contentCell = collapseDiv;
-    }
-  } else {
-    // fallback: use whole element
-    contentCell = element;
+  // Find the content (body)
+  let bodyContainer = element.querySelector('.card-body');
+  let contentEl = null;
+  if (bodyContainer) {
+    // The bodyContainer is a div containing a ul with a p and li's
+    // We should preserve the list structure and reference the div directly
+    contentEl = bodyContainer;
   }
 
-  // 4. Build rows: header, [title, content]
-  const rows = [
-    headerRow,
-    [titleCell, contentCell],
-  ];
+  // Build rows
+  const rows = [headerRow];
+  if (titleEl && contentEl) {
+    rows.push([
+      titleEl,
+      contentEl
+    ]);
+  }
+  // If title or content is missing, don't add item row
 
-  // 5. Create block table
+  // Create the block table and replace
   const table = WebImporter.DOMUtils.createTable(rows, document);
-
-  // 6. Replace element
   element.replaceWith(table);
 }

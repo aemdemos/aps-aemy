@@ -1,61 +1,91 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build block table: header row is a single cell ['Carousel']
-  const cells = [['Carousel']];
+  // Find all non-cloned slides (data-slick-index >= 0)
+  const slides = Array.from(element.querySelectorAll('.slick-track > .slick-slide'))
+    .filter(slide => {
+      const idx = Number(slide.getAttribute('data-slick-index'));
+      return !isNaN(idx) && idx >= 0;
+    });
 
-  // Get slide elements (non-cloned)
-  const track = element.querySelector('.slick-track');
-  if (!track) return;
-  const slides = Array.from(track.children).filter(slide => !slide.classList.contains('slick-cloned'));
-
-  // Build a map from image src to its modal for extracting text content
-  const modalMap = {};
-  Array.from(element.querySelectorAll('[id^="sliderImgModal-"]')).forEach(modal => {
-    const img = modal.querySelector('.modal-body img');
-    if (img && img.src) {
-      modalMap[img.src] = modal;
-    }
-  });
+  const seenSrcs = new Set();
+  const rows = [['Carousel']]; // Header row, exactly as specified
 
   slides.forEach(slide => {
     const img = slide.querySelector('img');
-    let textCell = '';
-    if (img && modalMap[img.src]) {
-      const modal = modalMap[img.src];
-      const textContent = [];
-      // Title as heading
-      const title = modal.querySelector('.modal-title');
-      if (title && title.textContent.trim()) {
-        const h2 = document.createElement('h2');
-        h2.textContent = title.textContent.trim();
-        textContent.push(h2);
-      }
-      // Extract description/additional content from modal-body (text nodes and non-img elements)
-      const modalBody = modal.querySelector('.modal-body');
-      if (modalBody) {
-        Array.from(modalBody.childNodes).forEach(node => {
-          if (node.nodeType === 3 && node.textContent.trim()) {
-            const p = document.createElement('p');
-            p.textContent = node.textContent.trim();
-            textContent.push(p);
-          } else if (node.nodeType === 1 && node.tagName !== 'IMG') {
-            textContent.push(node);
-          }
-        });
-      }
-      // Call-to-action or additional content from modal-footer
-      const footerP = modal.querySelector('.modal-footer p');
-      if (footerP && footerP.textContent.trim()) {
-        textContent.push(footerP);
-      }
-      // Only set text cell if any content is present
-      if (textContent.length > 0) {
-        textCell = textContent;
+    if (!img || !img.src || seenSrcs.has(img.src)) return;
+    seenSrcs.add(img.src);
+    // First cell: reference existing img element
+    const imageCell = img;
+
+    // Second cell: collect as much text content as available from the modal
+    let cellContent = [];
+    let a = img.closest('a');
+    let modalId = '';
+    if (a && a.getAttribute('href')) {
+      const m = a.getAttribute('href').match(/#sliderImgModal-(\d+)/);
+      if (m && m[1]) {
+        modalId = 'sliderImgModal-' + m[1];
       }
     }
-    cells.push([img || '', textCell]);
+    let modalTitle = '';
+    let modalDescription = '';
+    let modalCTA = null;
+    if (modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        // Title
+        const titleEl = modal.querySelector('.modal-title');
+        if (titleEl && titleEl.textContent.trim()) {
+          modalTitle = titleEl.textContent.trim();
+        }
+        // Description: modal-footer p
+        const descEl = modal.querySelector('.modal-footer p');
+        if (descEl && descEl.textContent.trim()) {
+          modalDescription = descEl.textContent.trim();
+        } else {
+          // fallback: any text node in modal-body not inside image
+          const body = modal.querySelector('.modal-body');
+          if (body) {
+            Array.from(body.childNodes).forEach(child => {
+              if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+                modalDescription = child.textContent.trim();
+              }
+            });
+          }
+        }
+        // CTA: look for links in modal-footer p
+        if (descEl) {
+          const link = descEl.querySelector('a');
+          if (link && link.href && link.textContent.trim()) {
+            modalCTA = link;
+          }
+        }
+      }
+    }
+    // Fallback for missing title
+    if (!modalTitle && img.alt) {
+      modalTitle = img.alt;
+    }
+    // Heading
+    if (modalTitle) {
+      const h2 = document.createElement('h2');
+      h2.textContent = modalTitle;
+      cellContent.push(h2);
+    }
+    // Description
+    if (modalDescription) {
+      const p = document.createElement('p');
+      p.textContent = modalDescription;
+      cellContent.push(p);
+    }
+    // CTA link (if found)
+    if (modalCTA) {
+      cellContent.push(modalCTA);
+    }
+    // Always provide an array, even if empty
+    rows.push([imageCell, cellContent.length ? cellContent : '']);
   });
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

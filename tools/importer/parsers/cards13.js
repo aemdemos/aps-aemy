@@ -1,58 +1,58 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header must match the example exactly
-  const cells = [['Cards (cards13)']];
+  // Block header as required by the block description and example
+  const headerRow = ['Cards (cards13)'];
 
-  // Find the cards list
+  // Find the UL containing the cards
   const ul = element.querySelector('ul.cards__list');
-  if (ul) {
-    const lis = ul.querySelectorAll(':scope > li.cards__item');
-    lis.forEach((li) => {
-      // Image cell: extract from .item-image background-image
-      const imageLink = li.querySelector('.item-image');
-      let imageEl = '';
-      if (imageLink && imageLink.style && imageLink.style.backgroundImage) {
-        const bg = imageLink.style.backgroundImage;
-        const urlMatch = bg.match(/url\(['"]?([^'"]+)['"]?\)/i);
-        if (urlMatch && urlMatch[1]) {
-          const img = document.createElement('img');
-          img.src = urlMatch[1].trim();
-          img.alt = imageLink.getAttribute('alt') || '';
-          imageEl = img;
-        }
-      }
+  if (!ul) return;
 
-      // Text cell: build content
-      const content = li.querySelector('.item-content');
-      const textParts = [];
-      if (content) {
-        const title = content.querySelector('.item-content__title');
-        if (title && title.textContent.trim()) {
-          const strong = document.createElement('strong');
-          strong.textContent = title.textContent.trim();
-          textParts.push(strong);
-        }
-        // The description is optional
-        const desc = content.querySelector('.item-content__desc');
-        if (desc && desc.textContent.trim()) {
-          const p = document.createElement('p');
-          p.textContent = desc.textContent.trim();
-          textParts.push(p);
-        }
-        // The CTA link
-        const cta = content.querySelector('.item-content__link');
-        if (cta) {
-          textParts.push(cta);
-        }
-      }
-      // Always include two columns per row
-      cells.push([
-        imageEl || '',
-        textParts.length ? textParts : '',
-      ]);
-    });
-  }
+  // Get all LI card items
+  const items = Array.from(ul.children).filter(li => li.classList.contains('cards__item'));
+  const rows = [headerRow];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  items.forEach((li) => {
+    // Card image (background-image on <a>)
+    const imageLink = li.querySelector('.item-image');
+    let imgEl = null;
+    if (imageLink) {
+      const style = imageLink.getAttribute('style') || '';
+      // Regex to pull out the first background-image URL
+      const match = style.match(/background-image:\s*url\(['"]?([^'"]+)['"]?\)/);
+      if (match && match[1]) {
+        imgEl = document.createElement('img');
+        imgEl.src = match[1].trim();
+        imgEl.alt = imageLink.getAttribute('alt') || '';
+      }
+    }
+
+    // Card text
+    const contentDiv = li.querySelector('.item-content');
+    const textContent = [];
+    if (contentDiv) {
+      // Title
+      const title = contentDiv.querySelector('.item-content__title');
+      if (title && title.textContent.trim().length > 0) {
+        const strong = document.createElement('strong');
+        strong.textContent = title.textContent.trim();
+        textContent.push(strong);
+      }
+      // Description (empty in this source, but must handle)
+      const desc = contentDiv.querySelector('.item-content__desc');
+      if (desc && desc.textContent.trim().length > 0) {
+        const p = document.createElement('p');
+        p.textContent = desc.textContent.trim();
+        textContent.push(p);
+      }
+      // CTA link
+      const cta = contentDiv.querySelector('.item-content__link');
+      if (cta) {
+        textContent.push(cta); // already an <a>, reference not clone
+      }
+    }
+    rows.push([imgEl, textContent]);
+  });
+
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }
