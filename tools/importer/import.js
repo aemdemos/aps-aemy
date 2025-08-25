@@ -19,6 +19,7 @@ import cards1Parser from './parsers/cards1.js';
 import embedVideo28Parser from './parsers/embedVideo28.js';
 import hero38Parser from './parsers/hero38.js';
 import carousel26Parser from './parsers/carousel26.js';
+import carousel49Parser from './parsers/carousel49.js';
 import columns31Parser from './parsers/columns31.js';
 import cards13Parser from './parsers/cards13.js';
 import accordion3Parser from './parsers/accordion3.js';
@@ -51,6 +52,7 @@ const parsers = {
   columns31: columns31Parser,
   cards13: cards13Parser,
   accordion3: accordion3Parser,
+  carousel49: carousel49Parser,
   ...customParsers,
 };
 
