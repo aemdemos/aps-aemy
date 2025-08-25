@@ -1,21 +1,29 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The header row must be a single column, exactly as in the example
-  const headerRow = ['Columns (columns21)'];
-
-  // Gather all direct anchor children in the <p>
+  // Get all <a> elements (columns)
   const links = Array.from(element.querySelectorAll('a'));
+  if (!links.length) return;
 
-  // Edge case: If no links, don't replace
-  if (links.length === 0) return;
+  // We want the header row to be a single cell/column, even if we have several in the content row
+  const headerRow = ['Columns (columns21)'];
+  // Content row: one <a> per column
+  const contentRow = links;
 
-  // Table's second row: each link gets its own column
-  const row = links;
+  // Create the block table
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
 
-  // Structure: headerRow is a single-cell array, row is a multi-cell array
-  const cells = [headerRow, row];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original element
+  // After createTable, set the header row to have a single <th> with correct colspan
+  // This ensures the header visually spans all columns in the HTML
+  const rows = table.querySelectorAll('tr');
+  if (rows.length >= 2) {
+    const headerThs = rows[0].querySelectorAll('th');
+    if (headerThs.length === 1 && contentRow.length > 1) {
+      headerThs[0].setAttribute('colspan', String(contentRow.length));
+    }
+  }
+  
   element.replaceWith(table);
 }

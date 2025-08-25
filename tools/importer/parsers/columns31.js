@@ -1,44 +1,39 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-    // Get all immediate child divs (these are the columns)
-    const colWrappers = Array.from(element.children).filter(e => e.tagName === 'DIV');
-    if (colWrappers.length !== 2) return;
+  // Set the header exactly
+  const headerRow = ['Columns (columns31)'];
 
-    // Helper: Recursively replace iframes (not images) with links, in-place, referencing existing elements
-    function replaceIframesWithLinks(node) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            // If it's an iframe (not image), replace with link
-            if (node.tagName === 'IFRAME') {
-                const src = node.getAttribute('src');
-                if (src) {
-                    const a = document.createElement('a');
-                    a.href = src;
-                    a.textContent = src;
-                    return a;
-                }
-                // If somehow no src, remove
-                return document.createTextNode('');
-            }
-            // Otherwise, recursively process its children
-            const children = Array.from(node.childNodes).map(replaceIframesWithLinks);
-            // Remove all childNodes and append processed
-            while (node.firstChild) node.removeChild(node.firstChild);
-            children.forEach(child => node.appendChild(child));
-            return node;
-        }
-        // Text nodes remain as-is
-        return node;
-    }
+  // Each column is a side of the block: left (hours) and right (librarian)
+  // Extract the left and right columns
+  const firstCol = element.querySelector('.code_snippet_first');
+  const secondCol = element.querySelector('.code_snippet_second');
 
-    // For each column, replace iframes with links in-place (referencing original elements, not clones)
-    replaceIframesWithLinks(colWrappers[0]);
-    replaceIframesWithLinks(colWrappers[1]);
+  // If either is missing, use an empty div to preserve columns
+  const leftContent = firstCol ? firstCol : document.createElement('div');
+  const rightContent = secondCol ? secondCol : document.createElement('div');
 
-    // Compose the table
-    const cells = [
-        ['Columns (columns31)'],
-        [colWrappers[0], colWrappers[1]]
-    ];
-    const block = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(block);
+  // Remove any inline style attributes from top-level columns
+  leftContent.removeAttribute('style');
+  rightContent.removeAttribute('style');
+
+  // Remove .fa icons from headings for semantic preservation
+  leftContent.querySelectorAll('i.fa').forEach(icon => icon.remove());
+  rightContent.querySelectorAll('i.fa').forEach(icon => icon.remove());
+
+  // Remove input[type=radio] and <nav> from leftContent, which are for tab mechanism only
+  leftContent.querySelectorAll('input[type="radio"], nav').forEach(el => el.remove());
+
+  // Remove aria-hidden icons (redundant, but safe)
+  leftContent.querySelectorAll('[aria-hidden]').forEach(el => el.remove());
+  rightContent.querySelectorAll('[aria-hidden]').forEach(el => el.remove());
+
+  // The structure is a 2-column block: left is the full hours/tabs block, right is the librarian block
+  // All semantic and text content is retained by referencing existing elements
+  const cells = [
+    headerRow,
+    [leftContent, rightContent]
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

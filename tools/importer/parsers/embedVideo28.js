@@ -1,39 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Compose the content for the block cell
-  const content = [];
-  const tableElement = element.querySelector('table');
-  if (tableElement) {
-    // Replace the <h4> element with its child table
-    element.parentNode.replaceChild(tableElement, element);
-    return;
-  }
+  // Collect all immediate children and text nodes for the cell
+  const cellContent = [];
   element.childNodes.forEach((node) => {
     if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'IFRAME' && node.src) {
-        // Replace iframe (non-img) with a link
-        const link = document.createElement('a');
-        link.href = node.src;
-        link.textContent = node.src;
-        content.push(link);
+      if (node.tagName.toLowerCase() === 'iframe' && node.hasAttribute('src')) {
+        // Replace iframe with a link to its src
+        const a = document.createElement('a');
+        a.href = node.src;
+        a.textContent = node.src;
+        cellContent.push(a);
       } else {
-        content.push(node);
+        cellContent.push(node);
       }
     } else if (node.nodeType === Node.TEXT_NODE) {
-      // Add any text content present directly under the element
-      const txt = node.textContent.trim();
-      if (txt) {
-        content.push(txt);
+      if (node.textContent.trim() !== '') {
+        cellContent.push(node.textContent);
       }
     }
   });
-
-  // Construct the cells array as per the markdown example
+  // Ensure the cell is not empty
+  const contentRow = [cellContent.length ? cellContent : ['']];
   const cells = [
-    ['Embed'], // EXACT header from example
-    [content] // All source content, preserving semantic meaning
+    ['Embed'],
+    contentRow
   ];
-
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
