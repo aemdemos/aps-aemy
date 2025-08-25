@@ -37,12 +37,6 @@
           "urlHash": "ac1c0cc8ddc4ff0616505bcb7c5a95899e995548",
           "uuid": "ac1c0cc8-03-fb19986deeeea19276bb0a0cb31e0ca9a7460b40",
           "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[3]"
-        },
-        {
-          "url": "https://library.westernsydney.edu.au/home",
-          "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
-          "uuid": "3eb45cc1-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
-          "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
     },
@@ -1632,6 +1626,12 @@
           "url": "https://library.westernsydney.edu.au/",
           "urlHash": "b61d3d495f54b270e3d91b149cf2e8b6b7da6f2a",
           "uuid": "b61d3d49-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
+          "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/home",
+          "urlHash": "3eb45cc1b1f7b1173bae665b6732cc8667538b5a",
+          "uuid": "3eb45cc1-01-764deff5da11c1e63c49829d6eef5b2e52084cea",
           "xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/div[1]"
         }
       ]
