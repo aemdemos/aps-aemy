@@ -1,30 +1,21 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Ensure we robustly extract the two column elements
-  let mediaBody = element.querySelector('.media-body');
-  let mediaRight = element.querySelector('.media-right');
-
-  // Edge case handling: if one is missing, create an empty div so columns align
-  if (!mediaBody) {
-    mediaBody = document.createElement('div');
-  }
-  if (!mediaRight) {
-    mediaRight = document.createElement('div');
-  }
-
-  // The header must match the block name exactly
+  // Header row for block
   const headerRow = ['Columns (columns33)'];
 
-  // The second row: each cell is a column. Reference the extracted elements directly.
-  const contentRow = [mediaBody, mediaRight];
+  // Find the left and right main columns
+  // Left: .media-body (contains title, description, details)
+  const leftCol = element.querySelector('.media-body');
+  // Right: .media-right img (the image)
+  const rightColImg = element.querySelector('.media-right img');
+  // Defensive fallback: ensure rightColImg is included as null if not found
 
-  // Compose the table
-  const cells = [
-    headerRow,
-    contentRow,
-  ];
+  // Build columns: left = all of .media-body, right = image (if present)
+  const row = [leftCol, rightColImg ? rightColImg : ''];
 
-  // Create and replace the block table
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  // Compose table
+  const cells = [headerRow, row];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  element.replaceWith(table);
 }
