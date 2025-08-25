@@ -77,6 +77,24 @@
           "section": "section-1"
         },
         {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
+          "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
+          "uuid": "69a1613a-01-e82fe33f627d4c638cc72a0c51222bdc",
+          "xpath": "/html/body/div[2]/main/div[1]/div[4]/div[2]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
+          "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
+          "uuid": "69a1613a-02-e82fe33f627d4c638cc72a0c51222bdc",
+          "xpath": "/html/body/div[2]/main/div[1]/div[7]"
+        },
+        {
+          "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
+          "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
+          "uuid": "69a1613a-03-e82fe33f627d4c638cc72a0c51222bdc",
+          "xpath": "/html/body/div[2]/main/div[1]/div[9]"
+        },
+        {
           "url": "https://library.westernsydney.edu.au/researchers/conducting-research/types_of_research",
           "urlHash": "7694e1c630375aeb2a7e080fbd2536c237f0db94",
           "uuid": "7694e1c6-05-bd4eb6ba7569a4d3ada770b5c7b2dee245dffef4",
@@ -2268,12 +2286,6 @@
       "uuid": "5b388e5b-01-d2bc145c197b13c9f9b102f9a32be44625f152a4",
       "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[1]",
       "section": "section-5"
-    },
-    {
-      "url": "https://library.westernsydney.edu.au/about_us/campus/locations/indonesia-surabaya",
-      "urlHash": "5b388e5ba6ff3b29e2e19fdbaaec761d47033cd1",
-      "uuid": "5b388e5b-03-ea74c947c21cb371847451b049d95e1ea7d387d3",
-      "xpath": "/html[1]/body[1]/div[2]/main[1]/div[1]/div[4]"
     },
     {
       "url": "https://library.westernsydney.edu.au/students/using_the_library/printing",
