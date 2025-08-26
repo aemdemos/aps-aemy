@@ -294,23 +294,27 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  box-sizing: border-box;
-  height: 22px;
-  min-height: 22px;
+  height: 28px;
+  padding: 0 6px 0 13px;
   background: #fafafa;
+  border: none;
+  box-shadow: none;
   border-bottom: 1px solid #ededed;
-  padding-left: 8px;
-  padding-right: 8px;
   margin: 0;
-  outline: none;
-  font-family: var(--body-font-family, sans-serif);
+  font-family: var(--body-font-family, Arial, sans-serif);
   position: relative;
+  box-sizing: border-box;
 
-  /* Subtler, thinner plus icon for more accurate match */
-  background-image: url("data:image/svg+xml,%3Csvg width='7' height='7' viewBox='0 0 7 7' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3.3' y='1' width='0.4' height='5' fill='black'/%3E%3Crect x='1' y='3.3' width='5' height='0.4' fill='black'/%3E%3C/svg%3E");
+  /* Plus icon SVG, slightly larger for better alignment, lines thinner */
+  background-image: url("data:image/svg+xml,%3Csvg width='7' height='7' viewBox='0 0 7 7' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='3.3' y='1' width='0.25' height='5' fill='black'/%3E%3Crect x='1' y='3.3' width='5' height='0.25' fill='black'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right 3px center;
   background-size: 7px 7px;
+}
+
+.accordion.accordion3 details > summary.accordion-item-label::-webkit-details-marker,
+.accordion.accordion3 details > summary.accordion-item-label::marker {
+  display: none;
 }
 
 .accordion.accordion3 .accordion-item-label::after {
@@ -320,21 +324,16 @@
 .accordion.accordion3 .accordion-item-label p {
   margin: 0;
   padding: 0;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-family: Arial, sans-serif;
+  line-height: 28px;
   color: #000;
-  line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: var(--body-font-family, sans-serif);
   flex: 1 1 auto;
   align-self: center;
-}
-
-.accordion.accordion3 details > summary.accordion-item-label::-webkit-details-marker,
-.accordion.accordion3 details > summary.accordion-item-label::marker {
-  display: none;
 }
 
 .accordion.accordion3 .accordion-item-body {
@@ -346,8 +345,12 @@
 
 @media (width <= 600px) {
   .accordion.accordion3 details > summary.accordion-item-label {
-    padding-left: 4px;
-    padding-right: 4px;
-    background-position: right 4px center;
+    padding-left: 6px;
+    padding-right: 3px;
+    background-position: right 1px center;
+  }
+
+  .accordion.accordion3 .accordion-item-label p {
+    font-size: 9.5px;
   }
 }
