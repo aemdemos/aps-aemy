@@ -104,7 +104,7 @@ jobs:
           cd ../sta-aem-helper
           npm install
           cd ..
-          npm install @adobe/aem-import-helper@latest
+          npm install @adobe/aem-import-helper
 
       - name: '[Check] Validation of inputs'
         if: ${{ env.errorMessage != '' }}
