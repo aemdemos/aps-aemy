@@ -1,0 +1,29 @@
+name: Hourly EDS Permission Update
+'on':
+  workflow_dispatch: null
+  schedule:
+    - cron: 0 * * * *
+jobs:
+  run-hourly-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run JavaScript file
+        run: |
+          node scripts/generate-json.js > output.json
+          echo "json_output=$(cat output.json | jq -c .)" >> $GITHUB_OUTPUT
+      - name: Convert JSON to CSV
+        run: |
+          jq -r '(.[0] | keys_unsorted) as $keys | 
+                 $keys, map([.[ $keys[] ]])[] | 
+                 @csv' output.json > output.csv
+      - name: Upload CSV as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: json-to-csv
+          path: output.csv
