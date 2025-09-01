@@ -19,9 +19,15 @@ jobs:
       - name: Convert JSON to CSV
         run: |
           jq -r '(.[0] | keys_unsorted) as $keys |
-                 $keys, map([.[ $keys[] ]])[] |
-                 @csv' output.json > output.csv
-
+          $keys,
+          map(
+            [ .[ $keys[] ]
+              | if type=="array" then join(";")
+                elif type=="object" then tojson
+                else tostring end
+            ]
+          )[] | @csv' output.json > output.csv
+          
       - name: Upload CSV as artifact
         uses: actions/upload-artifact@v4
         with:
