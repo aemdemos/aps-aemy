@@ -13,17 +13,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Run JavaScript file
-        run: |
-          node scripts/generate-json.js > output.json
-          echo "json_output=$(cat output.json | jq -c .)" >> $GITHUB_OUTPUT
+      - name: Run JS to generate JSON
+        run: node scripts/generate-json.js
+
       - name: Convert JSON to CSV
         run: |
-          jq -r '(.[0] | keys_unsorted) as $keys | 
-                 $keys, map([.[ $keys[] ]])[] | 
+          jq -r '(.[0] | keys_unsorted) as $keys |
+                 $keys, map([.[ $keys[] ]])[] |
                  @csv' output.json > output.csv
+
       - name: Upload CSV as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: permission
+          name: json-to-csv
           path: output.csv
