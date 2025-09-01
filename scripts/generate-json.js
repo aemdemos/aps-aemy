@@ -5,4 +5,4 @@ const data = [
   { name: "Bob", age: 25, city: "Melbourne" },
 ];
 
-fs.writeFileSync('output.json', JSON.stringify(allData, null, 2));
+fs.writeFileSync('output.json', JSON.stringify(data, null, 2));
